@@ -8,6 +8,14 @@
       url = "github:zhaofengli/nix-homebrew";
       inputs.nixpkgs.follows = "nix-darwin";
     };
+    homebrew-core = {
+      url = "github:homebrew/homebrew-core";
+      flake = false;
+    };
+    homebrew-cask = {
+      url = "github:homebrew/homebrew-cask";
+      flake = false;
+    };
 
     agenix = {
       url = "github:ryantm/agenix";
