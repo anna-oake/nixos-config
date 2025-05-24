@@ -1,0 +1,22 @@
+--- "a/Ilya Birman Typography Layout.bundle/Contents/Resources/English \342\200\223 Ilya Birman Typography.keylayout"	
++++ "b/Ilya Birman Typography Layout.bundle/Contents/Resources/English \342\200\223 Ilya Birman Typography.keylayout"	
+@@ -2,7 +2,7 @@
+ <!DOCTYPE keyboard SYSTEM "file://localhost/System/Library/DTDs/KeyboardLayout.dtd">
+ <!--Last edited by Ukelele version 359 on 2023-07-03 at 23:33 (GMT+5)-->
+ <!--Created by Ukelele version 1.8 on 2008-10-24 at 13:25 (YEKST)-->
+-<keyboard group="126" id="-9876" name="English – Ilya Birman Typography" maxout="3">
++<keyboard group="126" id="-9876" name="English" maxout="3">
+     <layouts>
+         <layout first="0" last="17" mapSet="16c" modifiers="f4"/>
+         <layout first="18" last="18" mapSet="994" modifiers="f4"/>
+--- "a/Ilya Birman Typography Layout.bundle/Contents/Resources/Russian \342\200\223 Ilya Birman Typography.keylayout"	
++++ "b/Ilya Birman Typography Layout.bundle/Contents/Resources/Russian \342\200\223 Ilya Birman Typography.keylayout"	
+@@ -2,7 +2,7 @@
+ <!DOCTYPE keyboard SYSTEM "file://localhost/System/Library/DTDs/KeyboardLayout.dtd">
+ <!--Last edited by Ukelele version 359 on 2023-07-03 at 23:33 (GMT+5)-->
+ <!--Created by Ukelele version 1.8 on 2008-10-24 at 13:25 (YEKST)-->
+-<keyboard group="126" id="-31553" name="Russian – Ilya Birman Typography" maxout="3">
++<keyboard group="126" id="-31553" name="Russian" maxout="3">
+     <layouts>
+         <layout first="0" last="17" mapSet="16c" modifiers="f4"/>
+         <layout first="18" last="18" mapSet="994" modifiers="f4"/>

@@ -10,15 +10,23 @@
   imports = [
     ./user.nix
     ./system-defaults.nix
+    ./macos-layouts.nix
     inputs.nix-homebrew.darwinModules.nix-homebrew
   ];
+
+  macos-layouts = {
+    enable = true;
+    packages = with pkgs; [
+      ilya-birman-typography-layout
+    ];
+  };
 
   # networking
   networking.computerName = hostname;
 
   # homebrew
   nix-homebrew = {
-    user = "anna";
+    user = config.me.username;
     enable = true;
 
     taps = with inputs; {
@@ -31,7 +39,12 @@
 
   homebrew = {
     enable = true;
-    onActivation.cleanup = "zap";
+    onActivation = {
+      cleanup = "zap";
+      autoUpdate = true;
+      upgrade = true;
+    };
+
     taps = builtins.attrNames config.nix-homebrew.taps;
 
     casks = [
@@ -40,9 +53,6 @@
 
       # apps
       "telegram"
-
-      # system
-      "ilya-birman-typography-layout"
     ];
   };
 

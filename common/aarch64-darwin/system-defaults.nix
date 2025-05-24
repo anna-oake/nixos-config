@@ -1,10 +1,7 @@
-{ ... }:
+{ config, ... }:
 {
   /*
-    TODO: fix typography layout! right now, only the *last* in the EnabledThirdPartyInputSources list is actually "applied"
-          also look into pretty names (ask anya how she does it)
-
-          possibly create a nice dock setup and apply it? the mess with GUIDs doesnt look great
+    TODO: possibly create a nice dock setup and apply it? the mess with GUIDs doesnt look great
   */
 
   system.defaults = {
@@ -15,55 +12,43 @@
       "com.apple.WindowManager" = {
         EnableStandardClickToShowDesktop = false;
       };
+      NSGlobalDomain = {
+        NSQuitAlwaysKeepsWindow = false;
+      };
+
+      # the following basically removes the default ABC keyboard layout since we only use 3rd-party ones
+      "com.apple.HIToolbox" = {
+        AppleEnabledInputSources = [
+          {
+            "Bundle ID" = "com.apple.CharacterPaletteIM";
+            InputSourceKind = "Non Keyboard Input Method";
+          }
+        ];
+      };
     };
 
     LaunchServices.LSQuarantine = false; # do not quarantine downloaded applications
 
-    CustomSystemPreferences = {
-      "com.apple.inputsources" = {
-        AppleEnabledThirdPartyInputSources = [
-          {
-            InputSourceKind = "Keyboard Layout";
-            "KeyboardLayout ID" = "-9876";
-            "KeyboardLayout Name" = "English \\U2013 Ilya Birman Typography";
-          }
-          {
-            InputSourceKind = "Keyboard Layout";
-            "KeyboardLayout ID" = "-31553";
-            "KeyboardLayout Name" = "Russian \\U2013 Ilya Birman Typography";
-          }
-        ];
-      };
-
-      "com.apple.HIToolbox" = {
-        AppleCurrentKeyboardLayoutInputSourceID = "com.apple.keylayout.British-PC";
-        AppleEnabledInputSources = [
-          {
-            InputSourceKind = "Keyboard Layout";
-            "KeyboardLayout ID" = 250;
-            "KeyboardLayout Name" = "British-PC";
-          }
-        ];
-        AppleSelectedInputSources = [
-          {
-            InputSourceKind = "Keyboard Layout";
-            "KeyboardLayout ID" = 250;
-            "KeyboardLayout Name" = "British-PC";
-          }
-        ];
-      };
+    NSGlobalDomain = {
+      NSDocumentSaveNewDocumentsToCloud = false;
     };
 
     finder = {
       AppleShowAllFiles = true; # show hidden files
-      NewWindowTarget = "Computer"; # default finder location
+      AppleShowAllExtensions = true;
+      NewWindowTarget = "Computer";
+      _FXSortFoldersFirst = false;
+      FXEnableExtensionChangeWarning = false;
+      FXDefaultSearchScope = "SCcf"; # search in This Folder byd efault
+      FXPreferredViewStyle = "Nlsv"; # list style
       ShowPathbar = true; # show pathbar at the bottom of the window
-      QuitMenuItem = true; # allow quit
+      QuitMenuItem = true;
     };
 
     dock = {
       autohide = true;
       autohide-delay = 0.0;
+      autohide-time-modifier = 0.3;
       largesize = 72; # magnification size
       tilesize = 28; # unmagnified size
       orientation = "bottom";
@@ -72,7 +57,7 @@
     };
 
     loginwindow = {
-      LoginwindowText = "sex";
+      LoginwindowText = "Please contact ${config.me.email}";
     };
 
     WindowManager = {

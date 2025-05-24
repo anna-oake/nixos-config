@@ -5,6 +5,7 @@
 
   imports = [
     inputs.agenix.nixosModules.default
+    ./me.nix
   ];
 
   # networking
@@ -17,5 +18,10 @@
   nix.settings.experimental-features = [
     "nix-command"
     "flakes"
+  ];
+
+  # overlays
+  nixpkgs.overlays = [
+    (import (inputs.self + /pkgs))
   ];
 }
