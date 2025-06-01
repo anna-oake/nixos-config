@@ -1,0 +1,1 @@
+Largely inspired by https://github.com/maeve-oake/nixos-config
