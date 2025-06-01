@@ -1,0 +1,44 @@
+name: Build & Cache flake outputs
+
+on: push
+
+jobs:
+  build-and-cache:
+    strategy:
+      matrix:
+        os: [ubuntu-22.04, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - if: matrix.os == 'ubuntu-22.04'
+        name: Maximize build space
+        uses: easimon/maximize-build-space@master
+        with:
+          remove-dotnet: 'true'
+          remove-haskell: 'true'
+          remove-codeql: 'true'
+          remove-docker-images: 'true'
+          root-reserve-mb: '10240'
+          build-mount-path: '/nix'
+      
+      - if: matrix.os == 'ubuntu-22.04'
+        name: Fix permissions
+        run: sudo chown -R root /nix
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Nix
+        uses: DeterminateSystems/nix-installer-action@main
+
+      - name: Setup Attic cache
+        uses: ryanccn/attic-action@v0
+        with:
+            endpoint: ${{ secrets.ATTIC_SERVER }}
+            token: ${{ secrets.ATTIC_TOKEN }}
+            cache: nixos
+
+      - name: Install omnix
+        run: nix profile install "github:juspay/omnix"
+
+      - name: Build all flake outputs
+        run: om ci run --extra-access-tokens ${{ secrets.GITHUB_TOKEN }}
