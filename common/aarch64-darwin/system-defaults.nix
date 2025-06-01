@@ -1,8 +1,6 @@
 { config, ... }:
 {
-  /*
-    TODO: possibly create a nice dock setup and apply it? the mess with GUIDs doesnt look great
-  */
+  # TODO: possibly create a nice dock setup and apply it? the mess with GUIDs doesnt look great
 
   system.defaults = {
     CustomUserPreferences = {
