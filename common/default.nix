@@ -39,9 +39,4 @@
   nixpkgs.overlays = [
     (import (inputs.self + /pkgs))
   ];
-
-  # overlays
-  nixpkgs.overlays = [
-    (import (inputs.self + /pkgs))
-  ];
 }
