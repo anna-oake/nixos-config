@@ -30,18 +30,18 @@
     ];
 
     profiles = {
-      Home = {
+      HomeIot5 = {
         connection = {
-          id = "$HOME_SSID";
+          id = "$HOME_IOT_5_SSID";
           type = "wifi";
         };
         wifi = {
           mode = "infrastructure";
-          ssid = "$HOME_SSID";
+          ssid = "$HOME_IOT_5_SSID";
         };
         wifi-security = {
           key-mgmt = "wpa-psk";
-          psk = "$HOME_PSK";
+          psk = "$HOME_IOT_5_PSK";
         };
       };
 

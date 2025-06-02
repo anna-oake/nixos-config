@@ -2,6 +2,7 @@
   pkgs,
   inputs,
   system,
+  lib,
   ...
 }:
 {
@@ -16,6 +17,9 @@
 
   # boot
   boot.loader.timeout = 0;
+
+  # user
+  users.user = lib.mkDefault true;
 
   # pkgs
   services.fwupd.enable = true;

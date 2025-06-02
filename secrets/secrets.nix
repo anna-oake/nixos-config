@@ -8,9 +8,13 @@ let
 in
 {
   "user-password.age".publicKeys = all;
+  "kiosk-password.age".publicKeys = all;
+
   "attic-netrc.age".publicKeys = all;
 
   # wifi
   "wifi-home.age".publicKeys = all;
+  "wifi-home-iot.age".publicKeys = all;
+  "wifi-home-iot-5.age".publicKeys = all;
   "wifi-temp.age".publicKeys = all;
 }
