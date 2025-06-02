@@ -22,6 +22,12 @@
     kiosk = true;
   };
 
+  services.cage = {
+    enable = true;
+    user = "kiosk";
+    program = "${pkgs.firefox}/bin/firefox -kiosk https://h.koteeq.me";
+  };
+
   # # Enable the X11 windowing system.
   # services.xserver.enable = true;
 
