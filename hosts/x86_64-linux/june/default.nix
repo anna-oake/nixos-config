@@ -2,6 +2,7 @@
   config,
   pkgs,
   lib,
+  inputs,
   ...
 }:
 
@@ -9,6 +10,14 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
+    inputs.nixos-hardware.nixosModules.microsoft-surface-common
+  ];
+
+  hardware.microsoft-surface.kernelVersion = "stable";
+  services.iptsd.enable = true;
+  environment.systemPackages = with pkgs; [
+    surface-control
+    htop
   ];
 
   # Bootloader.
