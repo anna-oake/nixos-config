@@ -37,7 +37,7 @@
     user = "kiosk";
     program = "${pkgs.writeScriptBin "start-cage-app" ''
       #!/usr/bin/env bash
-      wlr-randr --output DSI-1 --scale 2
+      ${pkgs.wlr-randr}/bin/wlr-randr --output DSI-1 --scale 2
       export MOZ_ENABLE_WAYLAND=1
       exec ${pkgs.firefox}/bin/firefox -kiosk https://h.koteeq.me
     ''}/bin/start-cage-app";
