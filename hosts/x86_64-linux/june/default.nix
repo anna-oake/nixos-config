@@ -17,7 +17,6 @@
   hardware.microsoft-surface.kernelVersion = "stable";
   services.iptsd.enable = true;
   environment.systemPackages = with pkgs; [
-    surface-control
     htop
   ];
 
@@ -32,6 +31,8 @@
     kiosk = true;
   };
 
+  services.acpid.enable = true;
+
   services.cage = {
     enable = true;
     user = "kiosk";
@@ -41,6 +42,14 @@
       export MOZ_ENABLE_WAYLAND=1
       ${pkgs.firefox}/bin/firefox -kiosk https://h.koteeq.me
     ''}/bin/start-cage-app";
+  };
+
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
   };
 
   # # Enable the X11 windowing system.
