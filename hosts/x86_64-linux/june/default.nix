@@ -35,7 +35,12 @@
   services.cage = {
     enable = true;
     user = "kiosk";
-    program = "MOZ_ENABLE_WAYLAND=1 ${pkgs.firefox}/bin/firefox -kiosk https://h.koteeq.me";
+    program = "${pkgs.writeScriptBin "start-cage-app" ''
+      #!/usr/bin/env bash
+      wlr-randr --output DSI-1 --scale 2
+      export MOZ_ENABLE_WAYLAND=1
+      exec ${pkgs.firefox}/bin/firefox -kiosk https://h.koteeq.me
+    ''}/bin/start-cage-app";
   };
 
   # # Enable the X11 windowing system.
