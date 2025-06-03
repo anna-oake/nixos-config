@@ -22,7 +22,11 @@
 
   boot = {
     secureboot.enable = true;
-    plymouth.enable = true;
+    plymouth = {
+      enable = true;
+      themePackages = [ pkgs.plymouth-blahaj-theme ];
+      theme = "blahaj";
+    };
     consoleLogLevel = 3;
     initrd.verbose = false;
     kernelParams = [
