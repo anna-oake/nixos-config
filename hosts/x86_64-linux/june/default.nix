@@ -21,6 +21,7 @@
   ];
 
   boot.secureboot.enable = true;
+  boot.plymouth.enable = true;
 
   time.timeZone = "Europe/London";
 
