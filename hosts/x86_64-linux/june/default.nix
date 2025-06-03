@@ -20,9 +20,7 @@
     htop
   ];
 
-  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot.secureboot.enable = true;
 
   time.timeZone = "Europe/London";
 
@@ -32,6 +30,7 @@
   };
 
   services.acpid.enable = true;
+  services.logind.powerKey = "ignore";
 
   services.cage = {
     enable = true;

@@ -12,6 +12,7 @@
     ./localisation.nix
     ./network.nix
     ./user.nix
+    ./secureboot.nix
     # inputs.lanzaboote.nixosModules.lanzaboote
   ];
 
