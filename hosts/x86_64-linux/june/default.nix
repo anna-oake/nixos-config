@@ -14,7 +14,7 @@
     inputs.nixos-hardware.nixosModules.microsoft-surface-common
   ];
 
-  hardware.microsoft-surface.kernelVersion = "longterm";
+  hardware.microsoft-surface.kernelVersion = "stable";
   services.iptsd.enable = true;
   environment.systemPackages = with pkgs; [
     htop
@@ -43,6 +43,8 @@
         name = "microsoft-surface-3-backlight";
         patch = null;
         extraStructuredConfig = with lib.kernel; {
+          CONFIG_I2C = yes;
+          CONFIG_ACPI_I2C_OPREGION = yes;
           CONFIG_I2C_DESIGNWARE_CORE = yes;
           CONFIG_I2C_DESIGNWARE_PLATFORM = yes;
           CONFIG_I2C_DESIGNWARE_BAYTRAIL = yes;
