@@ -14,7 +14,7 @@
     inputs.nixos-hardware.nixosModules.microsoft-surface-common
   ];
 
-  hardware.microsoft-surface.kernelVersion = "stable";
+  hardware.microsoft-surface.kernelVersion = "longterm";
   services.iptsd.enable = true;
   environment.systemPackages = with pkgs; [
     htop
@@ -61,7 +61,7 @@
     ''}/bin/start-cage-app";
   };
 
-  # security.rtkit.enable = true;
+  security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
