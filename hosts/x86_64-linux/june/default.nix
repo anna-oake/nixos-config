@@ -11,10 +11,10 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     inputs.nixos-hardware.nixosModules.common-cpu-intel
-    inputs.nixos-hardware.nixosModules.microsoft-surface-common
+    # inputs.nixos-hardware.nixosModules.microsoft-surface-common
   ];
 
-  hardware.microsoft-surface.kernelVersion = "stable";
+  # hardware.microsoft-surface.kernelVersion = "stable";
   services.iptsd.enable = true;
   environment.systemPackages = with pkgs; [
     htop
@@ -38,22 +38,7 @@
       "fbcon=nodefer"
       "vt.global_cursor_default=0"
     ];
-    kernelPatches = lib.mkAfter [
-      {
-        name = "microsoft-surface-3-backlight";
-        patch = null;
-        extraStructuredConfig = with lib.kernel; {
-          CONFIG_I2C = yes;
-          CONFIG_ACPI_I2C_OPREGION = yes;
-          CONFIG_I2C_DESIGNWARE_CORE = yes;
-          CONFIG_I2C_DESIGNWARE_PLATFORM = yes;
-          CONFIG_I2C_DESIGNWARE_BAYTRAIL = yes;
-          CONFIG_I2C_DESIGNWARE_PCI = yes;
-          CONFIG_INTEL_SOC_PMIC = yes;
-          CONFIG_PWM_CRC = yes;
-        };
-      }
-    ];
+    kernelPackages = pkgs.linuxPackages_6_15;
   };
 
   time.timeZone = "Europe/London";
