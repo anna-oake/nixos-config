@@ -17,7 +17,7 @@ jobs:
           remove-haskell: 'true'
           remove-codeql: 'true'
           remove-docker-images: 'true'
-          root-reserve-mb: '30720'
+          root-reserve-mb: '20480'
           build-mount-path: '/nix'
       
       - if: matrix.os == 'ubuntu-22.04'
