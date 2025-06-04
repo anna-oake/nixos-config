@@ -38,6 +38,20 @@
       "fbcon=nodefer"
       "vt.global_cursor_default=0"
     ];
+    kernelPatches = lib.mkAfter [
+      {
+        name = "microsoft-surface-3-backlight";
+        patch = null;
+        extraStructuredConfig = with lib.kernel; {
+          CONFIG_I2C_DESIGNWARE_CORE = yes;
+          CONFIG_I2C_DESIGNWARE_PLATFORM = yes;
+          CONFIG_I2C_DESIGNWARE_BAYTRAIL = yes;
+          CONFIG_I2C_DESIGNWARE_PCI = yes;
+          CONFIG_INTEL_SOC_PMIC = yes;
+          CONFIG_PWM_CRC = yes;
+        };
+      }
+    ];
   };
 
   time.timeZone = "Europe/London";
