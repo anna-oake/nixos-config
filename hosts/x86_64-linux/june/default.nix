@@ -36,6 +36,7 @@
       "udev.log_priority=3"
       "rd.systemd.show_status=auto"
       "fbcon=nodefer"
+      "vt.global_cursor_default=0"
     ];
   };
 
