@@ -42,7 +42,7 @@
           ssid = "$HOME_SSID";
         };
         wifi-security = {
-          key-mgmt = "wpa-psk";
+          key-mgmt = "sae";
           psk = "$HOME_PSK";
         };
       };

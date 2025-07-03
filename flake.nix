@@ -17,10 +17,7 @@
       flake = false;
     };
 
-    apple-silicon-support = {
-      url = "github:nix-community/nixos-apple-silicon";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    apple-silicon-support.url = "github:nix-community/nixos-apple-silicon";
 
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v0.4.2";
@@ -41,6 +38,8 @@
       url = "github:nix-community/nix-vscode-extensions";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    impermanence.url = "github:nix-community/impermanence";
   };
   outputs =
     inputs:

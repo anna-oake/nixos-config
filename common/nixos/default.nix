@@ -60,7 +60,7 @@ in
       (chromium.override { 
         enableWideVine = true; 
         commandLineArgs = [
-          "--enable-features=AcceleratedVideoEncoder"
+          "--enable-features=AcceleratedVideoEncoder,VaapiVideoDecoder"
           "--ignore-gpu-blocklist"
           "--enable-zero-copy"
         ];
