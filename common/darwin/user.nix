@@ -1,4 +1,7 @@
-{ pkgs, config, ... }:
+{
+  config,
+  ...
+}:
 {
   users.knownUsers = [ config.me.username ];
   users.users.${config.me.username} = {

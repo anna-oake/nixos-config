@@ -4,19 +4,14 @@
   config,
   ...
 }:
-let
-  cfg = config.boot.secureboot;
-in
 {
   imports = [
     inputs.lanzaboote.nixosModules.lanzaboote
   ];
 
-  options = {
-    boot.secureboot.enable = lib.mkEnableOption "secure boot";
-  };
+  options.boot.secureboot.enable = lib.mkEnableOption "Secure Boot";
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf config.boot.secureboot.enable {
     boot.initrd.systemd.enable = true;
     boot.loader.systemd-boot.enable = lib.mkForce false;
     boot.loader.efi.canTouchEfiVariables = true;

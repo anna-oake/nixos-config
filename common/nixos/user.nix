@@ -13,7 +13,9 @@ let
 in
 {
   options.users = {
-    user = mkEnableOption "default user";
+    user = mkEnableOption "default user" // {
+      default = lib.mkDefault true;
+    };
     kiosk = mkEnableOption "kiosk user";
   };
   config = {
@@ -40,7 +42,9 @@ in
         ];
 
         hashedPasswordFile = config.age.secrets.user-password.path;
-        openssh.authorizedKeys.keys = config.me.sshKeys;
+        openssh.authorizedKeys.keys = [
+          config.me.sshKey
+        ];
       };
 
       kiosk = mkIf cfg.kiosk {
@@ -55,7 +59,9 @@ in
         ];
 
         hashedPasswordFile = config.age.secrets.kiosk-password.path;
-        openssh.authorizedKeys.keys = config.me.sshKeys;
+        openssh.authorizedKeys.keys = [
+          config.me.sshKey
+        ];
       };
     };
   };

@@ -1,8 +1,10 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-25.05-darwin";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nix-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nix-darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-25.05";
-    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
 
@@ -15,8 +17,8 @@
       flake = false;
     };
 
-    agenix = {
-      url = "github:ryantm/agenix";
+    apple-silicon-support = {
+      url = "github:nix-community/nixos-apple-silicon";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -25,7 +27,20 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nix-vscode-extensions = {
+      url = "github:nix-community/nix-vscode-extensions";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs =
     inputs:
@@ -35,19 +50,18 @@
       mkHost =
         system: hostname:
         let
-          isDarwin = builtins.match ".*darwin$" system != null;
-          builder = if isDarwin then inputs.nix-darwin.lib.darwinSystem else inputs.nixpkgs.lib.nixosSystem;
+          builder =
+            if system == "darwin" then inputs.nix-darwin.lib.darwinSystem else inputs.nixpkgs.lib.nixosSystem;
           config = builder {
-            inherit system;
             specialArgs = { inherit inputs; };
             modules = [
+              ./hosts/${system}/${hostname}
               ./common
               ./common/${system}
-              ./hosts/${system}/${hostname}
-              { config._module.args = { inherit system hostname; }; }
+              { config._module.args = { inherit hostname; }; }
             ];
           };
-          key = if isDarwin then "darwinConfigurations" else "nixosConfigurations";
+          key = "${system}Configurations";
         in
         {
           ${key} = {
