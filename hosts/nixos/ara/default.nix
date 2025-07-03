@@ -1,5 +1,6 @@
 {
   inputs,
+  pkgs,
   ...
 }:
 {
@@ -18,6 +19,10 @@
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1"; # fix electron blur
   };
+
+  environment.systemPackages = [
+    pkgs.btrfs-progs
+  ];
 
   services.xserver.enable = true;
   services.xserver.displayManager.gdm.enable = true;
