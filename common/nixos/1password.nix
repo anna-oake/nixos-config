@@ -12,6 +12,8 @@
     polkitPolicyOwners = [ config.me.username ];
   };
 
+  # append `--js-flags="--nodecommit_pooled_pages"` to Exec line in 1password.desktop 
+
   environment.etc."xdg/autostart/1password.desktop".source = (
     pkgs._1password-gui + "/share/applications/1password.desktop"
   );

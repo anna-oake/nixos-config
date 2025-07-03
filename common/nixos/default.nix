@@ -20,6 +20,16 @@ in
 
   users.user = lib.mkDefault true;
 
+  programs.chromium = {
+    enable = true;
+    extraOpts = {
+	    "ExtensionManifestV2Availability" = 2;
+    };
+    extensions = [
+      "aeblfdkhhhdcdjpifhhbdiojplfjncoa"
+    ];
+  };
+
   # boot
   boot.loader.timeout = 0;
 
@@ -47,19 +57,28 @@ in
       # apps
       telegram-desktop
       element-desktop
+      (chromium.override { 
+        enableWideVine = true; 
+        commandLineArgs = [
+          "--enable-features=AcceleratedVideoEncoder"
+          "--ignore-gpu-blocklist"
+          "--enable-zero-copy"
+        ];
+      })
 
       # shell
       wget
       p7zip
       usbutils
       pciutils
-
-      chromium
     ]
     ++ lib.optionals isAarch64 [
       legcord
+      spotify-qt
     ]
     ++ lib.optionals isx86_64 [
       discord
+      slack
+      spotify
     ];
 }
