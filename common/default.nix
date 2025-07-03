@@ -27,8 +27,6 @@
     zoxide
   ];
 
-  users.user = lib.mkDefault true;
-
   # networking
   networking.hostName = hostname;
 

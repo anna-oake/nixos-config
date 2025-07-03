@@ -1,6 +1,7 @@
 {
   pkgs,
   inputs,
+  lib,
   ...
 }:
 let
@@ -16,6 +17,8 @@ in
     ./user.nix
     inputs.nix-index-database.nixosModules.nix-index
   ];
+
+  users.user = lib.mkDefault true;
 
   # boot
   boot.loader.timeout = 0;
