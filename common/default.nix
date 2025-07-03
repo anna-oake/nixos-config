@@ -2,6 +2,7 @@
   inputs,
   hostname,
   pkgs,
+  lib,
   ...
 }:
 {
@@ -25,6 +26,8 @@
     fzf
     zoxide
   ];
+
+  users.user = lib.mkDefault true;
 
   # networking
   networking.hostName = hostname;

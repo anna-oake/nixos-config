@@ -13,9 +13,7 @@ let
 in
 {
   options.users = {
-    user = mkEnableOption "default user" // {
-      default = lib.mkDefault true;
-    };
+    user = mkEnableOption "default user";
     kiosk = mkEnableOption "kiosk user";
   };
   config = {
