@@ -13,8 +13,8 @@
     boot = {
       plymouth = {
         enable = true;
-        themePackages = [ pkgs.plymouth-blahaj-theme ];
-        theme = "blahaj";
+        themePackages = [ pkgs.plymouth-feet-theme ];
+        theme = "feet";
       };
       consoleLogLevel = 3;
       initrd.verbose = false;

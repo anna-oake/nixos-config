@@ -6,13 +6,13 @@
 let
   part = "/dev/nvme0n1p5";
   mkBtrfsMount = subvol: {
-      device = part;
-      fsType = "btrfs";
-      options = [
-        "subvol=${subvol}"
-        "compress=zstd"
-        "noatime"
-      ];
+    device = part;
+    fsType = "btrfs";
+    options = [
+      "subvol=${subvol}"
+      "compress=zstd"
+      "noatime"
+    ];
   };
 in
 {
@@ -36,9 +36,13 @@ in
     "/" = mkBtrfsMount "root";
     "/home" = mkBtrfsMount "home";
     "/nix" = mkBtrfsMount "nix";
-    "/persist" = mkBtrfsMount "persist" // { neededForBoot = true; };
-    "/var/log" = mkBtrfsMount "log" // { neededForBoot = true; };
-  
+    "/persist" = mkBtrfsMount "persist" // {
+      neededForBoot = true;
+    };
+    "/var/log" = mkBtrfsMount "log" // {
+      neededForBoot = true;
+    };
+
     "/boot" = {
       device = "/dev/disk/by-uuid/3242-1D16";
       fsType = "vfat";
@@ -56,7 +60,7 @@ in
     postResumeCommands = lib.mkAfter ''
       mkdir -p /btrfs
       mount -o subvol=/ ${part} /btrfs
-  
+
       btrfs subvolume list -o /btrfs/root |
       cut -f9 -d' ' |
       while read subvolume; do
@@ -68,7 +72,7 @@ in
 
       echo "restoring blank /root subvolume..."
       btrfs subvolume snapshot /btrfs/root-blank /btrfs/root
-  
+
       umount /btrfs
     '';
   };
@@ -85,6 +89,7 @@ in
       "/etc/ssh/ssh_host_ed25519_key.pub"
       "/etc/ssh/ssh_host_rsa_key"
       "/etc/ssh/ssh_host_rsa_key.pub"
+      "/var/lib/plymouth/boot-duration"
     ];
   };
 

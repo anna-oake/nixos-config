@@ -2,6 +2,7 @@
   inputs,
   config,
   pkgs,
+  lib,
   ...
 }:
 let
@@ -20,8 +21,12 @@ in
     "flakes"
   ];
 
-  # add "unstable" to modules args
-  _module.args.unstable = unstable;
+  # comfy extra args
+  _module.args = with pkgs.stdenv.hostPlatform; {
+    inherit unstable;
+    onlyArm = lib.optionals isAarch64;
+    onlyX86 = lib.optionals isx86_64;
+  };
 
   # auto gc
   nix.gc = {

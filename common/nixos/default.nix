@@ -2,11 +2,10 @@
   pkgs,
   inputs,
   lib,
+  onlyArm,
+  onlyX86,
   ...
 }:
-let
-  inherit (pkgs.stdenv.hostPlatform) isAarch64 isx86_64;
-in
 {
   imports = [
     ./1password.nix
@@ -23,7 +22,7 @@ in
   programs.chromium = {
     enable = true;
     extraOpts = {
-	    "ExtensionManifestV2Availability" = 2;
+      "ExtensionManifestV2Availability" = 2;
     };
     extensions = [
       "aeblfdkhhhdcdjpifhhbdiojplfjncoa"
@@ -57,10 +56,10 @@ in
       # apps
       telegram-desktop
       element-desktop
-      (chromium.override { 
-        enableWideVine = true; 
+      (chromium.override {
+        enableWideVine = true;
         commandLineArgs = [
-          "--enable-features=AcceleratedVideoEncoder,VaapiVideoDecoder"
+          "--enable-features=AcceleratedVideoEncoder,VaapiVideoDecoder,TouchpadOverscrollHistoryNavigation"
           "--ignore-gpu-blocklist"
           "--enable-zero-copy"
         ];
@@ -72,11 +71,10 @@ in
       usbutils
       pciutils
     ]
-    ++ lib.optionals isAarch64 [
+    ++ onlyArm [
       legcord
-      spotify-qt
     ]
-    ++ lib.optionals isx86_64 [
+    ++ onlyX86 [
       discord
       slack
       spotify

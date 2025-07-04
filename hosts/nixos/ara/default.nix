@@ -15,12 +15,15 @@
     options hid_apple iso_layout=1
   '';
 
+  boot.loader.grub.configurationLimit = 3;
+
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1"; # fix electron blur
   };
 
-  environment.systemPackages = [
-    pkgs.btrfs-progs
+  environment.systemPackages = with pkgs; [
+    btrfs-progs
+    boot-macos
   ];
 
   services.xserver.enable = true;
