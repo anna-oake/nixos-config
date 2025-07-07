@@ -339,6 +339,21 @@
         "type": "github"
       }
     },
+    "nix-things": {
+      "locked": {
+        "lastModified": 1751906371,
+        "narHash": "sha256-VNMuUN9RROQJ32aIOcLTd9kBxIKJUwZJJWamGNJv7bM=",
+        "owner": "oake",
+        "repo": "nix-things",
+        "rev": "14e25bbffa2e76c7fb947848cfd3df77bd6dedc9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oake",
+        "repo": "nix-things",
+        "type": "github"
+      }
+    },
     "nix-unstable": {
       "locked": {
         "lastModified": 1751792365,
@@ -494,6 +509,7 @@
         "nix-darwin": "nix-darwin",
         "nix-homebrew": "nix-homebrew",
         "nix-index-database": "nix-index-database",
+        "nix-things": "nix-things",
         "nix-unstable": "nix-unstable",
         "nix-vscode-extensions": "nix-vscode-extensions",
         "nixos-hardware": "nixos-hardware",

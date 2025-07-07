@@ -40,6 +40,8 @@
     };
 
     impermanence.url = "github:nix-community/impermanence";
+
+    nix-things.url = "github:oake/nix-things";
   };
   outputs =
     inputs:
