@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=feet
+Description=Better Call Sole
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/feet
+ScriptFile=/usr/share/plymouth/themes/feet/feet.script

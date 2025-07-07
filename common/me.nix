@@ -1,32 +1,17 @@
-{ lib, inputs, ... }:
-let
-  userSubmodule = lib.types.submodule {
-    options = {
-      username = lib.mkOption {
-        type = lib.types.str;
-      };
-      email = lib.mkOption {
-        type = lib.types.str;
-      };
-      githubUsername = lib.mkOption {
-        type = lib.types.str;
-      };
-      sshKeys = lib.mkOption {
-        type = lib.types.listOf lib.types.str;
-        description = ''
-          SSH public keys
-        '';
-      };
-    };
-  };
-in
 {
-  imports = [
-    (inputs.self + /me.nix)
-  ];
-  options = {
-    me = lib.mkOption {
-      type = userSubmodule;
-    };
+  lib,
+  ...
+}:
+{
+  options.me = {
+    username = lib.mkOption { type = lib.types.str; };
+    email = lib.mkOption { type = lib.types.str; };
+    sshKey = lib.mkOption { type = lib.types.str; };
+  };
+
+  config.me = {
+    username = "anna";
+    email = "anna@oa.ke";
+    sshKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHf6UCNeXSN8WAZ9cXh8jz61+jbP+ts+inct/CCjcN/o anna@oa.ke";
   };
 }

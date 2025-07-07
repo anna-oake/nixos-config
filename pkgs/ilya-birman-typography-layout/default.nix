@@ -1,4 +1,7 @@
-{ stdenvNoCC, fetchzip }:
+{
+  stdenvNoCC,
+  fetchzip,
+}:
 
 stdenvNoCC.mkDerivation rec {
   pname = "ilya-birman-typography-layout";
