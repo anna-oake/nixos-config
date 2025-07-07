@@ -82,6 +82,8 @@ in
       "/etc/nixos"
       "/var/lib/nixos"
       "/var/lib/tailscale"
+      "/var/lib/bluetooth"
+      "/var/lib/upower"
     ];
     files = [
       "/etc/machine-id"
