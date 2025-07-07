@@ -30,6 +30,9 @@ jobs:
       - name: Set up Nix
         uses: DeterminateSystems/nix-installer-action@main
 
+      - name: Setup Magic Nix Cache
+        uses: DeterminateSystems/magic-nix-cache-action@main
+
       - name: Setup Attic cache
         uses: ryanccn/attic-action@v0
         with:
