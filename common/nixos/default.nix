@@ -36,7 +36,8 @@
       "ExtensionManifestV2Availability" = 2;
     };
     extensions = [
-      "aeblfdkhhhdcdjpifhhbdiojplfjncoa"
+      "aeblfdkhhhdcdjpifhhbdiojplfjncoa" # 1password
+      "ijcpiojgefnkmcadacmacogglhjdjphj" # shinigami eyes
     ];
   };
 
