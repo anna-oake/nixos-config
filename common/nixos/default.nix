@@ -8,17 +8,28 @@
 }:
 {
   imports = [
-    ./1password.nix
     ./localisation.nix
     ./network.nix
-    ./secureboot.nix
-    ./splash.nix
     ./user.nix
     inputs.nix-index-database.nixosModules.nix-index
+    inputs.nix-things.nixosModules.default
   ];
 
   users.user = lib.mkDefault true;
 
+  # boot
+  boot.loader.timeout = 0;
+  boot.splash = {
+    enable = lib.mkDefault true;
+    themePackage = pkgs.plymouth-feet-theme;
+    theme = "feet";
+  };
+
+  # pkgs
+  services.fwupd.enable = true;
+  programs.direnv.enable = true;
+  programs._1password.enable = true;
+  programs._1password-gui.enable = true;
   programs.chromium = {
     enable = true;
     extraOpts = {
@@ -28,14 +39,6 @@
       "aeblfdkhhhdcdjpifhhbdiojplfjncoa"
     ];
   };
-
-  # boot
-  boot.loader.timeout = 0;
-
-  # pkgs
-  services.fwupd.enable = true;
-
-  programs.direnv.enable = true;
 
   environment.systemPackages =
     with pkgs;

@@ -1,10 +1,10 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
-    nix-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    nix-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nix-darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-25.05";
 
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    nixos-hardware.url = "github:nixos/nixos-hardware/master";
 
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
 
@@ -18,11 +18,6 @@
     };
 
     apple-silicon-support.url = "github:nix-community/nixos-apple-silicon";
-
-    lanzaboote = {
-      url = "github:nix-community/lanzaboote/v0.4.2";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
 
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
@@ -41,7 +36,11 @@
 
     impermanence.url = "github:nix-community/impermanence";
 
-    nix-things.url = "github:oake/nix-things";
+    nix-things = {
+      url = "github:oake/nix-things";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nix-unstable.follows = "nix-unstable";
+    };
   };
   outputs =
     inputs:

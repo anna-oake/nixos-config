@@ -1,39 +1,9 @@
 {
   inputs,
   config,
-  pkgs,
-  lib,
   ...
 }:
-let
-  unstable = import inputs.nix-unstable {
-    system = pkgs.system;
-    config.allowUnfree = true;
-  };
-in
 {
-  # allow unfree pkgs
-  nixpkgs.config.allowUnfree = true;
-
-  # flakes
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
-
-  # comfy extra args
-  _module.args = with pkgs.stdenv.hostPlatform; {
-    inherit unstable;
-    onlyArm = lib.optionals isAarch64;
-    onlyX86 = lib.optionals isx86_64;
-  };
-
-  # auto gc
-  nix.gc = {
-    automatic = true;
-    options = "--delete-older-than 30d";
-  };
-
   # cache
   nix.settings.extra-substituters = [
     "https://attic.oa.ke/nixos"
@@ -48,7 +18,6 @@ in
   nixpkgs.overlays = [
     inputs.nix-vscode-extensions.overlays.default
     inputs.agenix.overlays.default
-    inputs.nix-things.overlays.default
-    (import (inputs.self + /pkgs))
+    (import (inputs.self + /packages))
   ];
 }
