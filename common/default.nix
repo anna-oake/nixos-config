@@ -11,12 +11,11 @@
   imports = [
     ./me.nix
     ./nix.nix
-    inputs.agenix.nixosModules.default
+    ./agenix.nix
     inputs.nix-things.commonModules.default
   ];
 
   environment.systemPackages = with pkgs; [
-    agenix
     gh
     git
     htop

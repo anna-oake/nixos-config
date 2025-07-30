@@ -24,7 +24,7 @@
   services.tailscale.useRoutingFeatures = "both";
 
   # wifi
-  age.secrets.wifi-home.file = (inputs.self + /secrets/wifi-home.age);
+  age.secrets.wifi-home.rekeyFile = (inputs.self + /secrets/wifi-home.age);
   networking.networkmanager.ensureProfiles = {
     environmentFiles = [
       config.age.secrets.wifi-home.path

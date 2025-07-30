@@ -22,10 +22,10 @@ in
 
     age.secrets =
       lib.optionalAttrs cfg.user {
-        "user-password".file = "${inputs.self}/secrets/user-password.age";
+        "user-password".rekeyFile = "${inputs.self}/secrets/user-password.age";
       }
       // lib.optionalAttrs cfg.kiosk {
-        "kiosk-password".file = "${inputs.self}/secrets/kiosk-password.age";
+        "kiosk-password".rekeyFile = "${inputs.self}/secrets/kiosk-password.age";
       };
 
     users.users = {
