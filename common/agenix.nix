@@ -45,14 +45,13 @@ in
       '')
     ];
 
-    age.rekey =
-      {
-        masterIdentities = ageMasterIdentities;
-        localStorageDir = inputs.self.outPath + "/secrets/rekeyed/${hostname}";
-        storageMode = "local";
-      }
-      // lib.optionalAttrs config.age.ready {
-        hostPubkey = builtins.readFile publicKeyAbsPath;
-      };
+    age.rekey = {
+      masterIdentities = ageMasterIdentities;
+      localStorageDir = inputs.self.outPath + "/secrets/rekeyed/${hostname}";
+      storageMode = "local";
+    }
+    // lib.optionalAttrs config.age.ready {
+      hostPubkey = builtins.readFile publicKeyAbsPath;
+    };
   };
 }
