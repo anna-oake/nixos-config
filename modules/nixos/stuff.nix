@@ -4,15 +4,14 @@
   lib,
   onlyArm,
   onlyX86,
+  flake,
   ...
 }:
 {
   imports = [
-    ./localisation.nix
-    ./network.nix
-    ./user.nix
     inputs.nix-index-database.nixosModules.nix-index
     inputs.nix-things.nixosModules.default
+    flake.commonModules.default
   ];
 
   users.user = lib.mkDefault true;
