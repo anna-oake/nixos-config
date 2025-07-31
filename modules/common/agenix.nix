@@ -1,6 +1,6 @@
 {
   inputs,
-  hostname,
+  hostName,
   pkgs,
   lib,
   config,
@@ -10,7 +10,7 @@ let
   ageMasterIdentities = [
     (inputs.self.outPath + "/secrets/master-keys/yubikey-a.pub")
   ];
-  publicKeyRelPath = "secrets/public-keys/${hostname}.pub";
+  publicKeyRelPath = "secrets/public-keys/${hostName}.pub";
   publicKeyAbsPath = inputs.self.outPath + "/" + publicKeyRelPath;
 in
 {
@@ -47,7 +47,7 @@ in
 
     age.rekey = {
       masterIdentities = ageMasterIdentities;
-      localStorageDir = inputs.self.outPath + "/secrets/rekeyed/${hostname}";
+      localStorageDir = inputs.self.outPath + "/secrets/rekeyed/${hostName}";
       storageMode = "local";
     }
     // lib.optionalAttrs config.age.ready {

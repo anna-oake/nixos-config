@@ -1,10 +1,12 @@
 {
   pkgs,
+  flake,
   ...
 }:
 {
   imports = [
     ./hardware-configuration.nix
+    flake.nixosModules.default
   ];
 
   hardware.asahi.peripheralFirmwareDirectory = ./firmware;

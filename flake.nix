@@ -4,6 +4,11 @@
     nix-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nix-darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-25.05";
 
+    blueprint = {
+      url = "github:numtide/blueprint";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nixos-hardware.url = "github:nixos/nixos-hardware/master";
 
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
@@ -45,51 +50,39 @@
       url = "github:oake/nix-things";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.nix-unstable.follows = "nix-unstable";
+      inputs.blueprint.follows = "blueprint";
     };
   };
+
   outputs =
     inputs:
     let
       inherit (inputs.nixpkgs) lib;
 
-      mkHost =
-        system: hostname:
-        let
-          builder =
-            if system == "darwin" then inputs.nix-darwin.lib.darwinSystem else inputs.nixpkgs.lib.nixosSystem;
-          config = builder {
-            specialArgs = { inherit inputs; };
-            modules = [
-              ./hosts/${system}/${hostname}
-              ./common
-              ./common/${system}
-              { config._module.args = { inherit hostname; }; }
-            ];
-          };
-          key = "${system}Configurations";
-        in
-        {
-          ${key} = {
-            ${hostname} = config;
+      blueprint = inputs.blueprint {
+        inherit inputs;
+        nixpkgs.config.allowUnfree = true;
+      };
+
+      mkModules =
+        modules:
+        modules
+        // {
+          default = {
+            imports = lib.attrsets.attrValues modules;
           };
         };
-
-      systems = builtins.attrNames (builtins.readDir ./hosts);
-
-      hosts = builtins.concatMap (
-        system:
-        let
-          hostnames = builtins.attrNames (builtins.readDir (./hosts + "/${system}"));
-        in
-        map (hostname: mkHost system hostname) hostnames
-      ) systems;
-
     in
-    builtins.foldl' lib.recursiveUpdate { } hosts
-    // {
+    {
+      inherit (blueprint) nixosConfigurations darwinConfigurations;
+
+      commonModules = mkModules blueprint.modules.common;
+      nixosModules = mkModules blueprint.nixosModules;
+      darwinModules = mkModules blueprint.darwinModules;
+
       agenix-rekey = inputs.agenix-rekey.configure {
         userFlake = inputs.self;
-        nixosConfigurations = inputs.self.nixosConfigurations // inputs.self.darwinConfigurations;
+        nixosConfigurations = blueprint.nixosConfigurations // blueprint.darwinConfigurations;
       };
     };
 }

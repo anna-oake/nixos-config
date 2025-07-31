@@ -1,7 +1,8 @@
 {
   pkgs,
-  hostname,
+  hostName,
   inputs,
+  flake,
   config,
   ...
 }:
@@ -9,11 +10,8 @@
   # common configuration for macOS machines
 
   imports = [
-    ./user.nix
-    ./system-defaults.nix
-    ./macos-layouts.nix
-    ./network.nix
     inputs.nix-homebrew.darwinModules.nix-homebrew
+    flake.commonModules.default
   ];
 
   macos-layouts = {
@@ -24,7 +22,7 @@
   };
 
   # networking
-  networking.computerName = hostname;
+  networking.computerName = hostName;
 
   # homebrew
   nix-homebrew = {

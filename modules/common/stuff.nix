@@ -1,6 +1,6 @@
 {
   inputs,
-  hostname,
+  hostName,
   pkgs,
   ...
 }:
@@ -9,9 +9,6 @@
   # please see subdirectories for arch-specific configuration
 
   imports = [
-    ./me.nix
-    ./nix.nix
-    ./agenix.nix
     inputs.nix-things.commonModules.default
   ];
 
@@ -27,7 +24,7 @@
   ];
 
   # networking
-  networking.hostName = hostname;
+  networking.hostName = hostName;
 
   system.configurationRevision = inputs.self.rev or "dirty";
 }
