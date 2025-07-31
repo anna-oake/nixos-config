@@ -29,6 +29,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    agenix-rekey = {
+      url = "github:oddlama/agenix-rekey";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nix-vscode-extensions = {
       url = "github:nix-community/nix-vscode-extensions";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -80,5 +85,11 @@
       ) systems;
 
     in
-    builtins.foldl' lib.recursiveUpdate { } hosts;
+    builtins.foldl' lib.recursiveUpdate { } hosts
+    // {
+      agenix-rekey = inputs.agenix-rekey.configure {
+        userFlake = inputs.self;
+        nixosConfigurations = inputs.self.nixosConfigurations // inputs.self.darwinConfigurations;
+      };
+    };
 }

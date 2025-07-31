@@ -12,6 +12,7 @@
     ./user.nix
     ./system-defaults.nix
     ./macos-layouts.nix
+    ./network.nix
     inputs.nix-homebrew.darwinModules.nix-homebrew
   ];
 
