@@ -3,14 +3,19 @@
   lib,
   pkgs,
   flake,
+  inputs,
   ...
 }:
 
 {
   imports = [
     ./hardware-configuration.nix
+    ./gaming.nix
     flake.nixosModules.default
+    inputs.jovian.nixosModules.default
   ];
+
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   boot.loader = {
     grub = {
@@ -43,6 +48,13 @@
   environment.systemPackages = with pkgs; [
     btrfs-progs
   ];
+
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
+
+  services.desktopManager.plasma6.enable = true;
 
   system.stateVersion = "25.05";
 }

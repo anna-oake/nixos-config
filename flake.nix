@@ -52,6 +52,11 @@
       inputs.nix-unstable.follows = "nix-unstable";
       inputs.blueprint.follows = "blueprint";
     };
+
+    jovian = {
+      url = "github:jovian-experiments/jovian-nixos";
+      inputs.nixpkgs.follows = "nix-unstable";
+    };
   };
 
   outputs =
