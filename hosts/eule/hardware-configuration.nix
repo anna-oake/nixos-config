@@ -49,6 +49,16 @@ in
     supportedFilesystems = [ "btrfs" ];
 
     postResumeCommands = lib.mkAfter ''
+      set -euo pipefail
+
+      udevadm settle || true
+      for i in $(seq 1 60); do
+        if [ -b "${part}" ]; then break; fi
+        echo "[impermanence] waiting for ${part} ($i/60)…"
+        sleep 0.5
+        udevadm settle || true
+      done
+
       mkdir -p /btrfs
       mount -o subvol=/ ${part} /btrfs
 
