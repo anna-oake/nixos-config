@@ -20,6 +20,8 @@
 
   boot.loader.grub.configurationLimit = 3;
 
+  services.automatic-timezoned.enable = true;
+
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1"; # fix electron blur
   };

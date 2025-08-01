@@ -17,6 +17,8 @@
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
+  time.timeZone = "Europe/Amsterdam";
+
   boot.loader = {
     grub = {
       enable = true;
