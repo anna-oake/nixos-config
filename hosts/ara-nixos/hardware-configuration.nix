@@ -1,19 +1,12 @@
 {
   lib,
   inputs,
+  flake,
   ...
 }:
 let
   part = "/dev/nvme0n1p5";
-  mkBtrfsMount = subvol: {
-    device = part;
-    fsType = "btrfs";
-    options = [
-      "subvol=${subvol}"
-      "compress=zstd"
-      "noatime"
-    ];
-  };
+  mkBtrfsMount = flake.lib.mkBtrfsMount part;
 in
 {
   imports = [
