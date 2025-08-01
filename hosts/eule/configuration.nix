@@ -63,11 +63,10 @@
     "monitor.alsa.rules" = [
       {
         matches = [
-          { "node.name" = "alsa_output.pci-0000_03_00.1.hdmi-surround"; }
+          { "device.name" = "alsa_card.pci-0000_03_00.1"; }
         ];
         actions.update-props = {
-          "priority.driver" = 100;
-          "priority.session" = 100;
+          "device.profile" = "hdmi-surround";
         };
       }
     ];
