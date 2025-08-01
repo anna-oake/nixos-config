@@ -18,7 +18,10 @@
       useOSProber = true;
       efiSupport = true;
       device = "nodev";
-      extraEntries = ''
+      extraConfig = ''
+        menuentry_id_option="--id"
+        export menuentry_id_option
+
         insmod net
         insmod efinet
         insmod tftp
@@ -26,6 +29,12 @@
         net_bootp
 
         source (tftp,eule-booter.lan.al)
+      '';
+
+      extraEntries = ''
+        menuentry "UEFI Firmware Settings" --id "uefi-firmware" {
+          fwsetup
+        }
       '';
     };
     efi.canTouchEfiVariables = true;
