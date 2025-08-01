@@ -12,24 +12,17 @@ let
   cfg = config.users;
 in
 {
-  options.users = {
-    user = mkEnableOption "default user";
-    kiosk = mkEnableOption "kiosk user";
-  };
+  options.users.me.enable = mkEnableOption "default user";
   config = {
     users.mutableUsers = false;
     users.groups.users.gid = 100;
 
-    age.secrets =
-      lib.optionalAttrs cfg.user {
-        "user-password".rekeyFile = "${inputs.self}/secrets/user-password.age";
-      }
-      // lib.optionalAttrs cfg.kiosk {
-        "kiosk-password".rekeyFile = "${inputs.self}/secrets/kiosk-password.age";
-      };
+    age.secrets = lib.optionalAttrs cfg.me.enable {
+      "user-password".rekeyFile = "${inputs.self}/secrets/user-password.age";
+    };
 
     users.users = {
-      ${config.me.username} = mkIf cfg.user {
+      ${config.me.username} = mkIf cfg.me.enable {
         isNormalUser = true;
         uid = 1000;
         group = "users";
@@ -40,23 +33,6 @@ in
         ];
 
         hashedPasswordFile = config.age.secrets.user-password.path;
-        openssh.authorizedKeys.keys = [
-          config.me.sshKey
-        ];
-      };
-
-      kiosk = mkIf cfg.kiosk {
-        isNormalUser = true;
-        uid = 1111;
-        group = "users";
-        extraGroups = [
-          "wheel"
-          "video"
-          "audio"
-          "input"
-        ];
-
-        hashedPasswordFile = config.age.secrets.kiosk-password.path;
         openssh.authorizedKeys.keys = [
           config.me.sshKey
         ];

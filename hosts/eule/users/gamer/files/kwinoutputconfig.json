@@ -1,0 +1,57 @@
+[
+  {
+    "data": [
+      {
+        "allowDdcCi": true,
+        "allowSdrSoftwareBrightness": true,
+        "autoRotation": "InTabletMode",
+        "brightness": 1,
+        "colorPowerTradeoff": "PreferEfficiency",
+        "colorProfileSource": "sRGB",
+        "connectorName": "DP-1",
+        "detectedDdcCi": false,
+        "edidHash": "9770e74d5ca14299245873fd2375687e",
+        "edidIdentifier": "GSM 1 16843009 1 2022 0",
+        "edrPolicy": "always",
+        "highDynamicRange": true,
+        "iccProfilePath": "",
+        "maxBitsPerColor": 0,
+        "mode": {
+          "height": 2160,
+          "refreshRate": 120000,
+          "width": 3840
+        },
+        "overscan": 0,
+        "rgbRange": "Automatic",
+        "scale": 2,
+        "sdrBrightness": 200,
+        "sdrGamutWideness": 0,
+        "transform": "Normal",
+        "uuid": "20ef916b-ac4c-4ce6-97bc-2da86c7aa224",
+        "vrrPolicy": "Never",
+        "wideColorGamut": true
+      }
+    ],
+    "name": "outputs"
+  },
+  {
+    "data": [
+      {
+        "lidClosed": false,
+        "outputs": [
+          {
+            "enabled": true,
+            "outputIndex": 0,
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "priority": 0,
+            "replicationSource": ""
+          }
+        ]
+      }
+    ],
+    "name": "setups"
+  }
+]

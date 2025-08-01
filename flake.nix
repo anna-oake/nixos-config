@@ -1,7 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
-    nix-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nix-darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-25.05";
 
     blueprint = {
@@ -49,8 +48,24 @@
     nix-things = {
       url = "github:oake/nix-things";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nix-unstable.follows = "nix-unstable";
+      inputs.nix-unstable.follows = "nixpkgs";
       inputs.blueprint.follows = "blueprint";
+    };
+
+    jovian = {
+      url = "github:jovian-experiments/jovian-nixos";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    plasma-manager = {
+      url = "github:nix-community/plasma-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
     };
   };
 
@@ -74,7 +89,13 @@
         };
     in
     {
-      inherit (blueprint) nixosConfigurations darwinConfigurations;
+      inherit (blueprint)
+        checks
+        nixosConfigurations
+        darwinConfigurations
+        homeModules
+        lib
+        ;
 
       commonModules = mkModules blueprint.modules.common;
       nixosModules = mkModules blueprint.nixosModules;
