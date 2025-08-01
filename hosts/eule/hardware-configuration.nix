@@ -49,32 +49,34 @@ in
     supportedFilesystems = [ "btrfs" ];
 
     postResumeCommands = lib.mkAfter ''
-      set -euo pipefail
+      (
+        set -euo pipefail
 
-      udevadm settle || true
-      for i in $(seq 1 60); do
-        if [ -b "${part}" ]; then break; fi
-        echo "[impermanence] waiting for ${part} ($i/60)…"
-        sleep 0.5
         udevadm settle || true
-      done
+        for i in $(seq 1 60); do
+          if [ -b "${part}" ]; then break; fi
+          echo "[impermanence] waiting for ${part} ($i/60)…"
+          sleep 0.5
+          udevadm settle || true
+        done
 
-      mkdir -p /btrfs
-      mount -o subvol=/ ${part} /btrfs
+        mkdir -p /btrfs
+        mount -o subvol=/ ${part} /btrfs
 
-      btrfs subvolume list -o /btrfs/root |
-      cut -f9 -d' ' |
-      while read subvolume; do
-        echo "deleting /$subvolume subvolume..."
-        btrfs subvolume delete "/btrfs/$subvolume"
-      done &&
-      echo "deleting /root subvolume..." &&
-      btrfs subvolume delete /btrfs/root
+        btrfs subvolume list -o /btrfs/root |
+        cut -f9 -d' ' |
+        while read subvolume; do
+          echo "deleting /$subvolume subvolume..."
+          btrfs subvolume delete "/btrfs/$subvolume"
+        done &&
+        echo "deleting /root subvolume..." &&
+        btrfs subvolume delete /btrfs/root
 
-      echo "restoring blank /root subvolume..."
-      btrfs subvolume snapshot /btrfs/root-blank /btrfs/root
+        echo "restoring blank /root subvolume..."
+        btrfs subvolume snapshot /btrfs/root-blank /btrfs/root
 
-      umount /btrfs
+        umount /btrfs
+      ) || echo "[impermanence] wipe failed — continuing boot."
     '';
   };
 
