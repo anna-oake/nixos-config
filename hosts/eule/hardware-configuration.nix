@@ -95,6 +95,7 @@ in
       "/var/lib/nixos"
       "/var/lib/tailscale"
       "/var/lib/bluetooth"
+      "/root"
     ];
     files = [
       "/etc/machine-id"
