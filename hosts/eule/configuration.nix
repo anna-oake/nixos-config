@@ -18,6 +18,15 @@
       useOSProber = true;
       efiSupport = true;
       device = "nodev";
+      extraEntries = ''
+        insmod net
+        insmod efinet
+        insmod tftp
+
+        net_bootp
+
+        source (tftp,eule-booter.lan.al)
+      '';
     };
     efi.canTouchEfiVariables = true;
   };
