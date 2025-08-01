@@ -58,5 +58,18 @@
 
   services.desktopManager.plasma6.enable = true;
 
+  services.pipewire.wireplumber.extraConfig."surround-by-default" = {
+    "monitor.alsa.rules" = [
+      {
+        matches = [
+          { "device.name" = "alsa_card.pci-0000_03_00.1"; }
+        ];
+        actions.update-props = {
+          "device.profile" = "hdmi-surround";
+        };
+      }
+    ];
+  };
+
   system.stateVersion = "25.05";
 }
