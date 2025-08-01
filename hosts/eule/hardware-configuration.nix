@@ -1,28 +1,35 @@
 {
+  config,
   lib,
   inputs,
   flake,
   ...
 }:
 let
-  part = "/dev/nvme0n1p5";
+  part = "/dev/disk/by-uuid/1081f64d-847e-43ac-b88f-f6d7baa6bf8c";
   mkBtrfsMount = flake.lib.mkBtrfsMount part;
 in
 {
   imports = [
     inputs.impermanence.nixosModules.impermanence
-    inputs.apple-silicon-support.nixosModules.apple-silicon-support
   ];
 
   hardware.enableRedistributableFirmware = lib.mkDefault true;
 
   boot.initrd.availableKernelModules = [
+    "xhci_pci"
+    "nvme"
     "usb_storage"
-    "sdhci_pci"
+    "sd_mod"
+    "ahci"
+    "usbhid"
+  ];
+  boot.kernelModules = [
+    "kvm-amd"
   ];
 
   boot.kernelParams = [
-    "apple_dcp.show_notch=1"
+    "usb-storage.quirks=30de:1000:u"
   ];
 
   fileSystems = {
@@ -34,15 +41,6 @@ in
     };
     "/var/log" = mkBtrfsMount "log" // {
       neededForBoot = true;
-    };
-
-    "/boot" = {
-      device = "/dev/disk/by-uuid/3242-1D16";
-      fsType = "vfat";
-      options = [
-        "fmask=0022"
-        "dmask=0022"
-      ];
     };
   };
 
@@ -76,7 +74,6 @@ in
       "/var/lib/nixos"
       "/var/lib/tailscale"
       "/var/lib/bluetooth"
-      "/var/lib/upower"
     ];
     files = [
       "/etc/machine-id"
@@ -95,5 +92,6 @@ in
     Defaults lecture = never
   '';
 
-  nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

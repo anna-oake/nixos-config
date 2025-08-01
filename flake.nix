@@ -74,7 +74,7 @@
         };
     in
     {
-      inherit (blueprint) nixosConfigurations darwinConfigurations;
+      inherit (blueprint) nixosConfigurations darwinConfigurations lib;
 
       commonModules = mkModules blueprint.modules.common;
       nixosModules = mkModules blueprint.nixosModules;
