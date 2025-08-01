@@ -58,6 +58,7 @@
 
   services.desktopManager.plasma6.enable = true;
 
+  security.rtkit.enable = true;
   services.pipewire.wireplumber.extraConfig."surround-by-default" = {
     "monitor.alsa.rules" = [
       {
@@ -65,7 +66,7 @@
           { "device.name" = "alsa_card.pci-0000_03_00.1"; }
         ];
         actions.update-props = {
-          "device.profile" = "output:hdmi-surround";
+          "device.profile" = "alsa_output.pci-0000_03_00.1.hdmi-surround";
         };
       }
     ];
