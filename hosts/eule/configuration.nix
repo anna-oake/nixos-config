@@ -12,10 +12,15 @@
     flake.nixosModules.default
   ];
 
-  boot.loader.grub.enable = true;
-  boot.loader.grub.useOSProber = true;
-
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader = {
+    grub = {
+      enable = true;
+      useOSProber = true;
+      efiSupport = true;
+      device = "nodev";
+    };
+    efi.canTouchEfiVariables = true;
+  };
 
   environment.systemPackages = with pkgs; [
     btrfs-progs
