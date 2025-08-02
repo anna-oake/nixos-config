@@ -20,6 +20,7 @@
     configFile = {
       "kwinrc"."Xwayland"."Scale" = 2;
     };
+    session.sessionRestore.restoreOpenApplicationsOnLogin = "startWithEmptySession";
   };
 
   xdg.enable = true;
