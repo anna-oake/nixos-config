@@ -15,7 +15,12 @@
     workspace = {
       theme = "breeze-dark";
       colorScheme = "BreezeDark";
+      lookAndFeel = "org.kde.breezedark.desktop";
     };
+  };
+
+  configFile = {
+    "kwinrc"."Xwayland"."Scale".value = 1.75;
   };
 
   home.stateVersion = "25.11";
