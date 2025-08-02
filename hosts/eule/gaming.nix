@@ -18,6 +18,7 @@
     decky-loader = {
       enable = true;
       user = "gamer";
+      stateDir = "/home/gamer/decky-loader";
     };
   };
 
