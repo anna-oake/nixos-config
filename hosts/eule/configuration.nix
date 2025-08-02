@@ -72,5 +72,7 @@
     ];
   };
 
+  home-manager.backupFileExtension = ".bak";
+
   system.stateVersion = "25.05";
 }
