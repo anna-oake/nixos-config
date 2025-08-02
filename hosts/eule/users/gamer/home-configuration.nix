@@ -22,5 +22,7 @@
     };
   };
 
+  xdg.configFile."kwinoutputconfig.json".source = ./files/kwinoutputconfig.json;
+
   home.stateVersion = "25.11";
 }
