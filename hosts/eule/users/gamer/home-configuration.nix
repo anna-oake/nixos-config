@@ -22,6 +22,11 @@
     };
   };
 
+  xdg.enable = true;
+  xdg.autostart.enable = true;
+  xdg.autostart.entries = [
+    "${osConfig.programs.steam.package}/share/applications/steam.desktop"
+  ];
   xdg.configFile."kwinoutputconfig.json".source = ./files/kwinoutputconfig.json;
 
   home.stateVersion = "25.11";
