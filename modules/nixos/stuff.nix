@@ -2,8 +2,6 @@
   pkgs,
   inputs,
   lib,
-  onlyArm,
-  onlyX86,
   flake,
   ...
 }:
@@ -14,7 +12,7 @@
     flake.commonModules.default
   ];
 
-  users.user = lib.mkDefault true;
+  users.me.enable = lib.mkDefault true;
 
   # boot
   boot.loader.timeout = 0;

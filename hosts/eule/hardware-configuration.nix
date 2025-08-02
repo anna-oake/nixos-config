@@ -96,6 +96,7 @@ in
       "/var/lib/tailscale"
       "/var/lib/bluetooth"
       "/root"
+      "/var/lib/decky-loader"
     ];
     files = [
       "/etc/machine-id"

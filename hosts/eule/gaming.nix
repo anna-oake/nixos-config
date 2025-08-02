@@ -15,6 +15,10 @@
       user = "gamer";
       desktopSession = "plasma";
     };
+    decky-loader = {
+      enable = true;
+      user = "gamer";
+    };
   };
 
   age.secrets.gamer-password.rekeyFile = "${flake}/secrets/gamer-password.age";
