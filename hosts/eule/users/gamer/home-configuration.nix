@@ -18,7 +18,7 @@
       lookAndFeel = "org.kde.breezedark.desktop";
     };
     configFile = {
-      "kwinrc"."Xwayland"."Scale".value = 1.75;
+      "kwinrc"."Xwayland"."Scale" = 2;
     };
   };
 
