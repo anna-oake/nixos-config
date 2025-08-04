@@ -1,7 +1,9 @@
 {
   pkgs,
   osConfig,
+  config,
   inputs,
+  lib,
   ...
 }:
 {
@@ -26,8 +28,14 @@
   xdg.enable = true;
   xdg.autostart.enable = true;
   xdg.autostart.entries = [
-    "${osConfig.programs.steam.package}/share/applications/steam.desktop"
+    "${config.xdg.dataHome}/applications/steam-minimised.desktop"
   ];
+
+  xdg.desktopEntries."steam-minimised" = {
+    name = "Steam (Minimised)";
+    exec = "${lib.getExe osConfig.programs.steam.package} -silent";
+  };
+
   xdg.configFile."kwinoutputconfig.json".source = ./files/kwinoutputconfig.json;
 
   home.stateVersion = "25.11";
