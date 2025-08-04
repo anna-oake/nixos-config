@@ -23,14 +23,17 @@ in
     "sd_mod"
     "ahci"
     "usbhid"
+    "uas"
   ];
   boot.kernelModules = [
     "kvm-amd"
   ];
 
-  boot.kernelParams = [
-    "usb-storage.quirks=30de:1000:u"
-  ];
+  services.udev.extraRules = ''
+    # Allow this Realtek BT dongle to wake the system
+    ACTION=="add|change", SUBSYSTEM=="usb", ATTRS{idVendor}=="0bda", ATTRS{idProduct}=="a729", \
+      TEST=="power/wakeup", ATTR{power/wakeup}="enabled"
+  '';
 
   fileSystems = {
     "/" = mkBtrfsMount "root";
