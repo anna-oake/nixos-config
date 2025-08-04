@@ -31,6 +31,7 @@ in
 
   boot.kernelParams = [
     "btusb.enable_autosuspend=0"
+    "usbcore.autosuspend=-1"
   ];
 
   services.udev.extraRules = ''
