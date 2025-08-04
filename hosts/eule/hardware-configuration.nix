@@ -31,13 +31,14 @@ in
 
   boot.kernelParams = [
     "btusb.enable_autosuspend=0"
-    "usbcore.autosuspend=-1"
   ];
 
   services.udev.extraRules = ''
     # Allow this Realtek BT dongle to wake the system
     ACTION=="add|change", SUBSYSTEM=="usb", ATTRS{idVendor}=="0bda", ATTRS{idProduct}=="a729", \
       TEST=="power/wakeup", ATTR{power/wakeup}="enabled"
+
+    SUBSYSTEM=="pci", DRIVERS=="xhci_hcd", TEST=="power/wakeup", ATTR{power/wakeup}="enabled"
   '';
 
   fileSystems = {
