@@ -28,7 +28,7 @@
   xdg.enable = true;
   xdg.autostart.enable = true;
   xdg.autostart.entries = [
-    "${config.xdg.dataHome}/applications/steam-minimised.desktop"
+    "${config.home.profileDirectory}/applications/steam-minimised.desktop"
   ];
 
   xdg.desktopEntries."steam-minimised" = {
