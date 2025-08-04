@@ -40,7 +40,7 @@ in
       ATTR{power/wakeup}="enabled"
   '';
 
-  networking.interfaces.enp14s0.wakeOnLan.enable = true;
+  # networking.interfaces.enp14s0.wakeOnLan.enable = true;
 
   fileSystems = {
     "/" = mkBtrfsMount "root";
