@@ -38,7 +38,7 @@ in
     ACTION=="add|change", SUBSYSTEM=="usb", ATTRS{idVendor}=="0bda", ATTRS{idProduct}=="a729", \
       TEST=="power/wakeup", ATTR{power/wakeup}="enabled"
 
-    SUBSYSTEM=="pci", DRIVERS=="xhci_hcd", TEST=="power/wakeup", ATTR{power/wakeup}="enabled"
+    SUBSYSTEM=="pci", DRIVERS=="xhci_hcd", ATTR{power/wakeup}="enabled", ATTR{power/control}="on"
   '';
 
   fileSystems = {
