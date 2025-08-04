@@ -3,6 +3,7 @@
   lib,
   inputs,
   flake,
+  pkgs,
   ...
 }:
 let
@@ -27,6 +28,10 @@ in
   ];
   boot.kernelModules = [
     "kvm-amd"
+  ];
+
+  hardware.firmware = [
+    pkgs.rtl8761bu-firmware
   ];
 
   boot.kernelParams = [

@@ -90,6 +90,7 @@
     in
     {
       inherit (blueprint)
+        checks
         nixosConfigurations
         darwinConfigurations
         homeModules
