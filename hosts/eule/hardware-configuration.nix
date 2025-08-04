@@ -31,6 +31,7 @@ in
 
   boot.kernelParams = [
     "btusb.enable_autosuspend=0"
+    "pcie_aspm=off"
   ];
 
   services.udev.extraRules = ''
