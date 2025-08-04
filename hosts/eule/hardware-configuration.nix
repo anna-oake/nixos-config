@@ -35,9 +35,9 @@ in
   ];
 
   boot.kernelParams = [
-    "btusb.enable_autosuspend=0"
-    "pcie_aspm=off"
-    "usbcore.autosuspend=-1"
+    # "btusb.enable_autosuspend=0"
+    # "pcie_aspm=off"
+    # "usbcore.autosuspend=-1"
   ];
 
   services.udev.extraRules = ''
