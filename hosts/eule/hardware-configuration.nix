@@ -34,19 +34,13 @@ in
     pkgs.rtl8761bu-firmware
   ];
 
-  boot.kernelParams = [
-    "btusb.enable_autosuspend=0"
-    "pcie_aspm=off"
-    "usbcore.autosuspend=-1"
-  ];
-
   services.udev.extraRules = ''
     # Allow this Realtek BT dongle to wake the system
     ACTION=="add|change", SUBSYSTEM=="usb", ATTRS{idVendor}=="0bda", ATTRS{idProduct}=="a729", \
-      ATTR{power/wakeup}="enabled", ATTR{power/control}="on"
-
-    SUBSYSTEM=="pci", DRIVER=="xhci_hcd", ATTR{power/wakeup}="enabled", ATTR{power/control}="on"
+      ATTR{power/wakeup}="enabled"
   '';
+
+  networking.interfaces.enp14s0.wakeOnLan.enable = true;
 
   fileSystems = {
     "/" = mkBtrfsMount "root";
