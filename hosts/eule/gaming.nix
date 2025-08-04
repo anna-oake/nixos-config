@@ -30,6 +30,7 @@
     extraGroups = [
       "wheel"
       "networkmanager"
+      "uinput"
     ];
     hashedPasswordFile = config.age.secrets.gamer-password.path;
     openssh.authorizedKeys.keys = [

@@ -98,6 +98,9 @@
     ];
   };
 
+  programs.steam.extest.enable = true;
+  hardware.uinput.enable = true;
+
   home-manager.backupFileExtension = ".bak";
 
   system.stateVersion = "25.05";
