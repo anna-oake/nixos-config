@@ -59,21 +59,43 @@
   services.desktopManager.plasma6.enable = true;
 
   security.rtkit.enable = true;
-  services.pipewire.wireplumber.extraConfig."surround-by-default" = {
-    "monitor.alsa.rules" = [
+  services.pipewire.wireplumber.extraConfig = {
+    # auto select the 5.1 surround sound profile AND disable restoring user selected profile
+    "99-surround-by-default" = {
+      "monitor.alsa.rules" = [
+        {
+          matches = [
+            { "device.name" = "alsa_card.pci-0000_03_00.1"; }
+          ];
+          actions.update-props = {
+            "device.profile" = "output:hdmi-surround";
+          };
+        }
+      ];
+
+      "wireplumber.settings" = {
+        "device.restore-profile" = false;
+      };
+    };
+    # fix audio falling asleep
+    "99-disable-suspend"."monitor.alsa.rules" = [
       {
         matches = [
-          { "device.name" = "alsa_card.pci-0000_03_00.1"; }
+          {
+            "node.name" = "~alsa_input.*";
+          }
+          {
+            "node.name" = "~alsa_output.*";
+          }
         ];
         actions.update-props = {
-          "device.profile" = "output:hdmi-surround";
+          "session.suspend-timeout-seconds" = 0;
+          "node.always-process" = true;
+          "dither.method" = "wannamaker3";
+          "dither.noise" = 1;
         };
       }
     ];
-
-    "wireplumber.settings" = {
-      "device.restore-profile" = false;
-    };
   };
 
   home-manager.backupFileExtension = ".bak";
