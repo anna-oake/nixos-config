@@ -42,8 +42,8 @@ in
 
   services.udev.extraRules = ''
     # Allow this Realtek BT dongle to wake the system
-    ACTION=="add|change", SUBSYSTEM=="usb", ATTRS{idVendor}=="0bda", ATTRS{idProduct}=="a729", \
-      ATTR{power/wakeup}="enabled", ATTR{power/control}="on"
+    # ACTION=="add|change", SUBSYSTEM=="usb", ATTRS{idVendor}=="0bda", ATTRS{idProduct}=="a729", \
+    #   ATTR{power/wakeup}="enabled", ATTR{power/control}="on"
 
     # SUBSYSTEM=="pci", DRIVER=="xhci_hcd", ATTR{power/wakeup}="enabled", ATTR{power/control}="on"
   '';
