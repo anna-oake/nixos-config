@@ -103,9 +103,9 @@ in
     directories = [
       "/etc/nixos"
       "/var/lib/nixos"
-      "/var/lib/tailscale"
       "/var/lib/bluetooth"
       "/root"
+      "/var/lib/netbird"
     ];
     files = [
       "/etc/machine-id"

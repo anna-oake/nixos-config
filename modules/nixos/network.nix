@@ -19,9 +19,18 @@
   # firewall
   networking.firewall.enable = false;
 
-  # tailscale
-  services.tailscale.enable = true;
-  services.tailscale.useRoutingFeatures = "both";
+  # netbird
+  age.secrets.netbird-personal = {
+    rekeyFile = (inputs.self + /secrets/netbird-personal.age);
+    owner = "netbird";
+    group = "netbird";
+  };
+
+  services.netbird.simple = {
+    enable = true;
+    managementUrl = "https://net.oa.ke";
+    setupKeyFile = config.age.secrets.netbird-personal.path;
+  };
 
   # wifi
   age.secrets.wifi-home.rekeyFile = (inputs.self + /secrets/wifi-home.age);
