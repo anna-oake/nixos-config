@@ -106,6 +106,7 @@ in
       "/var/lib/tailscale"
       "/var/lib/bluetooth"
       "/root"
+      "/var/lib/netbird-oake"
     ];
     files = [
       "/etc/machine-id"

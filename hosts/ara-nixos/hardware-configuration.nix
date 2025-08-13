@@ -77,6 +77,7 @@ in
       "/var/lib/tailscale"
       "/var/lib/bluetooth"
       "/var/lib/upower"
+      "/var/lib/netbird-oake"
     ];
     files = [
       "/etc/machine-id"
