@@ -11,6 +11,7 @@
   imports = [
     ./hardware-configuration.nix
     ./gaming.nix
+    ./samba.nix
     flake.nixosModules.default
     inputs.jovian.nixosModules.default
   ];
