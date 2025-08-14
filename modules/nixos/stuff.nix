@@ -30,5 +30,6 @@
     p7zip
     usbutils
     pciutils
+    go
   ];
 }

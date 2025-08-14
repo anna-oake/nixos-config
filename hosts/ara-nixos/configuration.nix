@@ -42,6 +42,7 @@
   environment.systemPackages =
     with pkgs;
     [
+      gnomeExtensions.appindicator
       btrfs-progs
       boot-macos
 
@@ -55,6 +56,7 @@
             ms-vsliveshare.vsliveshare
             esphome.esphome-vscode
             mkhl.direnv
+            golang.go
           ];
       })
 
