@@ -31,6 +31,7 @@
       "wheel"
       "networkmanager"
       "uinput"
+      "netbird"
     ];
     hashedPasswordFile = config.age.secrets.gamer-password.path;
     openssh.authorizedKeys.keys = [

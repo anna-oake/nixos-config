@@ -30,6 +30,7 @@ in
           "wheel" # sudo
           "networkmanager" # network configuration
           "video"
+          "netbird"
         ];
 
         hashedPasswordFile = config.age.secrets.user-password.path;
