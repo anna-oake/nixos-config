@@ -92,6 +92,28 @@
             imports = lib.attrsets.attrValues modules;
           };
         };
+
+      diskoDefs = lib.flatten (
+        lib.mapAttrsToList (
+          host: cfg:
+          let
+            sys = cfg.pkgs.stdenv.hostPlatform.system;
+            hasDisko = lib.hasAttrByPath [ "config" "system" "build" "diskoScript" ] cfg;
+          in
+          lib.optional hasDisko {
+            inherit host sys;
+            drv = cfg.config.system.build.diskoScript;
+          }
+        ) blueprint.nixosConfigurations
+      );
+
+      diskoPackages = lib.foldl' (
+        acc: def:
+        let
+          pname = "${def.host}-disko-script";
+        in
+        lib.recursiveUpdate acc { ${def.sys}.${pname} = def.drv; }
+      ) { } diskoDefs;
     in
     {
       inherit (blueprint)
@@ -105,6 +127,7 @@
       commonModules = mkModules blueprint.modules.common;
       nixosModules = mkModules blueprint.nixosModules;
       darwinModules = mkModules blueprint.darwinModules;
+      packages = diskoPackages;
 
       agenix-rekey = inputs.agenix-rekey.configure {
         userFlake = inputs.self;
