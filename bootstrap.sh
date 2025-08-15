@@ -104,7 +104,3 @@ git commit -m "rekey: $HOST"
 
 echo
 echo "✅ Ready. Your pre-generated host keys live in: $SSHDIR"
-echo "   Next step (on your Mac):"
-echo "     nix run github:nix-community/nixos-anywhere -- \\"
-echo "       --extra-files '$BOOTSTRAP_DIR/extra' \\"
-echo "       --flake '$FLAKE#$HOST' root@<ip-or-dns>"
