@@ -45,6 +45,11 @@
 
   environment.persistence."/persist" = {
     directories = [
+      {
+        directory = "/etc/nixos";
+        user = config.me.username;
+        group = "users";
+      }
       "/etc/nixos"
       "/var/lib/nixos"
       "/var/lib/bluetooth"
