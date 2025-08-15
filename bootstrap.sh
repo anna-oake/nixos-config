@@ -76,8 +76,10 @@ ssh-keygen -q -t rsa    -b 4096 -N "" -C "$HOST" -f "$SSHDIR/ssh_host_rsa_key"
 
 chmod 0755 "$BOOTSTRAP_DIR/extra${TARGET_ETC}"
 chmod 0755 "$SSHDIR"
-chmod 0644 "$SSHDIR/ssh_host_ed25519_key"
-chmod 0644 "$SSHDIR/ssh_host_rsa_key"
+chmod 0600 "$SSHDIR/ssh_host_ed25519_key"
+chmod 0600 "$SSHDIR/ssh_host_rsa_key"
+chmod 0644 "$SSHDIR/ssh_host_ed25519_key.pub"
+chmod 0644 "$SSHDIR/ssh_host_rsa_key.pub"
 
 # 4) write/update the repo's host pubkey (for rekey) and stage it
 install -m 0644 "$SSHDIR/ssh_host_ed25519_key.pub" "$PUBKEY_DIR/$HOST.pub"
