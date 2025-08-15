@@ -50,7 +50,6 @@
         user = config.me.username;
         group = "users";
       }
-      "/etc/nixos"
       "/var/lib/nixos"
       "/var/lib/bluetooth"
       "/root"
