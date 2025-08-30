@@ -55,4 +55,15 @@
       "telegram"
     ];
   };
+
+  environment.systemPackages = with pkgs; [
+    gh
+    git
+    htop
+    btop
+    nixfmt-rfc-style
+    nixd
+    fzf
+    zoxide
+  ];
 }

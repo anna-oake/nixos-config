@@ -32,5 +32,13 @@
     pciutils
     go
     ghostty.terminfo
+    gh
+    git
+    htop
+    btop
+    nixfmt-rfc-style
+    nixd
+    fzf
+    zoxide
   ];
 }
