@@ -72,6 +72,11 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    deploy-rs = {
+      url = "github:serokell/deploy-rs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -118,6 +123,26 @@
       nixosModules = mkModules blueprint.nixosModules;
       darwinModules = mkModules blueprint.darwinModules;
       checks = lib.recursiveUpdate blueprint.checks diskoChecks;
+
+      deploy.nodes =
+        let
+          lxcCfgs = lib.filterAttrs (
+            name: _: lib.strings.hasPrefix "lxc-" name
+          ) blueprint.nixosConfigurations;
+        in
+        lib.mapAttrs (
+          name: cfg:
+          let
+            short = lib.strings.removePrefix "lxc-" name;
+          in
+          {
+            hostname = "${short}.lan.ci";
+            profiles.system = {
+              sshUser = "root";
+              path = inputs.deploy-rs.lib.x86_64-linux.activate.nixos cfg;
+            };
+          }
+        ) lxcCfgs;
 
       agenix-rekey = inputs.agenix-rekey.configure {
         userFlake = inputs.self;
