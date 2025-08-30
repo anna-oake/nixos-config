@@ -114,6 +114,7 @@
         ;
 
       commonModules = mkModules blueprint.modules.common;
+      lxcModules = mkModules blueprint.modules.lxc;
       nixosModules = mkModules blueprint.nixosModules;
       darwinModules = mkModules blueprint.darwinModules;
       checks = lib.recursiveUpdate blueprint.checks diskoChecks;
