@@ -9,11 +9,6 @@
     flake.commonModules.default
   ];
 
-  proxmoxLXC = {
-    manageNetwork = true;
-    manageHostName = true;
-  };
-
   systemd.suppressedSystemUnits = [
     "sys-kernel-debug.mount"
   ];
