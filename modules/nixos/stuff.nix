@@ -31,5 +31,6 @@
     usbutils
     pciutils
     go
+    ghostty.terminfo
   ];
 }
