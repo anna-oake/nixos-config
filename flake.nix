@@ -67,6 +67,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
+
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -87,10 +92,21 @@
             imports = lib.attrsets.attrValues modules;
           };
         };
+
+      withDisko = lib.filterAttrs (
+        _: c: c.config.system.build ? diskoScript
+      ) blueprint.nixosConfigurations;
+      diskoChecks = lib.foldl' (
+        acc: name:
+        let
+          c = withDisko.${name};
+          sys = c.pkgs.system;
+        in
+        lib.recursiveUpdate acc { ${sys}."disko-${name}" = c.config.system.build.diskoScript; }
+      ) { } (builtins.attrNames withDisko);
     in
     {
       inherit (blueprint)
-        checks
         nixosConfigurations
         darwinConfigurations
         homeModules
@@ -100,6 +116,7 @@
       commonModules = mkModules blueprint.modules.common;
       nixosModules = mkModules blueprint.nixosModules;
       darwinModules = mkModules blueprint.darwinModules;
+      checks = lib.recursiveUpdate blueprint.checks diskoChecks;
 
       agenix-rekey = inputs.agenix-rekey.configure {
         userFlake = inputs.self;
