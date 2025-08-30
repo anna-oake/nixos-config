@@ -72,6 +72,11 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    deploy-rs = {
+      url = "github:serokell/deploy-rs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -104,6 +109,16 @@
         in
         lib.recursiveUpdate acc { ${sys}."disko-${name}" = c.config.system.build.diskoScript; }
       ) { } (builtins.attrNames withDisko);
+
+      withLxc = lib.filterAttrs (_: c: c.config ? lxc) blueprint.nixosConfigurations;
+      lxcTarballChecks = lib.foldl' (
+        acc: name:
+        let
+          c = withLxc.${name};
+          sys = c.pkgs.system;
+        in
+        lib.recursiveUpdate acc { ${sys}."lxc-tarball-${name}" = c.config.system.build.tarball; }
+      ) { } (builtins.attrNames withLxc);
     in
     {
       inherit (blueprint)
@@ -114,9 +129,33 @@
         ;
 
       commonModules = mkModules blueprint.modules.common;
+      lxcModules = mkModules blueprint.modules.lxc;
       nixosModules = mkModules blueprint.nixosModules;
       darwinModules = mkModules blueprint.darwinModules;
-      checks = lib.recursiveUpdate blueprint.checks diskoChecks;
+      checks = lib.foldl' lib.recursiveUpdate blueprint.checks [
+        diskoChecks
+        lxcTarballChecks
+      ];
+
+      deploy.nodes =
+        let
+          lxcCfgs = lib.filterAttrs (
+            name: _: lib.strings.hasPrefix "lxc-" name
+          ) blueprint.nixosConfigurations;
+        in
+        lib.mapAttrs (
+          name: cfg:
+          let
+            short = lib.strings.removePrefix "lxc-" name;
+          in
+          {
+            hostname = "${short}.lan.ci";
+            profiles.system = {
+              sshUser = "root";
+              path = inputs.deploy-rs.lib.x86_64-linux.activate.nixos cfg;
+            };
+          }
+        ) lxcCfgs;
 
       agenix-rekey = inputs.agenix-rekey.configure {
         userFlake = inputs.self;
