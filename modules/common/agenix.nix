@@ -10,8 +10,7 @@ let
   ageMasterIdentities = [
     (inputs.self.outPath + "/secrets/master-keys/yubikey-a.pub")
   ];
-  publicKeyRelPath = "secrets/public-keys/${hostName}.pub";
-  publicKeyAbsPath = inputs.self.outPath + "/" + publicKeyRelPath;
+  publicKeyAbsPath = inputs.self.outPath + "/" + config.age.publicKeyRelPath;
 in
 {
   imports = [
@@ -20,6 +19,10 @@ in
   ];
 
   options = {
+    age.publicKeyRelPath = lib.mkOption {
+      type = lib.types.str;
+      default = "secrets/public-keys/${hostName}.pub";
+    };
     age.ready = lib.mkOption {
       type = lib.types.bool;
       default = builtins.pathExists publicKeyAbsPath;
@@ -39,7 +42,7 @@ in
       (lib.mkIf (!config.age.ready) ''
         After initial target provisioning, fetch the target ssh identity:
 
-          ssh-keyscan -qt ssh-ed25519 $target | cut -d' ' -f2,3 > ./${publicKeyRelPath}
+          ssh-keyscan -qt ssh-ed25519 $target | cut -d' ' -f2,3 > ./${config.age.publicKeyRelPath}
 
         And rebuild NixOS.
       '')

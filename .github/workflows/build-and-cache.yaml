@@ -1,5 +1,8 @@
 name: Build & Cache flake outputs
 
+permissions:
+  contents: write
+
 on: push
 
 jobs:
@@ -13,13 +16,13 @@ jobs:
         name: Maximize build space
         uses: easimon/maximize-build-space@master
         with:
-          remove-dotnet: 'true'
-          remove-haskell: 'true'
-          remove-codeql: 'true'
-          remove-docker-images: 'true'
-          root-reserve-mb: '10240'
-          build-mount-path: '/nix'
-      
+          remove-dotnet: "true"
+          remove-haskell: "true"
+          remove-codeql: "true"
+          remove-docker-images: "true"
+          root-reserve-mb: "10240"
+          build-mount-path: "/nix"
+
       - if: matrix.os == 'ubuntu-22.04'
         name: Fix permissions
         run: sudo chown -R root /nix
@@ -33,12 +36,43 @@ jobs:
       - name: Setup Attic cache
         uses: ryanccn/attic-action@v0
         with:
-            endpoint: ${{ secrets.ATTIC_SERVER }}
-            token: ${{ secrets.ATTIC_TOKEN }}
-            cache: nixos
+          endpoint: ${{ secrets.ATTIC_SERVER }}
+          token: ${{ secrets.ATTIC_TOKEN }}
+          cache: nixos
 
       - name: Install omnix
         run: nix profile install "github:juspay/omnix"
 
       - name: Build all flake outputs
-        run: om ci run --extra-access-tokens ${{ secrets.GITHUB_TOKEN }}
+        run: om ci run -o om.json --extra-access-tokens ${{ secrets.GITHUB_TOKEN }}
+
+      - if: matrix.os == 'ubuntu-22.04'
+        name: Upload LXC tarballs
+        shell: bash
+        env:
+          NIX_BALLS_HOST: ${{ secrets.NIX_BALLS_HOST }}
+          NIX_BALLS_IP: ${{ secrets.NIX_BALLS_IP }}
+          NIX_BALLS_TOKEN: ${{ secrets.NIX_BALLS_TOKEN }}
+        run: |
+          set -euo pipefail
+          host="${NIX_BALLS_HOST}"
+          ip="${NIX_BALLS_IP}"
+          auth="Authorization: Bearer ${NIX_BALLS_TOKEN}"
+
+          jq -r '
+            .. | objects | select(has("outPaths")) | .outPaths[]
+            | select(endswith("-tarball"))
+          ' "$(readlink -f om.json)" | while read -r p; do
+            for f in "$p"/tarball/vzdump-*.tar.zst; do
+              [ -e "$f" ] || continue
+              sum="$(sha256sum "$f" | awk '{print $1}')"
+              if [ "$(curl -sS -X POST -H "$auth" --resolve $host:443:$ip "https://$host/have?sha256=$sum")" = "HIT" ]; then
+                echo "HIT  $(basename "$f")  $sum"
+                continue
+              fi
+              echo "MISS $(basename "$f") — uploading…"
+              curl -sS --fail --show-error --progress-bar \
+                -X POST -H "$auth" --resolve $host:443:$ip "https://$host/upload?name=$(basename "$f")&sha256=$sum" \
+                --data-binary @"$f" > /dev/null
+            done
+          done
