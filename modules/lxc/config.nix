@@ -42,12 +42,12 @@
     };
     features = lib.mkOption {
       type = lib.types.listOf (lib.types.str);
-      default = [ "nesting" ];
+      default = [ ];
       description = "List of features to enable for the container";
     };
     mounts = lib.mkOption {
       type = lib.types.listOf (lib.types.str);
-      default = [ "/root/nix-lxc/${hostName},mp=/nix-lxc,ro=1" ];
+      default = [ ];
       description = "List of mounts to configure for the container";
     };
     extraConfig = lib.mkOption {
@@ -60,5 +60,9 @@
       default = true;
       description = "Whether to automatically start the container on boot";
     };
+  };
+  config = {
+    lxc.mounts = [ "/root/nix-lxc/${hostName},mp=/nix-lxc,ro=1" ];
+    lxc.features = [ "nesting" ];
   };
 }
