@@ -1,7 +1,7 @@
 @_default:
   just --list  --unsorted
 
-# generate a keypair, rekey
+# generate a keypair, rekey all secrets
 @bootstrap host="":
   HOST={{host}} scripts/bootstrap.sh
 
@@ -19,3 +19,11 @@
 # use deploy-rs to update an existing host
 @deploy host:
   nix run nixpkgs#deploy-rs -- .#{{host}} --remote-build
+
+# rekey all secrets
+@rekey:
+  nix run github:oddlama/agenix-rekey -- rekey -a
+
+# create/edit agenix secret
+@secret secret:
+  EDITOR=nano nix run github:oddlama/agenix-rekey -- edit ./secrets/secrets/{{secret}}.age
