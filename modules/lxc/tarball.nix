@@ -39,6 +39,7 @@ let
     unprivileged: ${if config.lxc.unprivileged then "1" else "0"}
     net0: name=eth0,bridge=${config.lxc.network},hwaddr=00:00:00:00:00:00,ip=dhcp,type=veth
     ostype: unmanaged
+    onboot: ${if config.lxc.autoStart then "1" else "0"}
     rootfs: ${config.lxc.storageName}:unknown,size=${toString config.lxc.diskSize}G
     ${mountsLines}
     ${config.lxc.extraConfig}
