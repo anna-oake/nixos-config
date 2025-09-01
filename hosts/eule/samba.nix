@@ -67,7 +67,7 @@ in
     openFirewall = true;
   };
 
-  age.secrets.gamer-samba-password.rekeyFile = "${flake}/secrets/gamer-samba-password.age";
+  age.secrets.gamer-samba-password.rekeyFile = "${flake}/secrets/secrets/eule/gamer-samba-password.age";
   system.activationScripts.set-samba-password = ''
     smb_password=$(cat "${config.age.secrets.gamer-samba-password.path}")
     echo -e "$smb_password\n$smb_password\n" | ${lib.getExe' pkgs.samba "smbpasswd"} -a -s gamer
@@ -77,7 +77,7 @@ in
   environment.systemPackages = with pkgs; [
     cifs-utils
   ];
-  age.secrets.mynah-smb-eule.rekeyFile = "${flake}/secrets/mynah-smb-eule.age";
+  age.secrets.mynah-smb-eule.rekeyFile = "${flake}/secrets/secrets/eule/mynah-smb-eule.age";
   fileSystems = mkMynahMounts {
     "/mnt/mynah/family" = "family";
   };
