@@ -16,7 +16,7 @@
     netrc-file = config.age.secrets.attic-netrc.path;
   };
   age.secrets = lib.mkIf config.age.ready {
-    attic-netrc.rekeyFile = (inputs.self + /secrets/attic-netrc.age);
+    attic-netrc.rekeyFile = (inputs.self + /secrets/secrets/attic-netrc.age);
   };
 
   # overlays

@@ -22,7 +22,7 @@
     };
   };
 
-  age.secrets.gamer-password.rekeyFile = "${flake}/secrets/gamer-password.age";
+  age.secrets.gamer-password.rekeyFile = "${flake}/secrets/secrets/eule/gamer-password.age";
   users.users.gamer = {
     isNormalUser = true;
     uid = 1001;
