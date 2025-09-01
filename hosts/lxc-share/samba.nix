@@ -61,21 +61,34 @@ in
       openFirewall = true;
     };
 
-    system.activationScripts.samba-sync-users =
-      let
-        smb = config.services.samba.package;
-        pdb = "${smb}/bin/pdbedit";
-      in
-      ''
-        sync_user() {
-          u="$1"; f="/run/agenix/lxc-share/$u-samba-password"
-          [ -f "$f" ] || return 1
-          hash="$(tr -d '\r\n' < "$f")"
-          printf 'bogus\nbogus\n' | ${pdb} -a -u "$u" -t >/dev/null
-          ${pdb} -u "$u" --set-nt-hash "$hash" >/dev/null
-        }
+    systemd.services.samba-sync-users = {
+      description = "Load samba user hashes from agenix";
 
-        ${lib.concatStringsSep "\n" (map (u: "sync_user ${u}") (builtins.attrNames config.share.users))}
-      '';
+      wantedBy = [ "samba.target" ];
+      partOf = [ "samba-smbd.service" ];
+      requires = [ "samba-smbd.service" ];
+      after = [ "samba-smbd.service" ];
+
+      script =
+        let
+          smb = config.services.samba.package;
+          pdb = "${smb}/bin/pdbedit";
+        in
+        ''
+          sync_user() {
+            u="$1"; f="/run/agenix/lxc-share/$u-samba-password"
+            [ -f "$f" ] || return 1
+            hash="$(tr -d '\r\n' < "$f")"
+            printf 'bogus\nbogus\n' | ${pdb} -a -u "$u" -t >/dev/null
+            ${pdb} -u "$u" --set-nt-hash "$hash" >/dev/null
+          }
+
+          ${lib.concatStringsSep "\n" (map (u: "sync_user ${u}") (builtins.attrNames config.share.users))}
+        '';
+
+      serviceConfig = {
+        Type = "oneshot";
+      };
+    };
   };
 }
