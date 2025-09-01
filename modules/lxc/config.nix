@@ -55,5 +55,10 @@
       default = "";
       description = "Additional configuration options to set for the container";
     };
+    autoStart = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = "Whether to automatically start the container on boot";
+    };
   };
 }
