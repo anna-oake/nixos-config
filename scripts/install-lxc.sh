@@ -88,7 +88,7 @@ wipe
 echo "${bold}Successfully created as $PCT_ID!${normal}"
 echo
 echo "The LXC ${bold}will not${normal} be started automatically."
-echo "Resulting config (you might want the MAC):"
+echo "Resulting config (you might need the MAC):"
 echo
 
 echo "$PCT_CONFIG"
