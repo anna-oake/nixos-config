@@ -6,12 +6,10 @@
 {
   imports = [
     flake.lxcModules.default
-    ./users.nix
-    ./samba.nix
-    ./sftp.nix
   ];
 
-  share = {
+  lxc.profiles.share = {
+    enable = true;
     serverString = "Maeve Mynah";
     users = {
       maeve = {

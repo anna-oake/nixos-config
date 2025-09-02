@@ -7,6 +7,7 @@
   imports = [
     "${modulesPath}/virtualisation/proxmox-lxc.nix"
     flake.commonModules.default
+    ./profiles
   ];
 
   systemd.suppressedSystemUnits = [

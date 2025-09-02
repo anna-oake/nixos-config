@@ -12,9 +12,10 @@ let
     "spotlight" = true;
     "veto files" = "/._*/.DS_Store/";
   };
+  cfg = config.lxc.profiles.share;
 in
 {
-  options.share = {
+  options.lxc.profiles.share = {
     serverString = lib.mkOption {
       type = lib.types.str;
       default = "share";
@@ -24,13 +25,13 @@ in
       default = { };
     };
   };
-  config = {
+  config = lib.mkIf cfg.enable {
     services.samba = {
       enable = true;
       openFirewall = true;
       settings = {
         global = {
-          "server string" = config.share.serverString;
+          "server string" = cfg.serverString;
           "netbios name" = "share";
           "access based share enum" = true;
           "fruit:encoding" = "native";
@@ -54,7 +55,7 @@ in
           "path" = path;
         }
         // goodDefaults
-      ) config.share.extraShares;
+      ) cfg.extraShares;
     };
     services.samba-wsdd = {
       enable = true;
@@ -76,14 +77,14 @@ in
         in
         ''
           sync_user() {
-            u="$1"; f="/run/agenix/lxc-share/$u-samba-password"
+            u="$1"; f="/run/agenix/${cfg.secretsDomain}/$u-samba-password"
             [ -f "$f" ] || return 1
             hash="$(tr -d '\r\n' < "$f")"
             printf 'bogus\nbogus\n' | ${pdb} -a -u "$u" -t >/dev/null
             ${pdb} -u "$u" --set-nt-hash "$hash" >/dev/null
           }
 
-          ${lib.concatStringsSep "\n" (map (u: "sync_user ${u}") (builtins.attrNames config.share.users))}
+          ${lib.concatStringsSep "\n" (map (u: "sync_user ${u}") (builtins.attrNames cfg.users))}
         '';
 
       serviceConfig = {
