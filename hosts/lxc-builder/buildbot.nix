@@ -41,6 +41,7 @@
     ];
 
     github = {
+      enable = true;
       authType.app = {
         id = 1885778;
         secretKeyFile = config.age.secrets."lxc-builder/gh-app-key".path;
