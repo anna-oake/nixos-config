@@ -3,12 +3,22 @@
 
 # generate a keypair, rekey all secrets
 [group('deployment')]
-@bootstrap host="":
+@bootstrap host:
   HOST={{host}} scripts/bootstrap.sh
 
-# install with nixos-anywhere
+# install with nixos-anywhere or LXC in PVE
 [group('deployment')]
 @install host build="local":
+  if [[ "{{host}}" == lxc-* ]]; then \
+    just _install-lxc {{host}}; \
+  else \
+    just _install-anywhere {{host}} {{build}}; \
+  fi
+
+@_install-lxc host:
+  HOST={{host}} scripts/install-lxc.sh
+
+@_install-anywhere host build:
   test -d .bootstrap/extra && [ "$(ls -A .bootstrap/extra)" ] \
     || { echo "Can't find the keypair. Did you bootstrap?"; exit 1; }
 
