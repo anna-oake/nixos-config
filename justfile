@@ -21,7 +21,7 @@
 # use deploy-rs to update an existing host
 [group('deployment')]
 @deploy host:
-  nix run nixpkgs#deploy-rs -- .#{{host}} --remote-build
+  nix run github:serokell/deploy-rs#deploy-rs -- .#{{host}} --remote-build
 
 # rekey all secrets
 [group('secrets')]
