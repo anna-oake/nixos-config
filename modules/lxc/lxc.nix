@@ -15,6 +15,7 @@
   ];
 
   proxmoxLXC.manageNetwork = true;
+  networking.firewall.enable = false;
 
   age.identityPaths = [ "/nix-lxc/agenix_key" ];
 

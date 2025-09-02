@@ -15,6 +15,10 @@
     "lxc-builder/gh-app-key".rekeyFile = "${inputs.self}/secrets/secrets/lxc-builder/gh-app-key.age";
     "lxc-builder/gh-webhook-secret".rekeyFile =
       "${inputs.self}/secrets/secrets/lxc-builder/gh-webhook-secret.age";
+    "lxc-builder/basic-auth-pwd" = {
+      rekeyFile = "${inputs.self}/secrets/secrets/lxc-builder/basic-auth-pwd.age";
+      owner = "buildbot";
+    };
   };
 
   services.buildbot-nix.master = {
@@ -29,11 +33,16 @@
       ]
     '';
 
-    authBackend = "none"; # protected by traefik
+    authBackend = "httpbasicauth";
+    httpBasicAuthPasswordFile = config.age.secrets."lxc-builder/basic-auth-pwd".path;
+    admins = [
+      "maeve-oake"
+      "anna-oake"
+    ];
 
     github = {
       authType.app = {
-        id = 1885567;
+        id = 1885778;
         secretKeyFile = config.age.secrets."lxc-builder/gh-app-key".path;
       };
       webhookSecretFile = config.age.secrets."lxc-builder/gh-webhook-secret".path;
