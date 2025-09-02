@@ -7,6 +7,7 @@
 {
   age.secrets."lxc-builder/attic-auth-token".rekeyFile =
     "${inputs.self}/secrets/secrets/lxc-builder/attic-auth-token.age";
+
   systemd.services.attic-watch-store = {
     wantedBy = [ "multi-user.target" ];
     after = [ "network-online.target" ];
