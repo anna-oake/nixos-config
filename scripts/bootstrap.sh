@@ -9,8 +9,6 @@
 set -Eeuo pipefail
 IFS=$'\n\t'
 
-LXC_HOST="mynah.lan.ci"
-LXC_HOST_DIR="/root/nix-lxc"
 PUBKEY_DIR="secrets/public-keys"
 BOOTSTRAP_DIR=".bootstrap"
 FLAKE="${FLAKE:-.}"
@@ -33,34 +31,26 @@ BRANCH="$(git rev-parse --abbrev-ref HEAD)"
 
 clear
 
-if [[ -z "${HOST:-}" ]]; then
-  echo "Discovering hosts..."
-  HOSTS_JSON="$(nix "${NIX_FLAGS[@]}" flake show --json "$FLAKE" 2>/dev/null)"
-  mapfile -t HOSTS < <(jq -r '.nixosConfigurations | select(type=="object") | keys[]' <<<"$HOSTS_JSON" | sort)
-
-  ((${#HOSTS[@]})) || die "no nixosConfigurations found in $FLAKE"
-  clear
-  echo "Choose a host to bootstrap:"
-  select HOST in "${HOSTS[@]}"; do
-    [[ -n "${HOST:-}" ]] && break
-    echo "Invalid selection."
-  done
-  clear
-fi
-
-echo "Host: $HOST"
-echo "Branch: $BRANCH"
+echo "Loading..."
 
 if [[ $HOST == lxc-* ]]; then
   ROUTE="lxc"
-  echo "This host is an LXC - will offer to upload keys"
+  LXC_JSON="$(nix "${NIX_FLAGS[@]}" eval "$FLAKE#nixosConfigurations.$HOST.config.lxc.pve" --json)"
+  LXC_HOST=$(jq -r '.host' <<<"$LXC_JSON")
+  [[ -n "$LXC_HOST" && "$LXC_HOST" != "null" ]] || die "LXC_HOST is empty or null"
+  LXC_HOST_DIR=$(jq -r '.keypairMountPath' <<<"$LXC_JSON")
+  [[ -n "$LXC_HOST_DIR" && "$LXC_HOST_DIR" != "null" ]] || die "LXC_HOST_DIR is empty or null"
 elif nix "${NIX_FLAGS[@]}" eval "$FLAKE#nixosConfigurations.$HOST.config.environment.persistence" --json >/dev/null 2>&1; then
   ROUTE="impermanence"
-  echo "This host has impermanence enabled - will adjust paths"
 else
   ROUTE="normal"
 fi
 
+clear
+
+echo "Host: $HOST"
+echo "Branch: $BRANCH"
+echo "Type: $ROUTE"
 echo
 
 # 2) show target branch & confirm we should proceed
@@ -82,10 +72,10 @@ if [[ $ROUTE == "lxc" ]]; then
   PUBKEY_FILE="$SSHDIR/agenix_key.pub"
 
   # Upload keys to remote LXC host
-  if confirm "Upload generated keys to $LXC_HOST?"; then
-    ssh "root@$LXC_HOST" "mkdir -p $LXC_HOST_DIR/$HOST"
-    scp "$SSHDIR/agenix_key"{,.pub} "root@$LXC_HOST:$LXC_HOST_DIR/$HOST/"
-    ssh "root@$LXC_HOST" "chown -R 100000:100000 $LXC_HOST_DIR/$HOST"
+  if confirm "Upload generated keys to $LXC_HOST in $LXC_HOST_DIR?"; then
+    ssh "root@$LXC_HOST" "mkdir -p $LXC_HOST_DIR"
+    scp "$SSHDIR/agenix_key"{,.pub} "root@$LXC_HOST:$LXC_HOST_DIR/"
+    ssh "root@$LXC_HOST" "chown -R 100000:100000 $LXC_HOST_DIR"
   else
     echo "Skipping upload"
   fi

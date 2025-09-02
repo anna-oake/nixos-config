@@ -1,6 +1,7 @@
 {
   lib,
   hostName,
+  config,
   ...
 }:
 {
@@ -60,9 +61,30 @@
       default = true;
       description = "Whether to automatically start the container on boot";
     };
+    pve = lib.mkOption {
+      type = lib.types.submodule {
+        options = {
+          host = lib.mkOption {
+            type = lib.types.str;
+            description = "The hostname of the PVE host to install the container to";
+          };
+          tarballPath = lib.mkOption {
+            type = lib.types.str;
+            default = "/rpool/nix-tarballs/dump";
+            description = "The path on the PVE host where the vzdump tarballs are stored";
+          };
+          keypairMountPath = lib.mkOption {
+            type = lib.types.str;
+            default = "/root/nix-lxc/${hostName}";
+            description = "The path on the PVE host where the agenix keypair is mounted";
+          };
+        };
+      };
+      description = "Configuration options for the Proxmox VE host for this container";
+    };
   };
   config = {
-    lxc.mounts = [ "/root/nix-lxc/${hostName},mp=/nix-lxc,ro=1" ];
+    lxc.mounts = [ "${config.lxc.pve.keypairMountPath},mp=/nix-lxc,ro=1" ];
     lxc.features = [ "nesting" ];
   };
 }
