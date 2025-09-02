@@ -40,7 +40,7 @@
 
 # create/edit agenix secret
 [group('secrets')]
-@secret secret:
+@secret secret: && rekey
   EDITOR=nano nix run github:oddlama/agenix-rekey -- edit ./secrets/secrets/{{secret}}.age
 
 # navigate config tree
