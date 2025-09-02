@@ -5,18 +5,19 @@
   ...
 }:
 let
+  cfg = config.lxc.profiles.share;
   mapShareUser = name: user: {
     inherit name;
     inherit (user) uid;
     isNormalUser = true;
-    home = "${config.share.homes}/${name}";
+    home = "${cfg.homes}/${name}";
     openssh.authorizedKeys.keys = lib.mkIf (user.sshKey != null) [ user.sshKey ];
-    hashedPasswordFile = config.age.secrets."lxc-share/${name}-unix-password".path;
+    hashedPasswordFile = config.age.secrets."${cfg.secretsDomain}/${name}-unix-password".path;
     extraGroups = map (share: "share-${share}") user.allowedExtraShares;
   };
 in
 {
-  options.share = {
+  options.lxc.profiles.share = {
     homes = lib.mkOption {
       type = lib.types.str;
       default = "/storage/share";
@@ -43,20 +44,20 @@ in
       );
     };
   };
-  config = {
+  config = lib.mkIf cfg.enable {
     users.groups =
-      lib.genAttrs (map (share: "share-${share}") (lib.attrNames config.share.extraShares)) (share: { })
+      lib.genAttrs (map (share: "share-${share}") (lib.attrNames cfg.extraShares)) (share: { })
       // {
         users.gid = 100;
       };
 
-    users.users = lib.mapAttrs (name: user: mapShareUser name user) config.share.users;
+    users.users = lib.mapAttrs (name: user: mapShareUser name user) cfg.users;
     age.secrets =
       lib.genAttrs
         (lib.concatMap (name: [
-          "lxc-share/${name}-unix-password"
-          "lxc-share/${name}-samba-password"
-        ]) (lib.attrNames config.share.users))
+          "${cfg.secretsDomain}/${name}-unix-password"
+          "${cfg.secretsDomain}/${name}-samba-password"
+        ]) (lib.attrNames cfg.users))
         (secretName: {
           rekeyFile = "${inputs.self}/secrets/secrets/${secretName}.age";
         });
