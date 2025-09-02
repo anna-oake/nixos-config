@@ -135,27 +135,22 @@
       checks = lib.foldl' lib.recursiveUpdate blueprint.checks [
         diskoChecks
         lxcTarballChecks
+        (builtins.mapAttrs (system: packages: { inherit (packages) deploy-rs; }) inputs.deploy-rs.packages)
       ];
 
-      deploy.nodes =
+      deploy.nodes = lib.mapAttrs (
+        name: cfg:
         let
-          lxcCfgs = lib.filterAttrs (
-            name: _: lib.strings.hasPrefix "lxc-" name
-          ) blueprint.nixosConfigurations;
+          hostname = (lib.strings.removePrefix "lxc-" name) + ".lan.ci";
         in
-        lib.mapAttrs (
-          name: cfg:
-          let
-            short = lib.strings.removePrefix "lxc-" name;
-          in
-          {
-            hostname = "${short}.lan.ci";
-            profiles.system = {
-              sshUser = "root";
-              path = inputs.deploy-rs.lib.x86_64-linux.activate.nixos cfg;
-            };
-          }
-        ) lxcCfgs;
+        {
+          inherit hostname;
+          profiles.system = {
+            sshUser = "root";
+            path = inputs.deploy-rs.lib.${cfg.pkgs.system}.activate.nixos cfg;
+          };
+        }
+      ) blueprint.nixosConfigurations;
 
       agenix-rekey = inputs.agenix-rekey.configure {
         userFlake = inputs.self;
