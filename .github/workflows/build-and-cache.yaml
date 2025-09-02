@@ -9,24 +9,9 @@ jobs:
   build-and-cache:
     strategy:
       matrix:
-        os: [ubuntu-22.04, macos-latest, ubuntu-22.04-arm]
+        os: [macos-latest, ubuntu-22.04-arm]
     runs-on: ${{ matrix.os }}
     steps:
-      - if: matrix.os == 'ubuntu-22.04'
-        name: Maximize build space
-        uses: easimon/maximize-build-space@master
-        with:
-          remove-dotnet: "true"
-          remove-haskell: "true"
-          remove-codeql: "true"
-          remove-docker-images: "true"
-          root-reserve-mb: "10240"
-          build-mount-path: "/nix"
-
-      - if: matrix.os == 'ubuntu-22.04'
-        name: Fix permissions
-        run: sudo chown -R root /nix
-
       - name: Checkout code
         uses: actions/checkout@v4
 
