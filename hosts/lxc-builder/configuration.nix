@@ -6,6 +6,7 @@
   imports = [
     flake.lxcModules.default
     ./buildbot.nix
+    ./attic-watch.nix
   ];
 
   lxc = {

@@ -56,8 +56,6 @@
     branches = {
       all-branches = {
         matchGlob = "*";
-        registerGCRoots = true;
-        updateOutputs = true;
       };
     };
   };
