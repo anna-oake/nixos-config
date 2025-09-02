@@ -11,7 +11,7 @@
 
   lxc = {
     cores = 10;
-    memory = 30720;
+    memory = 32768;
     diskSize = 64;
   };
 
