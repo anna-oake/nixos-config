@@ -1,4 +1,5 @@
 {
+  inputs,
   config,
   lib,
   ...
@@ -15,6 +16,10 @@ in
   config = {
     users.mutableUsers = false;
     users.groups.users.gid = 100;
+
+    age.secrets = lib.optionalAttrs cfg.me.enable {
+      "user-password" = { };
+    };
 
     users.users = {
       ${config.me.username} = mkIf cfg.me.enable (
