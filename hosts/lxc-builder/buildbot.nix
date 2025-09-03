@@ -54,6 +54,7 @@
     branches = {
       all-branches = {
         matchGlob = "*";
+        registerGCRoots = false;
       };
     };
   };
