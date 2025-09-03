@@ -13,10 +13,10 @@
     environment.HOME = "/var/lib/attic-watch-store";
     serviceConfig = {
       DynamicUser = true;
-      MemoryHigh = "5%";
-      MemoryMax = "10%";
+      MemoryMax = "15%";
       LoadCredential = "attic-auth-token:${config.age.secrets."lxc-builder/attic-auth-token".path}";
       StateDirectory = "attic-watch-store";
+      Restart = "always";
     };
     path = [ pkgs.attic-client ];
     script = ''
