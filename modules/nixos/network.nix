@@ -1,6 +1,5 @@
 {
   config,
-  inputs,
   ...
 }:
 {
@@ -21,7 +20,6 @@
 
   # netbird
   age.secrets.netbird-personal = {
-    rekeyFile = (inputs.self + /secrets/secrets/netbird-personal.age);
     owner = "netbird";
     group = "netbird";
   };
@@ -33,7 +31,7 @@
   };
 
   # wifi
-  age.secrets.wifi-home.rekeyFile = (inputs.self + /secrets/secrets/wifi-home.age);
+  age.secrets.wifi-home = { };
   networking.networkmanager.ensureProfiles = {
     environmentFiles = [
       config.age.secrets.wifi-home.path

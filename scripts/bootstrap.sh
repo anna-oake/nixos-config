@@ -38,7 +38,7 @@ if [[ $HOST == lxc-* ]]; then
   LXC_JSON="$(nix "${NIX_FLAGS[@]}" eval "$FLAKE#nixosConfigurations.$HOST.config.lxc.pve" --json)"
   LXC_HOST=$(jq -r '.host' <<<"$LXC_JSON")
   [[ -n "$LXC_HOST" && "$LXC_HOST" != "null" ]] || die "LXC_HOST is empty or null"
-  LXC_HOST_DIR=$(jq -r '.keypairMountPath' <<<"$LXC_JSON")
+  LXC_HOST_DIR=$(jq -r '.keypairPath' <<<"$LXC_JSON")
   [[ -n "$LXC_HOST_DIR" && "$LXC_HOST_DIR" != "null" ]] || die "LXC_HOST_DIR is empty or null"
 elif nix "${NIX_FLAGS[@]}" eval "$FLAKE#nixosConfigurations.$HOST.config.environment.persistence" --json >/dev/null 2>&1; then
   ROUTE="impermanence"

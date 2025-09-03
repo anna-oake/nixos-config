@@ -1,12 +1,12 @@
 {
-  flake,
+  inputs,
   modulesPath,
   ...
 }:
 {
   imports = [
     "${modulesPath}/virtualisation/proxmox-lxc.nix"
-    flake.commonModules.default
+    inputs.self.commonModules.default
     ./profiles
   ];
 
@@ -15,6 +15,7 @@
   ];
 
   proxmoxLXC.manageNetwork = true;
+  networking.firewall.enable = false;
 
   age.identityPaths = [ "/nix-lxc/agenix_key" ];
 

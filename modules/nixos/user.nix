@@ -18,7 +18,7 @@ in
     users.groups.users.gid = 100;
 
     age.secrets = lib.optionalAttrs cfg.me.enable {
-      "user-password".rekeyFile = "${inputs.self}/secrets/secrets/user-password.age";
+      "user-password" = { };
     };
 
     users.users = {

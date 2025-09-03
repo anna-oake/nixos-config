@@ -1,12 +1,11 @@
 {
-  lib,
   inputs,
-  flake,
+  lib,
   ...
 }:
 let
   part = "/dev/nvme0n1p5";
-  mkBtrfsMount = flake.lib.mkBtrfsMount part;
+  mkBtrfsMount = inputs.self.lib.mkBtrfsMount part;
 in
 {
   imports = [

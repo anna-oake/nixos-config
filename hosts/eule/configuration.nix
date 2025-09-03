@@ -1,18 +1,15 @@
 {
-  config,
+  inputs,
   lib,
   pkgs,
-  flake,
-  inputs,
   ...
 }:
-
 {
   imports = [
     ./hardware-configuration.nix
     ./gaming.nix
     ./samba.nix
-    flake.nixosModules.default
+    inputs.self.nixosModules.default
     inputs.jovian.nixosModules.default
   ];
 

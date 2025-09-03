@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  flake,
   ...
 }:
 let
@@ -36,7 +35,7 @@ let
         "soft"
         "uid=${toString config.users.users.gamer.uid}"
         "gid=${toString config.users.groups.users.gid}"
-        "credentials=${config.age.secrets.mynah-smb-eule.path}"
+        "credentials=${config.age.secrets."eule/mynah-smb".path}"
       ];
     }) mounts;
 in
@@ -67,9 +66,9 @@ in
     openFirewall = true;
   };
 
-  age.secrets.gamer-samba-password.rekeyFile = "${flake}/secrets/secrets/eule/gamer-samba-password.age";
+  age.secrets."eule/gamer-samba-password" = { };
   system.activationScripts.set-samba-password = ''
-    smb_password=$(cat "${config.age.secrets.gamer-samba-password.path}")
+    smb_password=$(cat "${config.age.secrets."eule/gamer-samba-password".path}")
     echo -e "$smb_password\n$smb_password\n" | ${lib.getExe' pkgs.samba "smbpasswd"} -a -s gamer
   '';
 
@@ -77,7 +76,7 @@ in
   environment.systemPackages = with pkgs; [
     cifs-utils
   ];
-  age.secrets.mynah-smb-eule.rekeyFile = "${flake}/secrets/secrets/eule/mynah-smb-eule.age";
+  age.secrets."eule/mynah-smb" = { };
   fileSystems = mkMynahMounts {
     "/mnt/mynah/family" = "family";
   };

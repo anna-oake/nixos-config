@@ -71,7 +71,7 @@ let
       }
     ];
 
-    compressCommand = "zstd -19 -T0 -c";
+    compressCommand = "zstd -3 -T0 -c";
     compressionExtension = ".zst";
     extraInputs = [ pkgs.zstd ];
 
