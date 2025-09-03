@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  inputs,
   ...
 }:
 let
@@ -46,20 +45,24 @@ in
   };
   config = lib.mkIf cfg.enable {
     users.groups =
-      lib.genAttrs (map (share: "share-${share}") (lib.attrNames cfg.extraShares)) (share: { })
+      lib.genAttrs (map (share: "share-${share}") (builtins.attrNames cfg.extraShares)) (share: { })
       // {
         users.gid = 100;
       };
 
     users.users = lib.mapAttrs (name: user: mapShareUser name user) cfg.users;
+
     age.secrets =
-      lib.genAttrs
-        (lib.concatMap (name: [
-          "${cfg.secretsDomain}/${name}-unix-password"
-          "${cfg.secretsDomain}/${name}-samba-password"
-        ]) (lib.attrNames cfg.users))
-        (secretName: {
-          rekeyFile = "${inputs.self}/secrets/secrets/${secretName}.age";
-        });
+      let
+        users = builtins.attrNames cfg.users;
+        mk =
+          name:
+          map (s: "${cfg.secretsDomain}/${name}-${s}") [
+            "unix-password"
+            "samba-password"
+          ];
+        names = lib.concatMap mk users;
+      in
+      lib.genAttrs names (_: { });
   };
 }

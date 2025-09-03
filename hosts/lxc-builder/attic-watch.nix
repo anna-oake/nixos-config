@@ -1,12 +1,10 @@
 {
   config,
   pkgs,
-  inputs,
   ...
 }:
 {
-  age.secrets."lxc-builder/attic-auth-token".rekeyFile =
-    "${inputs.self}/secrets/secrets/lxc-builder/attic-auth-token.age";
+  age.secrets."lxc-builder/attic-auth-token" = { };
 
   systemd.services.attic-watch-store = {
     wantedBy = [ "multi-user.target" ];

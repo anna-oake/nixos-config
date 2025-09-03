@@ -1,6 +1,6 @@
 {
+  inputs,
   pkgs,
-  flake,
   onlyArm,
   onlyX86,
   ...
@@ -8,7 +8,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    flake.nixosModules.default
+    inputs.self.nixosModules.default
   ];
 
   hardware.asahi.peripheralFirmwareDirectory = ./firmware;

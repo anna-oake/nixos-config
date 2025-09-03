@@ -1,6 +1,6 @@
 {
-  pkgs,
   inputs,
+  pkgs,
   hostName,
   config,
   ...
@@ -12,11 +12,9 @@
   ];
 
   age.secrets = {
-    "lxc-builder/gh-app-key".rekeyFile = "${inputs.self}/secrets/secrets/lxc-builder/gh-app-key.age";
-    "lxc-builder/gh-webhook-secret".rekeyFile =
-      "${inputs.self}/secrets/secrets/lxc-builder/gh-webhook-secret.age";
+    "lxc-builder/gh-app-key" = { };
+    "lxc-builder/gh-webhook-secret" = { };
     "lxc-builder/basic-auth-pwd" = {
-      rekeyFile = "${inputs.self}/secrets/secrets/lxc-builder/basic-auth-pwd.age";
       owner = "buildbot";
     };
   };

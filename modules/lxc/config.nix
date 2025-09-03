@@ -73,10 +73,10 @@
             default = "/rpool/nix-tarballs/dump";
             description = "The path on the PVE host where the vzdump tarballs are stored";
           };
-          keypairMountPath = lib.mkOption {
+          keypairPath = lib.mkOption {
             type = lib.types.str;
             default = "/root/nix-lxc/${hostName}";
-            description = "The path on the PVE host where the agenix keypair is mounted";
+            description = "The path on the PVE host where the agenix keypair is stored";
           };
         };
       };
@@ -84,7 +84,7 @@
     };
   };
   config = {
-    lxc.mounts = [ "${config.lxc.pve.keypairMountPath},mp=/nix-lxc,ro=1" ];
+    lxc.mounts = [ "${config.lxc.pve.keypairPath},mp=/nix-lxc,ro=1" ];
     lxc.features = [ "nesting" ];
   };
 }

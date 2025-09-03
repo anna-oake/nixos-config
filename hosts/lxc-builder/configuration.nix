@@ -1,10 +1,10 @@
 {
-  flake,
+  inputs,
   ...
 }:
 {
   imports = [
-    flake.lxcModules.default
+    inputs.self.lxcModules.default
     ./buildbot.nix
     ./attic-watch.nix
   ];

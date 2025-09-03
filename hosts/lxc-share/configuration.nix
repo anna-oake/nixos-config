@@ -1,11 +1,11 @@
 {
+  inputs,
   config,
-  flake,
   ...
 }:
 {
   imports = [
-    flake.lxcModules.default
+    inputs.self.lxcModules.default
   ];
 
   lxc.profiles.share = {

@@ -1,15 +1,14 @@
 {
-  pkgs,
   inputs,
+  pkgs,
   lib,
-  flake,
   ...
 }:
 {
   imports = [
     inputs.nix-index-database.nixosModules.nix-index
     inputs.nix-things.nixosModules.default
-    flake.commonModules.default
+    inputs.self.commonModules.default
   ];
 
   users.me.enable = lib.mkDefault true;

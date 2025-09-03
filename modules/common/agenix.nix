@@ -1,7 +1,6 @@
 {
   inputs,
   hostName,
-  pkgs,
   lib,
   config,
   ...
@@ -10,7 +9,8 @@ let
   ageMasterIdentities = [
     (inputs.self.outPath + "/secrets/master-keys/yubikey-a.pub")
   ];
-  publicKeyAbsPath = inputs.self.outPath + "/" + config.age.publicKeyRelPath;
+  publicKeyRelPath = "secrets/public-keys/${hostName}.pub";
+  publicKeyAbsPath = inputs.self.outPath + "/" + publicKeyRelPath;
 in
 {
   imports = [
@@ -19,10 +19,6 @@ in
   ];
 
   options = {
-    age.publicKeyRelPath = lib.mkOption {
-      type = lib.types.str;
-      default = "secrets/public-keys/${hostName}.pub";
-    };
     age.ready = lib.mkOption {
       type = lib.types.bool;
       default = builtins.pathExists publicKeyAbsPath;
@@ -30,19 +26,11 @@ in
   };
 
   config = {
-    environment.systemPackages = [
-      pkgs.agenix-rekey
-    ];
-
-    nixpkgs.overlays = [
-      inputs.agenix-rekey.overlays.default
-    ];
-
     warnings = [
       (lib.mkIf (!config.age.ready) ''
         After initial target provisioning, fetch the target ssh identity:
 
-          ssh-keyscan -qt ssh-ed25519 $target | cut -d' ' -f2,3 > ./${config.age.publicKeyRelPath}
+          ssh-keyscan -qt ssh-ed25519 $target | cut -d' ' -f2,3 > ./${publicKeyRelPath}
 
         And rebuild NixOS.
       '')
@@ -51,6 +39,7 @@ in
     age.rekey = {
       masterIdentities = ageMasterIdentities;
       localStorageDir = inputs.self.outPath + "/secrets/rekeyed/${hostName}";
+      secretsDir = inputs.self.outPath + "/secrets/secrets";
       storageMode = "local";
     }
     // lib.optionalAttrs config.age.ready {

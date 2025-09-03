@@ -1,8 +1,7 @@
 {
-  pkgs,
+  inputs,
   osConfig,
   config,
-  inputs,
   lib,
   ...
 }:

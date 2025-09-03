@@ -1,12 +1,12 @@
 {
-  flake,
+  inputs,
   modulesPath,
   ...
 }:
 {
   imports = [
     "${modulesPath}/virtualisation/proxmox-lxc.nix"
-    flake.commonModules.default
+    inputs.self.commonModules.default
     ./profiles
   ];
 

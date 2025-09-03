@@ -4,9 +4,6 @@
   ...
 }:
 {
-  # common configuration for all architectures
-  # please see subdirectories for arch-specific configuration
-
   imports = [
     inputs.nix-things.commonModules.default
   ];

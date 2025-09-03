@@ -1,8 +1,7 @@
 {
+  inputs,
   pkgs,
   hostName,
-  inputs,
-  flake,
   config,
   ...
 }:
@@ -11,7 +10,7 @@
 
   imports = [
     inputs.nix-homebrew.darwinModules.nix-homebrew
-    flake.commonModules.default
+    inputs.self.commonModules.default
   ];
 
   macos-layouts = {

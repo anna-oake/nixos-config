@@ -1,6 +1,5 @@
 {
   config,
-  flake,
   ...
 }:
 {
@@ -22,7 +21,7 @@
     };
   };
 
-  age.secrets.gamer-password.rekeyFile = "${flake}/secrets/secrets/eule/gamer-password.age";
+  age.secrets."eule/gamer-password" = { };
   users.users.gamer = {
     isNormalUser = true;
     uid = 1001;
@@ -33,7 +32,7 @@
       "uinput"
       "netbird"
     ];
-    hashedPasswordFile = config.age.secrets.gamer-password.path;
+    hashedPasswordFile = config.age.secrets."eule/gamer-password".path;
     openssh.authorizedKeys.keys = [
       config.me.sshKey
     ];

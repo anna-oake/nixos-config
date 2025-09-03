@@ -3,12 +3,12 @@
 
 # generate a keypair, rekey all secrets
 [group('deployment')]
-@bootstrap host:
+@bootstrap host: _add
   HOST={{host}} scripts/bootstrap.sh
 
 # install with nixos-anywhere or LXC in PVE
 [group('deployment')]
-@install host build="local":
+@install host build="local": _add
   if [[ "{{host}}" == lxc-* ]]; then \
     just _install-lxc {{host}}; \
   else \
@@ -24,26 +24,29 @@
 
   nix run nixos-anywhere -- \
         --extra-files '.bootstrap/extra' \
-        --build-on local \
+        --build-on '{{build}}' \
         --flake '.#{{host}}' \
         root@{{host}}.lan.al
 
 # use deploy-rs to update an existing host
 [group('deployment')]
-@deploy host:
-  nix run github:serokell/deploy-rs#deploy-rs -- .#{{host}} --remote-build -s
-
-# rekey all secrets
-[group('secrets')]
-@rekey:
-  nix run github:oddlama/agenix-rekey -- rekey -a
+@deploy host: _add
+  nix run github:serokell/deploy-rs#deploy-rs -- .#{{host}} -s
 
 # create/edit agenix secret
 [group('secrets')]
-@secret secret: && rekey
+@secret secret: _add && rekey
   EDITOR=nano nix run github:oddlama/agenix-rekey -- edit ./secrets/secrets/{{secret}}.age
+
+# rekey all agenix secrets
+[group('secrets')]
+@rekey: _add
+  nix run github:oddlama/agenix-rekey -- rekey -a
 
 # navigate config tree
 [group('tools')]
 @inspect:
   nix run nixpkgs#nix-inspect -- -p .
+
+@_add:
+    git add --all
