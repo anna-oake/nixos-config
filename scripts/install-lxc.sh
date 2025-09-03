@@ -26,9 +26,6 @@ ask_pct_id() {
 
 need nix; need jq; need scp; need awk
 
-git rev-parse --is-inside-work-tree >/dev/null 2>&1 || die "not inside a git repo"
-# git status --porcelain | grep -q . && die "working tree not clean; commit/stash changes first"
-
 wipe
 
 echo "Loading..."
