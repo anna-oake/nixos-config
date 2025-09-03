@@ -12,5 +12,6 @@
   ];
   imports = [
     ./share
+    ./net-router
   ];
 }

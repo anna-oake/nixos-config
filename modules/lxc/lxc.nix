@@ -7,6 +7,7 @@
   imports = [
     "${modulesPath}/virtualisation/proxmox-lxc.nix"
     inputs.self.commonModules.default
+    inputs.nix-things.nixosModules.default
     ./profiles
   ];
 
