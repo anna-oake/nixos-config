@@ -8,6 +8,10 @@
 let
   ageMasterIdentities = [
     (inputs.self.outPath + "/secrets/master-keys/yubikey-a.pub")
+    {
+      identity = "/Users/koteeq/.ssh/agenix-master";
+      pubkey = builtins.readFile (inputs.self.outPath + "/secrets/master-keys/agenix-master.pub");
+    }
   ];
   publicKeyRelPath = "secrets/public-keys/${hostName}.pub";
   publicKeyAbsPath = inputs.self.outPath + "/" + publicKeyRelPath;
