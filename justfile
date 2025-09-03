@@ -36,11 +36,16 @@
 # create/edit agenix secret
 [group('secrets')]
 @secret secret: _add && rekey
-  EDITOR=nano nix run github:oddlama/agenix-rekey -- edit ./secrets/secrets/{{secret}}.age
+  EDITOR=nano \
+  AGENIX_REKEY_PRIMARY_IDENTITY=$(cat ./secrets/master-keys/agenix-master.pub) \
+  AGENIX_REKEY_PRIMARY_IDENTITY_ONLY=true \
+  nix run github:oddlama/agenix-rekey -- edit ./secrets/secrets/{{secret}}.age
 
 # rekey all agenix secrets
 [group('secrets')]
 @rekey: _add
+  AGENIX_REKEY_PRIMARY_IDENTITY=$(cat ./secrets/master-keys/agenix-master.pub) \
+  AGENIX_REKEY_PRIMARY_IDENTITY_ONLY=true \
   nix run github:oddlama/agenix-rekey -- rekey -a
 
 # navigate config tree
