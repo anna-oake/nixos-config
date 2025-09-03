@@ -31,6 +31,7 @@
   };
 
   # wifi
+  age.secrets.wifi-home = { };
   networking.networkmanager.ensureProfiles = {
     environmentFiles = [
       config.age.secrets.wifi-home.path
