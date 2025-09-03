@@ -75,7 +75,7 @@ let
     compressionExtension = ".zst";
     extraInputs = [ pkgs.zstd ];
 
-    extraArgs = "--transform=s,^[^/],./\\0,";
+    extraArgs = "--transform=s,^etc/vzdump/,./etc/vzdump/,";
   };
 in
 {
