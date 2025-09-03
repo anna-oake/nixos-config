@@ -77,17 +77,13 @@
       url = "github:serokell/deploy-rs";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    buildbot-nix = {
-      url = "github:nix-community/buildbot-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs =
     inputs:
     let
       inherit (inputs.nixpkgs) lib;
+      inherit (inputs.nix-things.lib) mkDiskoChecks mkLxcChecks mkDeployNodes;
 
       blueprint = inputs.blueprint {
         inherit inputs;
@@ -102,28 +98,6 @@
             imports = lib.attrsets.attrValues modules;
           };
         };
-
-      withDisko = lib.filterAttrs (
-        _: c: c.config.system.build ? diskoScript
-      ) blueprint.nixosConfigurations;
-      diskoChecks = lib.foldl' (
-        acc: name:
-        let
-          c = withDisko.${name};
-          sys = c.pkgs.system;
-        in
-        lib.recursiveUpdate acc { ${sys}."disko-${name}" = c.config.system.build.diskoScript; }
-      ) { } (builtins.attrNames withDisko);
-
-      withLxc = lib.filterAttrs (_: c: c.config ? lxc) blueprint.nixosConfigurations;
-      lxcTarballChecks = lib.foldl' (
-        acc: name:
-        let
-          c = withLxc.${name};
-          sys = c.pkgs.system;
-        in
-        lib.recursiveUpdate acc { ${sys}."lxc-tarball-${name}" = c.config.system.build.tarball; }
-      ) { } (builtins.attrNames withLxc);
     in
     {
       inherit (blueprint)
@@ -137,25 +111,18 @@
       lxcModules = mkModules blueprint.modules.lxc;
       nixosModules = mkModules blueprint.nixosModules;
       darwinModules = mkModules blueprint.darwinModules;
+
       checks = lib.foldl' lib.recursiveUpdate blueprint.checks [
-        diskoChecks
-        lxcTarballChecks
+        (mkDiskoChecks blueprint.nixosConfigurations)
+        (mkLxcChecks blueprint.nixosConfigurations)
         (builtins.mapAttrs (system: packages: { inherit (packages) deploy-rs; }) inputs.deploy-rs.packages)
       ];
 
-      deploy.nodes = lib.mapAttrs (
-        name: cfg:
+      deploy.nodes =
         let
-          hostname = (lib.strings.removePrefix "lxc-" name) + ".lan.ci";
+          inherit ((import inputs.self.commonModules.me).config.me) lanDomain;
         in
-        {
-          inherit hostname;
-          profiles.system = {
-            sshUser = "root";
-            path = inputs.deploy-rs.lib.${cfg.pkgs.system}.activate.nixos cfg;
-          };
-        }
-      ) blueprint.nixosConfigurations;
+        mkDeployNodes lanDomain blueprint.nixosConfigurations;
 
       agenix-rekey = inputs.agenix-rekey.configure {
         userFlake = inputs.self;
