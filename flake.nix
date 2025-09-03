@@ -77,11 +77,6 @@
       url = "github:serokell/deploy-rs";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    buildbot-nix = {
-      url = "github:nix-community/buildbot-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs =
@@ -137,25 +132,23 @@
       lxcModules = mkModules blueprint.modules.lxc;
       nixosModules = mkModules blueprint.nixosModules;
       darwinModules = mkModules blueprint.darwinModules;
-      checks = lib.foldl' lib.recursiveUpdate blueprint.checks [
-        diskoChecks
-        lxcTarballChecks
-        (builtins.mapAttrs (system: packages: { inherit (packages) deploy-rs; }) inputs.deploy-rs.packages)
-      ];
 
-      deploy.nodes = lib.mapAttrs (
-        name: cfg:
+      checks =
         let
-          hostname = (lib.strings.removePrefix "lxc-" name) + ".lan.ci";
+          inherit (inputs.nix-things.lib) mkDiskoChecks mkLxcChecks;
         in
-        {
-          inherit hostname;
-          profiles.system = {
-            sshUser = "root";
-            path = inputs.deploy-rs.lib.${cfg.pkgs.system}.activate.nixos cfg;
-          };
-        }
-      ) blueprint.nixosConfigurations;
+        lib.foldl' lib.recursiveUpdate blueprint.checks [
+          (mkDiskoChecks blueprint.nixosConfigurations)
+          (mkLxcChecks blueprint.nixosConfigurations)
+          (builtins.mapAttrs (system: packages: { inherit (packages) deploy-rs; }) inputs.deploy-rs.packages)
+        ];
+
+      deploy.nodes =
+        let
+          inherit ((import inputs.self.commonModules.me).config.me) lanDomain;
+          inherit (inputs.nix-things.lib) mkDeployNodes;
+        in
+        mkDeployNodes lanDomain blueprint.nixosConfigurations;
 
       agenix-rekey = inputs.agenix-rekey.configure {
         userFlake = inputs.self;

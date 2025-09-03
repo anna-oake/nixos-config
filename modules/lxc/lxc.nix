@@ -1,6 +1,7 @@
 {
   inputs,
   lib,
+  config,
   ...
 }:
 {
@@ -9,5 +10,5 @@
     inputs.nix-things.lxcModules.default
   ];
 
-  lxc.pve.host = lib.mkDefault "mynah.lan.ci";
+  lxc.pve.host = lib.mkDefault "mynah." + config.me.lanDomain;
 }
