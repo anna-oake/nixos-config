@@ -1,5 +1,6 @@
 {
   inputs,
+  config,
   ...
 }:
 {
@@ -8,7 +9,7 @@
   ];
 
   lxc.network = "vmbr1";
-  lxc.pve.host = "kolibri.lan.al";
+  lxc.pve.host = "kolibri." + config.me.lanDomain;
 
   lxc.profiles.net-router = {
     enable = true;
