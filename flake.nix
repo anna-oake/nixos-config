@@ -78,7 +78,12 @@
     inputs:
     let
       inherit (inputs.nixpkgs) lib;
-      inherit (inputs.nix-things.lib) mkDiskoChecks mkLxcChecks mkDeployNodes;
+      inherit (inputs.nix-things.lib)
+        mkDiskoChecks
+        mkLxcChecks
+        mkDeployChecks
+        mkDeployNodes
+        ;
 
       blueprint = inputs.blueprint {
         inherit inputs;
@@ -110,7 +115,7 @@
       checks = lib.foldl' lib.recursiveUpdate blueprint.checks [
         (mkDiskoChecks blueprint.nixosConfigurations)
         (mkLxcChecks blueprint.nixosConfigurations)
-        (builtins.mapAttrs (system: packages: { inherit (packages) deploy-rs; }) inputs.deploy-rs.packages)
+        mkDeployChecks
       ];
 
       deploy.nodes =
