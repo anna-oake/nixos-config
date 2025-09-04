@@ -146,6 +146,7 @@
       "inputs": {
         "flake-compat": "flake-compat_3",
         "nixpkgs": [
+          "nix-things",
           "nixpkgs"
         ],
         "utils": "utils"
@@ -594,6 +595,7 @@
         "blueprint": [
           "blueprint"
         ],
+        "deploy-rs": "deploy-rs",
         "lanzaboote": "lanzaboote",
         "nix-unstable": [
           "nixpkgs"
@@ -603,11 +605,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1756937167,
-        "narHash": "sha256-z16/yx3qvCYH4M0hT41+iuUH/u8M5WKwFDnioIwnpOw=",
+        "lastModified": 1756978116,
+        "narHash": "sha256-G1POHGLyosGXbCv6tqYnzkLolzvxPk4kFvkDgjsjAUw=",
         "owner": "oake",
         "repo": "nix-things",
-        "rev": "500d1acd6acb6207595375fdc2c59c9afc08200e",
+        "rev": "9971c41bd2b58c5504caa0fa5d5288cfa240d0f7",
         "type": "github"
       },
       "original": {
@@ -798,7 +800,6 @@
         "agenix-rekey": "agenix-rekey",
         "apple-silicon-support": "apple-silicon-support",
         "blueprint": "blueprint",
-        "deploy-rs": "deploy-rs",
         "disko": "disko",
         "home-manager": "home-manager_2",
         "homebrew-cask": "homebrew-cask",
