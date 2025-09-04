@@ -8,7 +8,7 @@
   ];
 
   lxc.network = "vmbr1";
-  lxc.pve.host = "kolibri.lan.ci";
+  lxc.pve.host = "kolibri.lan.al";
 
   lxc.profiles.net-router = {
     enable = true;
