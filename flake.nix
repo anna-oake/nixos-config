@@ -83,6 +83,7 @@
         mkLxcChecks
         mkDeployChecks
         mkDeployNodes
+        mkBootstrapScripts
         ;
 
       blueprint = inputs.blueprint {
@@ -117,6 +118,8 @@
         (mkLxcChecks blueprint.nixosConfigurations)
         mkDeployChecks
       ];
+
+      packages = mkBootstrapScripts blueprint.nixosConfigurations inputs.self;
 
       deploy.nodes =
         let
