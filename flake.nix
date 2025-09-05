@@ -119,7 +119,7 @@
         mkDeployChecks
       ];
 
-      packages = mkBootstrapScripts blueprint.nixosConfigurations inputs.self;
+      packages = mkBootstrapScripts blueprint.nixosConfigurations;
 
       deploy.nodes =
         let
