@@ -80,7 +80,6 @@
       inherit (inputs.nixpkgs) lib;
       inherit (inputs.nix-things.lib)
         mkDiskoChecks
-        mkDeployChecks
         mkDeployNodes
         mkBootstrapScripts
         mkLxcScripts
@@ -115,7 +114,6 @@
 
       checks = lib.foldl' lib.recursiveUpdate blueprint.checks [
         (mkDiskoChecks blueprint.nixosConfigurations)
-        mkDeployChecks
       ];
 
       packages = lib.foldl' lib.recursiveUpdate blueprint.packages [
