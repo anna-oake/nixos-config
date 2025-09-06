@@ -18,11 +18,12 @@
   time.timeZone = "Europe/Amsterdam";
 
   boot.loader = {
-    efi.canTouchEfiVariables = lib.mkOverride 5 true; # priority 5 or disko fucks this up
+    efi.canTouchEfiVariables = lib.mkOverride 5 false; # priority 5 or disko fucks this up
     grub = {
       enable = true;
       useOSProber = true;
       efiSupport = true;
+      efiInstallAsRemovable = true;
       devices = lib.mkOverride 5 [ "nodev" ]; # priority 5 or disko fucks this up
       extraConfig = ''
         menuentry_id_option="--id"
