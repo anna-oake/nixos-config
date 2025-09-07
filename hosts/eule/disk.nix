@@ -5,9 +5,9 @@
 }:
 let
   # fucking around:
-  device = "/dev/disk/by-id/usb-KIOXIA_EXCERIA_PLUS_635FC19CFPH4-0:0";
+  #device = "/dev/disk/by-id/usb-KIOXIA_EXCERIA_PLUS_635FC19CFPH4-0:0";
   # production:
-  # device = "/dev/disk/by-id/nvme-KINGSTON_SNV3S2000G_50026B73834AB709";
+  device = "/dev/disk/by-id/nvme-KINGSTON_SNV3S2000G_50026B73834AB709";
   rootPart = device + "-part2";
 in
 {
