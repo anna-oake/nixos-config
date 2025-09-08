@@ -23,11 +23,6 @@
 
     apple-silicon-support.url = "github:nix-community/nixos-apple-silicon";
 
-    nix-index-database = {
-      url = "github:nix-community/nix-index-database";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     agenix = {
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -108,7 +103,6 @@
         ;
 
       commonModules = mkModules blueprint.modules.common;
-      lxcModules = mkModules blueprint.modules.lxc;
       nixosModules = mkModules blueprint.nixosModules;
       darwinModules = mkModules blueprint.darwinModules;
 
@@ -121,11 +115,7 @@
         (mkLxcScripts blueprint.nixosConfigurations)
       ];
 
-      deploy.nodes =
-        let
-          inherit ((import inputs.self.commonModules.me).config.me) lanDomain;
-        in
-        mkDeployNodes lanDomain blueprint.nixosConfigurations;
+      deploy.nodes = mkDeployNodes blueprint.nixosConfigurations;
 
       agenix-rekey = inputs.agenix-rekey.configure {
         userFlake = inputs.self;

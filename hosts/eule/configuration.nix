@@ -13,6 +13,8 @@
     inputs.jovian.nixosModules.default
   ];
 
+  profiles.workstation.enable = true;
+
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   time.timeZone = "Europe/Amsterdam";

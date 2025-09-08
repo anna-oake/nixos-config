@@ -5,10 +5,10 @@
 }:
 {
   imports = [
-    inputs.self.lxcModules.default
+    inputs.self.nixosModules.default
   ];
 
-  lxc.profiles.share = {
+  profiles.server.share = {
     enable = true;
     serverString = "Anna Mynah";
     users = {
@@ -55,9 +55,12 @@
     };
   };
 
-  lxc.mounts = [
-    "/storage,mp=/storage"
-  ];
+  lxc = {
+    enable = true;
+    mounts = [
+      "/storage,mp=/storage"
+    ];
+  };
 
   system.stateVersion = "25.11";
 }

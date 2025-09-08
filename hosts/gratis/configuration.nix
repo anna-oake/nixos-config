@@ -5,14 +5,13 @@
 {
   imports = [
     inputs.self.nixosModules.default
+    ./hardware-configuration.nix
+    ./users.nix
   ];
 
-  profiles.server.net-router = {
-    enable = true;
-    port = 30304;
-  };
+  profiles.server.enable = true;
 
-  lxc.enable = true;
+  deploy.fqdn = "gratis.oa.ke";
 
   system.stateVersion = "25.11";
 }
