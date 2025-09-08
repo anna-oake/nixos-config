@@ -11,6 +11,8 @@
     inputs.self.nixosModules.default
   ];
 
+  profiles.workstation.enable = true;
+
   hardware.asahi.peripheralFirmwareDirectory = ./firmware;
 
   boot.extraModprobeConfig = ''
