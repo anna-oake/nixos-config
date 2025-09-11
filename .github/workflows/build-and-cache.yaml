@@ -9,7 +9,7 @@ jobs:
   build-and-cache:
     strategy:
       matrix:
-        os: [macos-latest, ubuntu-22.04-arm]
+        os: [macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout code
