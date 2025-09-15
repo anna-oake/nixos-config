@@ -1,6 +1,7 @@
 {
   inputs,
   config,
+  lib,
   ...
 }:
 {
@@ -61,6 +62,11 @@
       "/storage,mp=/storage"
     ];
   };
+
+  # Arq Backup can't connect otherwise
+  services.openssh.settings.Macs = lib.mkOptionDefault [
+    "hmac-sha2-512"
+  ];
 
   system.stateVersion = "25.11";
 }
