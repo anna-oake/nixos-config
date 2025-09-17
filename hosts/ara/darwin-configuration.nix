@@ -5,6 +5,7 @@
 {
   imports = [
     inputs.self.darwinModules.default
+    ./wallpaper.nix
   ];
 
   profiles.workstation.enable = true;
