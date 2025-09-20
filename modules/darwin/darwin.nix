@@ -45,24 +45,5 @@
     };
 
     taps = builtins.attrNames config.nix-homebrew.taps;
-
-    casks = [
-      # dev
-      "visual-studio-code"
-
-      # apps
-      "telegram"
-    ];
   };
-
-  environment.systemPackages = with pkgs; [
-    gh
-    git
-    htop
-    btop
-    nixfmt-rfc-style
-    nixd
-    fzf
-    zoxide
-  ];
 }
