@@ -15,4 +15,6 @@
   '';
 
   security.pam.services.sudo_local.touchIdAuth = true;
+
+  nix.settings.trusted-users = [ config.me.username ];
 }

@@ -51,6 +51,12 @@
       "nix"
       "just"
       "just-ls"
+      "graphql"
+      "toml"
+      "git-firefly"
+    ];
+    extraPackages = [
+      pkgs.gopls
     ];
     userSettings = {
       ui_font_size = 15;

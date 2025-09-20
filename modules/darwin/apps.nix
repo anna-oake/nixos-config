@@ -28,6 +28,8 @@
     daisydisk
     hexfiend
     httpie
+    go
+    devenv
   ];
 
   homebrew.casks = [
@@ -41,6 +43,7 @@
     "charles" # installs from nixpkgs but doesn't show up as .app
     "ocenaudio"
     "loopback"
+    "transmit"
   ];
 
   fonts.packages = with pkgs; [
