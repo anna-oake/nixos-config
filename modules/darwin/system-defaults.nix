@@ -19,7 +19,17 @@
       NSDocumentSaveNewDocumentsToCloud = false;
     };
 
+    screensaver = {
+      # TODO: this is actually broken - https://github.com/nix-darwin/nix-darwin/issues/908
+      askForPassword = true;
+      askForPasswordDelay = 0;
+    };
+
     CustomUserPreferences = {
+      NSGlobalDomain = {
+        WebKitDeveloperExtras = true;
+      };
+
       "com.apple.menuextra.clock" = {
         ShowSeconds = true;
       };
@@ -38,6 +48,12 @@
         AutoFillMiscellaneousForms = false;
         AutoFillPasswords = false;
         ShowOverlayStatusBar = true;
+        AutoOpenSafeDownloads = false;
+        IncludeDevelopMenu = true;
+        IncludeInternalDebugMenu = true;
+        ShowDevelopMenu = 1;
+        WebKitDeveloperExtrasEnabledPreferenceKey = true;
+        "com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled" = true;
       };
 
       "com.apple.symbolichotkeys" = {
@@ -91,40 +107,36 @@
         showMissionControlGestureEnabled = true;
         showAppExposeGestureEnabled = true;
       };
-    };
-
-    CustomSystemPreferences = {
-      "com.apple.CoreBrightness"."DisplayPreferences"."37D8832A-2D66-02CA-B9F7-8F30A301B230" = {
-        AutoBrightnessEnable = false;
-      };
 
       "com.apple.desktopservices" = {
         # Avoid creating .DS_Store files on USB or network volumes
         DSDontWriteUSBStores = true;
         DSDontWriteNetworkStores = true;
       };
+
       "com.apple.frameworks.diskimages" = {
         # Disable disk image verification
         skip-verify = true;
         skip-verify-locked = true;
         skip-verify-remote = true;
       };
-      "com.apple.CrashReporter" = {
-        # Disable crash reporter
-        DialogType = "none";
-      };
+
       "com.apple.AdLib" = {
         # Disable personalized advertising
         forceLimitAdTracking = true;
         allowApplePersonalizedAdvertising = false;
         allowIdentifierForAdvertising = false;
       };
-      "com.apple.Safari" = {
-        IncludeDevelopMenu = true;
-        IncludeInternalDebugMenu = true;
-        WebKitDeveloperExtras = true;
-        WebKitDeveloperExtrasEnabledPreferenceKey = true;
-        "com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled" = true;
+
+      "com.apple.CrashReporter" = {
+        # Disable crash reporter
+        DialogType = "none";
+      };
+    };
+
+    CustomSystemPreferences = {
+      "com.apple.CoreBrightness"."DisplayPreferences"."37D8832A-2D66-02CA-B9F7-8F30A301B230" = {
+        AutoBrightnessEnable = false;
       };
     };
 

@@ -1,7 +1,5 @@
 {
-  inputs,
   osConfig,
-  config,
   lib,
   pkgs,
   ...
@@ -9,11 +7,7 @@
 {
   programs.zsh.enable = true;
   programs.zsh.oh-my-zsh.enable = true;
-  # programs.oh-my-posh = {
-  #   enable = true;
-  #   enableZshIntegration = true;
-  #   useTheme = "bubbles";
-  # };
+
   programs.fzf.enable = true;
   programs.zoxide = {
     enable = true;
