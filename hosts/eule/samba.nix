@@ -29,7 +29,7 @@ let
       options = [
         "x-systemd.automount"
         "noauto"
-        "x-systemd.idle-timeout=5s"
+        "x-systemd.idle-timeout=60min"
         "x-systemd.device-timeout=5s"
         "x-systemd.mount-timeout=5s"
         "soft"

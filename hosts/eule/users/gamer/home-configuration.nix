@@ -3,12 +3,43 @@
   osConfig,
   config,
   lib,
+  pkgs,
   ...
 }:
 {
   imports = [
     inputs.plasma-manager.homeModules.plasma-manager
+    inputs.steam-rom-manager.homeManagerModules.default
   ];
+
+  programs.steam-rom-manager = {
+    enable = true;
+    steamUsername = "meowkoteeq";
+    environmentVariables = {
+      romsDirectory = "/mnt/mynah/family/emudeck/roms";
+    };
+    emulators = {
+      dolphin-emu = {
+        enable = true;
+        package = pkgs.dolphin-emu;
+        romFolder = "wii";
+        fileTypes = [
+          ".iso"
+          ".ISO"
+          ".gcm"
+          ".GCM"
+          ".ciso"
+          ".CISO"
+        ];
+        extraArgs = "--exec=\"\${filePath}\" --batch --confirm=false";
+      };
+      duckstation = {
+        enable = true;
+        package = pkgs.libretro.swanstation;
+        extraArgs = "-batch -fullscreen \"\${filePath}\"";
+      };
+    };
+  };
 
   programs.plasma = {
     enable = true;

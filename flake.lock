@@ -795,7 +795,8 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-unstable": "nixpkgs-unstable",
-        "plasma-manager": "plasma-manager"
+        "plasma-manager": "plasma-manager",
+        "steam-rom-manager": "steam-rom-manager"
       }
     },
     "rust-overlay": {
@@ -817,6 +818,29 @@
       "original": {
         "owner": "oxalica",
         "repo": "rust-overlay",
+        "type": "github"
+      }
+    },
+    "steam-rom-manager": {
+      "inputs": {
+        "home-manager": [
+          "home-manager"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1740436018,
+        "narHash": "sha256-mblKQD3IFyVLN3dw7T7/qsXt1Vw7zu5Ky1rJcLu5Qeg=",
+        "owner": "mjallen18",
+        "repo": "nix-steam-rom-manager",
+        "rev": "5c0875d5942b8a1928d53a642b43a49a3c7636ea",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mjallen18",
+        "repo": "nix-steam-rom-manager",
         "type": "github"
       }
     },
