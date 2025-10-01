@@ -10,6 +10,8 @@
 
   homebrew.masApps = {
     "1Password for Safari" = 1569813296;
+    "Control Panel for Twitter" = 1668516167;
+    "Xcode" = 497799835;
   };
 
   environment.systemPackages = with pkgs; [
@@ -30,6 +32,7 @@
     httpie
     go
     devenv
+    uv
   ];
 
   homebrew.casks = [
@@ -44,6 +47,8 @@
     "ocenaudio"
     "loopback"
     "transmit"
+    "keka" # ancient in nixpkgs
+    "mist"
   ];
 
   fonts.packages = with pkgs; [
