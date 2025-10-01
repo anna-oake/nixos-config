@@ -8,6 +8,10 @@
 {
   # common configuration for macOS machines
 
+  environment.systemPath = [
+    "/Users/anna/.local/bin"
+  ];
+
   imports = [
     inputs.nix-homebrew.darwinModules.nix-homebrew
     inputs.self.commonModules.default

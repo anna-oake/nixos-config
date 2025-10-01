@@ -150,6 +150,10 @@
       orientation = "bottom";
       magnification = false;
       show-recents = false;
+      # top left hot corner - start screen saver
+      wvous-tl-corner = 5;
+      # bottom right hot corner - do nothing
+      wvous-br-corner = 1;
       persistent-apps = [
         "/System/Cryptexes/App/System/Applications/Safari.app"
         "/System/Applications/Calendar.app"
