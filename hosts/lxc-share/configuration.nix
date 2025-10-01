@@ -14,6 +14,7 @@
     serverString = "Anna Mynah";
     users = {
       anna = {
+        uid = 1001;
         sshKeys = [
           config.me.sshKey
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP+jz3sPX+PhQrpiVxdW/YVhZW2y+KrSnR8lsQAB3d+j opnsense"
@@ -26,6 +27,7 @@
         ];
       };
       maeve = {
+        uid = 1004;
         sshKey = config.me.wifeKey;
         allowedExtraShares = [
           "oake"
@@ -33,17 +35,14 @@
         ];
       };
       alina = {
+        uid = 1000;
         allowedExtraShares = [
           "family"
           "media"
         ];
       };
       eule = {
-        allowedExtraShares = [
-          "family"
-        ];
-      };
-      bazzite = {
+        uid = 1003;
         allowedExtraShares = [
           "family"
         ];
