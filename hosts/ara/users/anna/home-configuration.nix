@@ -48,6 +48,8 @@
       "graphql"
       "toml"
       "git-firefly"
+      "swift"
+      "liquid"
     ];
     extraPackages = [
       pkgs.gopls

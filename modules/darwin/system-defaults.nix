@@ -170,7 +170,7 @@
         "/System/Cryptexes/App/System/Applications/Safari.app"
         "/System/Applications/Calendar.app"
         "/System/Applications/Mail.app"
-        "/Applications/Spotify.app"
+        "/Applications/Nix Apps/Spotify.app"
         "/Applications/Telegram.app"
         "/Applications/Nix Apps/Slack.app"
         "/Applications/Nix Apps/Element.app"
