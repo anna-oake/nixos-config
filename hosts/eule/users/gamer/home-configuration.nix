@@ -33,11 +33,12 @@
         ];
         extraArgs = "--exec=\"\${filePath}\" --batch --confirm=false";
       };
-      duckstation = {
-        enable = true;
-        package = pkgs.libretro.swanstation;
-        extraArgs = "-batch -fullscreen \"\${filePath}\"";
-      };
+      # disabled because swanstation uses ancient mbedtls
+      # duckstation = {
+      #   enable = true;
+      #   package = pkgs.libretro.swanstation;
+      #   extraArgs = "-batch -fullscreen \"\${filePath}\"";
+      # };
     };
   };
 
