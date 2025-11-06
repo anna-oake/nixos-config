@@ -28,9 +28,11 @@
 
   programs.git = {
     enable = true;
-    userName = "Anna Oake";
-    userEmail = osConfig.me.email;
     lfs.enable = true;
+    settings.user = {
+      email = osConfig.me.email;
+      name = "Anna Oake";
+    };
     signing = {
       key = osConfig.me.sshKey;
       format = "ssh";

@@ -10,6 +10,7 @@
   homebrew.masApps = {
     "Xcode" = 497799835;
     "TestFlight" = 899247664;
+    "Numbers" = 409203825;
     # Safari extensions:
     "1Password for Safari" = 1569813296;
     "Control Panel for Twitter" = 1668516167;
@@ -55,6 +56,7 @@
     "mist"
     "plex"
     "protonvpn"
+    "dosbox"
   ];
 
   homebrew.brews = [
