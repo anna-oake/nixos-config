@@ -29,4 +29,4 @@ jobs:
         run: nix profile install "github:juspay/omnix"
 
       - name: Build all flake outputs
-        run: om ci run --extra-access-tokens ${{ secrets.GITHUB_TOKEN }}
+        run: om ci run --extra-access-tokens ${{ secrets.GITHUB_TOKEN }} --systems aarch64-darwin
