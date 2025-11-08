@@ -103,6 +103,8 @@
             imports = lib.attrsets.attrValues modules;
           };
         };
+      bootstrapScripts = mkBootstrapScripts blueprint.nixosConfigurations;
+      lxcScripts = mkLxcScripts blueprint.nixosConfigurations;
     in
     {
       inherit (blueprint)
@@ -118,11 +120,12 @@
 
       checks = lib.foldl' lib.recursiveUpdate blueprint.checks [
         (mkDiskoChecks blueprint.nixosConfigurations)
+        bootstrapScripts.checks
+        lxcScripts.checks
       ];
 
-      packages = lib.foldl' lib.recursiveUpdate blueprint.packages [
-        (mkBootstrapScripts blueprint.nixosConfigurations)
-        (mkLxcScripts blueprint.nixosConfigurations)
+      apps = lib.foldl' lib.recursiveUpdate bootstrapScripts.apps [
+        lxcScripts.apps
       ];
 
       deploy.nodes = mkDeployNodes blueprint.nixosConfigurations;
