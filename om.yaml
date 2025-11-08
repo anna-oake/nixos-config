@@ -1,0 +1,9 @@
+ci:
+  default:
+    root:
+      dir: "."
+      steps:
+        build:
+          enable: false
+        flake-check:
+          enable: true
