@@ -39,6 +39,7 @@
     uv
     spotify
     ffmpeg_8-full
+    imhex
   ];
 
   homebrew.casks = [
