@@ -15,7 +15,7 @@
     redsocks = [
       {
         type = "socks5";
-        proxy = "10.10.0.100:8889"; # anya-mac.lan.al, but resolving is flaky
+        proxy = "10.10.0.100:8889"; # ara.lan.al, but resolving is flaky
         port = 12345;
       }
     ];
@@ -24,10 +24,25 @@
   # this allows 8192 connections
   systemd.services.redsocks.serviceConfig.LimitNOFILE = 65535;
 
-  # we need this because we're routing external traffic
+  age.secrets."lxc-proxy/wireguard-priv" = { };
+
+  networking.wireguard.interfaces.wg0 = {
+    ips = [ "10.253.0.1/30" ];
+    listenPort = 51820;
+
+    privateKeyFile = config.age.secrets."lxc-proxy/wireguard-priv".path;
+
+    peers = [
+      {
+        publicKey = "SAO+xdn6PNT1Pe8+jlUfA4rmrciB8bmUUqAYxHf4EXs=";
+        allowedIPs = [ "10.253.0.2/32" ];
+        persistentKeepalive = 25;
+      }
+    ];
+  };
+
   boot.kernel.sysctl = {
-    "net.ipv4.conf.all.forwarding" = true;
-    "net.ipv4.conf.all.route_localnet" = true;
+    "net.ipv4.conf.wg0.route_localnet" = true;
   };
 
   # we'll route all connections through redsocks except ones destined for the lxc itself
@@ -38,11 +53,7 @@
       content = ''
         chain prerouting {
           type nat hook prerouting priority dstnat
-          fib daddr type local return
-          meta l4proto tcp dnat to 127.0.0.1:12345
-        }
-        chain postrouting {
-          type nat hook postrouting priority srcnat
+          iifname "wg0" ip protocol tcp dnat to 127.0.0.1:12345
         }
       '';
     };
