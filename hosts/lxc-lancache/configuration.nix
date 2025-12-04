@@ -10,7 +10,7 @@
 
   profiles.server.enable = true;
 
-  age.secrets."lxc-lancache/steam-anya-token" = { };
+  age.secrets."lxc-lancache/steam-token-anna" = { };
 
   services.lancache = {
     enable = true;
@@ -19,7 +19,7 @@
     prefill.steam = {
       enable = true;
       accounts.anna = {
-        tokenFile = config.age.secrets."lxc-lancache/steam-anya-token".path;
+        tokenFile = config.age.secrets."lxc-lancache/steam-token-anna".path;
         prefillAll = true;
         systems = [
           "windows"
