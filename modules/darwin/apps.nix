@@ -6,6 +6,7 @@
   programs.arqbackup.enable = true;
   programs._1password.enable = true;
   programs._1password-gui.enable = true;
+  programs.direnv.enable = true;
 
   homebrew.masApps = {
     "Xcode" = 497799835;
@@ -38,8 +39,9 @@
     devenv
     uv
     spotify
-    ffmpeg_8-full
+    ffmpeg-full
     imhex
+    keka
   ];
 
   homebrew.casks = [
@@ -53,15 +55,10 @@
     "ocenaudio"
     "loopback"
     "transmit"
-    "keka" # ancient in nixpkgs
     "mist"
     "plex"
     "protonvpn"
     "dosbox"
-  ];
-
-  homebrew.brews = [
-    "esphome"
   ];
 
   fonts.packages = with pkgs; [
