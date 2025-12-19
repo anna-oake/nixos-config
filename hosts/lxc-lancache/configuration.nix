@@ -34,6 +34,7 @@
     mounts = [
       "/storage/lancache,mp=/lancache"
     ];
+    memory = 4096;
   };
 
   system.stateVersion = "25.11";
