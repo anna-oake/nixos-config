@@ -12,8 +12,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixos-hardware.url = "github:nixos/nixos-hardware/master";
-
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
 
     homebrew-core = {
