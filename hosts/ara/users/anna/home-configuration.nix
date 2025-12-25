@@ -1,10 +1,15 @@
 {
+  inputs,
   osConfig,
   lib,
   pkgs,
   ...
 }:
 {
+  imports = [
+    inputs.nix-things.homeModules.default
+  ];
+
   programs.zsh.enable = true;
   programs.zsh.oh-my-zsh.enable = true;
 
@@ -52,6 +57,7 @@
       "git-firefly"
       "swift"
       "liquid"
+      "lua"
     ];
     extraPackages = [
       pkgs.gopls
@@ -133,6 +139,25 @@
     };
 
     enableZshIntegration = true;
+  };
+
+  programs.hammerspoon = {
+    enable = true;
+    scripts = {
+      fix-audio-input = {
+        enable = true;
+        settings = {
+          badInputs = [
+            "AirPods"
+            "OpenRun"
+          ];
+          goodInputs = [
+            "Shure MV7"
+            "MacBook Pro Microphone"
+          ];
+        };
+      };
+    };
   };
 
   home.stateVersion = "25.11";
