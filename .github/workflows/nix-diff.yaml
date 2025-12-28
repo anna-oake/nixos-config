@@ -1,0 +1,50 @@
+name: Compute packages diff
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  nix-diff:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Nix
+        uses: DeterminateSystems/nix-installer-action@main
+
+      - name: Discover flake configurations
+        id: discover
+        run: |
+          set -euo pipefail
+          {
+            echo "attributes<<EOF"
+            nix eval --extra-experimental-features "nix-command flakes" --impure --json \
+              --expr '
+              let
+                flake = (builtins.getFlake (toString ./.)).outputs;
+                nixos = builtins.attrNames (flake.nixosConfigurations or {});
+                darwin = builtins.attrNames (flake.darwinConfigurations or {});
+              in
+              (map (name: {
+                displayName = name;
+                attribute = "nixosConfigurations.${name}.config.system.build.toplevel";
+              }) nixos)
+              ++
+              (map (name: {
+                displayName = name;
+                attribute = "darwinConfigurations.${name}.system";
+              }) darwin)
+              '
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Run nix-diff-check
+        uses: natsukium/nix-diff-action@v1.0.2
+        with:
+          attributes: ${{ steps.discover.outputs.attributes }}
+          comment-strategy: update
