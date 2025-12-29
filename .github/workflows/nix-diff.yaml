@@ -44,7 +44,7 @@ jobs:
           } >> "$GITHUB_OUTPUT"
 
       - name: Run nix-diff-check
-        uses: natsukium/nix-diff-action@v1.0.2
+        uses: oake/nix-diff-action@main
         with:
           attributes: ${{ steps.discover.outputs.attributes }}
           comment-strategy: update
