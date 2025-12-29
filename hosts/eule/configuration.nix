@@ -100,7 +100,10 @@
     ];
   };
 
-  programs.steam.extest.enable = true;
+  programs.steam = {
+    extest.enable = true;
+    protontricks.enable = true;
+  };
   hardware.uinput.enable = true;
 
   home-manager.backupFileExtension = ".bak";
