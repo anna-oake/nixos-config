@@ -42,6 +42,8 @@
     ffmpeg-full
     imhex
     keka
+    codex
+    codex-acp
   ];
 
   homebrew.casks = [
@@ -59,6 +61,7 @@
     "plex"
     "protonvpn"
     "dosbox"
+    "autodesk-fusion"
   ];
 
   fonts.packages = with pkgs; [
