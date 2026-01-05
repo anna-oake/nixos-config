@@ -54,6 +54,7 @@
       "/var/lib/bluetooth"
       "/root"
       "/var/lib/netbird"
+      "/var/spool/rsyslog"
     ];
     files = [
       "/etc/machine-id"
