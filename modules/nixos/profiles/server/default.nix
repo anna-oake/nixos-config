@@ -11,6 +11,6 @@
   config = lib.mkIf config.profiles.server.enable {
     lxc.pve.host = lib.mkDefault ("mynah." + config.me.lanDomain);
 
-    monitoring.logs.enable = true;
+    monitoring.logs.enable = lib.mkDefault true;
   };
 }

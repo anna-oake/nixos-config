@@ -17,6 +17,9 @@
     tokenType = "monitor";
   };
 
+  # funny right?
+  monitoring.logs.enable = false;
+
   lxc = {
     enable = true;
     memory = 8192;
