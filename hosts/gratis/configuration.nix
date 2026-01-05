@@ -7,6 +7,7 @@
     inputs.self.nixosModules.default
     ./hardware-configuration.nix
     ./users.nix
+    ./monitoring.nix
   ];
 
   profiles.server.enable = true;
