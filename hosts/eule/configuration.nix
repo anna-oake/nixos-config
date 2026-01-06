@@ -110,5 +110,8 @@
 
   monitoring.logs.enable = true;
 
+  # thank you Bill Gates. hope it was fun at Epstein's, you asshole
+  time.hardwareClockInLocalTime = true;
+
   system.stateVersion = "25.05";
 }
