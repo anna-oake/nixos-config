@@ -51,6 +51,7 @@
 
   environment.systemPackages = with pkgs; [
     btrfs-progs
+    linkwinbt
   ];
 
   hardware.graphics = {
