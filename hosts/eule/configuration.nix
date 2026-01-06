@@ -108,5 +108,7 @@
 
   home-manager.backupFileExtension = ".bak";
 
+  monitoring.logs.enable = true;
+
   system.stateVersion = "25.05";
 }
