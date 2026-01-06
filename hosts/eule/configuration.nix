@@ -2,6 +2,7 @@
   inputs,
   lib,
   pkgs,
+  config,
   ...
 }:
 {
@@ -112,6 +113,19 @@
 
   # thank you Bill Gates. hope it was fun at Epstein's, you asshole
   time.hardwareClockInLocalTime = true;
+
+  fileSystems."/mnt/windows" = {
+    device = "/dev/disk/by-id/nvme-KINGSTON_SNV3S2000G_50026B7785BA74DD-part2";
+    fsType = "ntfs";
+    options = [
+      "nofail"
+      "x-systemd.device-timeout=5s"
+      "x-systemd.mount-timeout=10s"
+      "uid=0"
+      "gid=${toString config.users.groups.users.gid}"
+      "umask=002"
+    ];
+  };
 
   system.stateVersion = "25.05";
 }
