@@ -62,6 +62,7 @@
     "protonvpn"
     "dosbox"
     "autodesk-fusion"
+    "helium-browser"
   ];
 
   fonts.packages = with pkgs; [
