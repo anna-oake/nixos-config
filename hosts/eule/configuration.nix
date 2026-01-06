@@ -18,7 +18,12 @@
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  time.timeZone = "Europe/Amsterdam";
+  time = {
+    timeZone = "Europe/Amsterdam";
+
+    # thank you Bill Gates. hope it was fun at Epstein's, you asshole
+    hardwareClockInLocalTime = true;
+  };
 
   boot.loader = {
     efi.canTouchEfiVariables = lib.mkOverride 5 false; # priority 5 or disko fucks this up
@@ -112,8 +117,7 @@
 
   monitoring.logs.enable = true;
 
-  # thank you Bill Gates. hope it was fun at Epstein's, you asshole
-  time.hardwareClockInLocalTime = true;
+  services.eule-rebooter.enable = true;
 
   fileSystems."/mnt/windows" = {
     device = "/dev/disk/by-id/nvme-KINGSTON_SNV3S2000G_50026B7785BA74DD-part2";
