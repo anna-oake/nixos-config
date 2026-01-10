@@ -1,15 +1,19 @@
 {
-  inputs,
   config,
   lib,
   pkgs,
   ...
 }:
 {
-  imports = [
-    ./disk.nix
-    inputs.impermanence.nixosModules.impermanence
-  ];
+  disko.simple = {
+    # fucking around disk:
+    # device = "/dev/disk/by-id/usb-KIOXIA_EXCERIA_PLUS_635FC19CFPH4-0:0";
+
+    # production disk:
+    device = "/dev/disk/by-id/nvme-KINGSTON_SNV3S2000G_50026B73834AB709";
+    rootType = "btrfs";
+    impermanence.enable = true;
+  };
 
   hardware.enableRedistributableFirmware = lib.mkDefault true;
 
@@ -37,41 +41,6 @@
   '';
 
   networking.interfaces.enp14s0.wakeOnLan.enable = true;
-
-  boot.initrd = {
-    enable = true;
-    supportedFilesystems = [ "btrfs" ];
-  };
-
-  environment.persistence."/persist" = {
-    directories = [
-      {
-        directory = "/etc/nixos";
-        user = config.me.username;
-        group = "users";
-      }
-      "/var/lib/nixos"
-      "/var/lib/bluetooth"
-      "/root"
-      "/var/lib/netbird"
-      "/var/spool/rsyslog"
-    ];
-    files = [
-      "/etc/machine-id"
-      "/etc/ssh/ssh_host_ed25519_key"
-      "/etc/ssh/ssh_host_ed25519_key.pub"
-      "/etc/ssh/ssh_host_rsa_key"
-      "/etc/ssh/ssh_host_rsa_key.pub"
-      "/var/lib/plymouth/boot-duration"
-    ];
-  };
-
-  age.identityPaths = [ "/persist/etc/ssh/ssh_host_ed25519_key" ];
-
-  security.sudo.extraConfig = ''
-    # rollback results in sudo lectures after each reboot
-    Defaults lecture = never
-  '';
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;

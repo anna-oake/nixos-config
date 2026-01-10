@@ -3,9 +3,7 @@
   ...
 }:
 {
-  imports = [
-    ./disk.nix
-  ];
+  disko.simple.device = "/dev/sda";
 
   boot = {
     loader = {
