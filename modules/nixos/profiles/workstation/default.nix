@@ -33,7 +33,7 @@
       git
       htop
       btop
-      nixfmt-rfc-style
+      nixfmt
       nixd
       fzf
       zoxide
