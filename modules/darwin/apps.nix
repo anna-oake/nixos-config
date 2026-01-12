@@ -44,6 +44,7 @@
     keka
     codex
     codex-acp
+    proxmoxbar
   ];
 
   homebrew.casks = [
