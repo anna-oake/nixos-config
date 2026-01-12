@@ -126,6 +126,7 @@
       agenix-rekey = inputs.agenix-rekey.configure {
         userFlake = inputs.self;
         nixosConfigurations = blueprint.nixosConfigurations // blueprint.darwinConfigurations;
+        agePackage = p: p.age;
       };
     };
 }
