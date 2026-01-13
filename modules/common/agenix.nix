@@ -11,7 +11,7 @@
   config = {
     age.rekey.masterIdentities = [
       {
-        identity = "/Users/anna/.ssh/agenix-master-pq";
+        identity = inputs.self.outPath + "/secrets/master-keys/agenix-master-pq.key";
         pubkey = builtins.readFile (inputs.self.outPath + "/secrets/master-keys/agenix-master-pq.pub");
       }
     ];
