@@ -6,9 +6,9 @@
 let
   nvidia = config.boot.kernelPackages.nvidiaPackages.mkDriver {
     version = "580.119.02";
-    sha256_64bit = "sha256-Bh5I4R/lUiMglYEdCxzqm3GgayQNYFB0/yJ/zgYoeYw=";
-    openSha256 = "sha256-8/7ZrcwBMgrBtxebYtCcH5A51sexAxXTCY00LElZz08=";
-    settingsSha256 = "sha256-lx1WZHsW7eKFXvi03dAML667C5glEn63Tuiz3T867nY=";
+    sha256_64bit = "sha256-gCD139PuiK7no4mQ0MPSr+VHUemhcLqerdfqZwE47Nc=";
+    openSha256 = "sha256-l3IQDoopOt0n0+Ig+Ee3AOcFCGJXhbH1Q1nh1TEAHTE=";
+    settingsSha256 = "sha256-sI/ly6gNaUw0QZFWWkMbrkSstzf0hvcdSaogTUoTecI=";
     usePersistenced = false;
   };
 in
