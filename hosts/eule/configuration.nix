@@ -115,7 +115,7 @@
 
   home-manager.backupFileExtension = ".bak";
 
-  monitoring.logs.enable = true;
+  monitoring.logs.systemd.enable = true;
 
   services.eule-rebooter.enable = true;
 

@@ -11,6 +11,18 @@
   config = lib.mkIf config.profiles.server.enable {
     lxc.pve.host = lib.mkDefault ("mynah." + config.me.lanDomain);
 
-    monitoring.logs.enable = lib.mkDefault true;
+    # mynah host driver
+    lxc.nvidia.package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
+      version = "580.119.02";
+      sha256_64bit = "sha256-gCD139PuiK7no4mQ0MPSr+VHUemhcLqerdfqZwE47Nc=";
+      openSha256 = "sha256-l3IQDoopOt0n0+Ig+Ee3AOcFCGJXhbH1Q1nh1TEAHTE=";
+      settingsSha256 = "sha256-sI/ly6gNaUw0QZFWWkMbrkSstzf0hvcdSaogTUoTecI=";
+      usePersistenced = false;
+    };
+
+    monitoring.logs = {
+      systemd.enable = lib.mkDefault true;
+      docker.enable = lib.mkDefault config.virtualisation.docker.enable;
+    };
   };
 }

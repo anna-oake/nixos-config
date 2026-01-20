@@ -18,7 +18,7 @@
   };
 
   # funny right?
-  monitoring.logs.enable = false;
+  monitoring.logs.systemd.enable = false;
 
   lxc = {
     enable = true;
