@@ -11,10 +11,7 @@
     enable = true;
     enableNvidiaSupport = true;
 
-    portainer = {
-      enable = true;
-      traefikIntegration.host = "ph.koteeq.me";
-    };
+    portainer.enable = true;
   };
 
   lxc = {
