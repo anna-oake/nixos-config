@@ -11,7 +11,10 @@
     enable = true;
     enableNvidiaSupport = true;
 
-    portainer.enable = true;
+    portainer = {
+      enable = true;
+      traefikIntegration.entrypoint = "lan";
+    };
   };
 
   lxc = {
