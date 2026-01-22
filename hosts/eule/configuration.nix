@@ -18,12 +18,7 @@
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  time = {
-    timeZone = "Europe/Amsterdam";
-
-    # thank you Bill Gates. hope it was fun at Epstein's, you asshole
-    hardwareClockInLocalTime = true;
-  };
+  time.timeZone = "Europe/Amsterdam";
 
   boot.loader = {
     efi.canTouchEfiVariables = lib.mkOverride 5 false; # priority 5 or disko fucks this up
