@@ -5,21 +5,13 @@
 {
   disko.simple.device = "/dev/sda";
 
-  boot = {
-    loader = {
-      systemd-boot = {
-        enable = true;
-        configurationLimit = 3;
-      };
-      efi.canTouchEfiVariables = true;
-      timeout = 0;
+  boot.loader = {
+    systemd-boot = {
+      enable = true;
+      configurationLimit = 3;
     };
-    initrd.verbose = false;
-    consoleLogLevel = 0;
-    kernelParams = [
-      "quiet"
-      "rd.udev.log_level=3"
-    ];
+    efi.canTouchEfiVariables = true;
+    timeout = 0;
   };
 
   boot.initrd.availableKernelModules = [
