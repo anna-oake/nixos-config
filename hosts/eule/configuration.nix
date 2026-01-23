@@ -10,6 +10,7 @@
     ./hardware-configuration.nix
     ./gaming.nix
     ./samba.nix
+    ./vr.nix
     inputs.self.nixosModules.default
     inputs.jovian.nixosModules.default
   ];
@@ -52,6 +53,7 @@
   environment.systemPackages = with pkgs; [
     btrfs-progs
     linkwinbt
+    modrinth-app
   ];
 
   hardware.graphics = {

@@ -8,7 +8,7 @@
     networking.networkmanager.enable = true;
 
     # mdns
-    services.avahi.enable = false;
+    services.avahi.enable = lib.mkDefault false;
     services.resolved.enable = true;
 
     # firewall
