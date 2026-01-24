@@ -59,7 +59,7 @@
   nixpkgs.overlays = [
     (final: prev: {
       modrinth-app =
-        (import inputs.nixpkgs_modrinth_pr {
+        (import inputs.nixpkgs-modrinth {
           inherit (prev) system;
           config = prev.config;
         }).modrinth-app;
