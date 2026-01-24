@@ -53,7 +53,7 @@
   environment.systemPackages = with pkgs; [
     btrfs-progs
     linkwinbt
-    modrinth-app
+    inputs.nixpkgs-modrinth.legacyPackages.x86_64-linux.modrinth-app
   ];
 
   hardware.graphics = {

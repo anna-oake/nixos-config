@@ -1,5 +1,7 @@
 {
   inputs = {
+    nixpkgs-modrinth.url = "github:NixOS/nixpkgs?ref=pull/483254/head";
+
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nix-darwin = {
