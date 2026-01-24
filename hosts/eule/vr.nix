@@ -1,5 +1,4 @@
 {
-  pkgs,
   ...
 }:
 {
@@ -11,8 +10,4 @@
     steam.importOXRRuntimes = true;
     highPriority = true;
   };
-
-  environment.systemPackages = with pkgs; [
-    xrizer
-  ];
 }
