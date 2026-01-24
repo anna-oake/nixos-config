@@ -8,7 +8,7 @@ let
   # server
   mkShares =
     shares:
-    lib.attrsets.mapAttrs (name: path: {
+    lib.attrsets.mapAttrs (_: path: {
       "path" = path;
       "browseable" = "yes";
       "read only" = "no";
@@ -23,7 +23,7 @@ let
   # client
   mkMynahMounts =
     mounts:
-    lib.attrsets.mapAttrs (name: share: {
+    lib.attrsets.mapAttrs (_: share: {
       device = "//share.lan.al/${share}";
       fsType = "cifs";
       options = [
