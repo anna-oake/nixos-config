@@ -46,6 +46,7 @@
     codex
     codex-acp
     proxmoxbar
+    utm
   ];
 
   homebrew.casks = [
