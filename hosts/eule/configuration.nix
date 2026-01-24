@@ -53,7 +53,17 @@
   environment.systemPackages = with pkgs; [
     btrfs-progs
     linkwinbt
-    inputs.nixpkgs-modrinth.legacyPackages.x86_64-linux.modrinth-app
+    modrinth-app
+  ];
+
+  nixpkgs.overlays = [
+    (final: prev: {
+      modrinth-app =
+        (import inputs.nixpkgs_modrinth_pr {
+          inherit (prev) system;
+          config = prev.config;
+        }).modrinth-app;
+    })
   ];
 
   hardware.graphics = {
