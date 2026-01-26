@@ -47,6 +47,7 @@
     codex-acp
     proxmoxbar
     utm
+    zone-wizard
   ];
 
   homebrew.casks = [
