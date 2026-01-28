@@ -4,6 +4,6 @@ ci:
       dir: "."
       steps:
         build:
-          enable: false
-        flake-check:
           enable: true
+        flake-check:
+          enable: false
