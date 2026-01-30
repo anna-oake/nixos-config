@@ -26,29 +26,6 @@
       setupKeyFile = config.age.secrets.netbird-personal.path;
     };
 
-    # wifi
-    age.secrets.wifi-home = { };
-    networking.networkmanager.ensureProfiles = {
-      environmentFiles = [
-        config.age.secrets.wifi-home.path
-      ];
-
-      profiles = {
-        Home = {
-          connection = {
-            id = "$HOME_SSID";
-            type = "wifi";
-          };
-          wifi = {
-            mode = "infrastructure";
-            ssid = "$HOME_SSID";
-          };
-          wifi-security = {
-            key-mgmt = "sae";
-            psk = "$HOME_PSK";
-          };
-        };
-      };
-    };
+    services.openssh.settings.PasswordAuthentication = false;
   };
 }

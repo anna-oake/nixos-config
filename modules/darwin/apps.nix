@@ -4,9 +4,6 @@
 }:
 {
   programs.arqbackup.enable = true;
-  programs._1password.enable = true;
-  programs._1password-gui.enable = true;
-  programs.direnv.enable = true;
 
   homebrew.masApps = {
     "Xcode" = 497799835;
@@ -21,33 +18,16 @@
   };
 
   environment.systemPackages = with pkgs; [
-    gh
-    git
-    htop
-    btop
-    nixfmt
-    nixd
-    just
     raycast
-    chatgpt
-    slack
-    discord
-    element-desktop
     daisydisk
     hexfiend
-    httpie
-    go
-    devenv
-    uv
-    spotify
-    ffmpeg-full
-    imhex
     keka
-    codex
-    codex-acp
     proxmoxbar
     utm
-    zone-wizard
+    chatgpt
+    spotify
+    slack
+    discord
   ];
 
   homebrew.casks = [
@@ -69,8 +49,5 @@
     "helium-browser"
   ];
 
-  fonts.packages = with pkgs; [
-    nerd-fonts.symbols-only
-    comic-code-font
-  ];
+  services.netbird.enable = true;
 }

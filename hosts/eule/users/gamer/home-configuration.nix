@@ -10,7 +10,13 @@
   imports = [
     inputs.plasma-manager.homeModules.plasma-manager
     inputs.steam-rom-manager.homeManagerModules.default
+    inputs.self.homeModules.default
   ];
+
+  profiles.workstation = {
+    enable = true;
+    personal.enable = false;
+  };
 
   programs.steam-rom-manager = {
     enable = true;
