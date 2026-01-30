@@ -102,11 +102,11 @@
       inherit (blueprint)
         nixosConfigurations
         darwinConfigurations
-        homeModules
         lib
         ;
 
       commonModules = mkModules blueprint.modules.common;
+      homeModules = mkModules blueprint.homeModules;
       nixosModules = mkModules blueprint.nixosModules;
       darwinModules = mkModules blueprint.darwinModules;
 

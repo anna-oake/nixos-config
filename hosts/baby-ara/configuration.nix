@@ -10,13 +10,10 @@
     inputs.self.nixosModules.default
   ];
 
-  profiles.workstation.enable = true;
-
-  environment.sessionVariables = {
-    NIXOS_OZONE_WL = "1"; # fix electron blur
+  profiles.workstation = {
+    enable = true;
+    personal.enable = false;
   };
-
-  programs.direnv.enable = true;
 
   environment.systemPackages = with pkgs; [
     gnomeExtensions.appindicator

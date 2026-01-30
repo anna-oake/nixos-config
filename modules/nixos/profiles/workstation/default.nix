@@ -9,6 +9,7 @@
     ./localisation.nix
     ./network.nix
     ./user.nix
+    ./personal
   ];
 
   config = lib.mkIf config.profiles.workstation.enable {
@@ -20,23 +21,15 @@
       theme = "feet";
     };
 
+    environment.sessionVariables = lib.optionalAttrs (!config.hardware.nvidia.enabled) {
+      NIXOS_OZONE_WL = "1"; # fix electron blur
+    };
+
     # pkgs
     services.fwupd.enable = true;
     environment.systemPackages = with pkgs; [
-      # shell
-      wget
-      p7zip
       usbutils
       pciutils
-      go
-      gh
-      git
-      htop
-      btop
-      nixfmt
-      nixd
-      fzf
-      zoxide
     ];
   };
 }

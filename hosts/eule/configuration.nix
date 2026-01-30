@@ -14,7 +14,10 @@
     inputs.jovian.nixosModules.default
   ];
 
-  profiles.workstation.enable = true;
+  profiles.workstation = {
+    enable = true;
+    personal.enable = false;
+  };
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
