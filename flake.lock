@@ -576,11 +576,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1769872068,
-        "narHash": "sha256-JS31faPfzCYyWgfhtYM8sUMsC04Q7HfAbf9hFugL78A=",
+        "lastModified": 1769874751,
+        "narHash": "sha256-ILGJvRpQ6xXT0wzzWf5x+eFbSXuDNQNCCRZ0IeKvo7A=",
         "owner": "oake",
         "repo": "nix-things",
-        "rev": "ed2714fedd9de24504aef4abdad7d61ceaa25ff3",
+        "rev": "87f042f4c2cd494dc8be55fcd1d68ebe6a3f3d6a",
         "type": "github"
       },
       "original": {
@@ -606,6 +606,21 @@
       "original": {
         "owner": "nix-community",
         "repo": "nix-vscode-extensions",
+        "type": "github"
+      }
+    },
+    "nixos-hardware": {
+      "locked": {
+        "lastModified": 1769775383,
+        "narHash": "sha256-BhWO4x1Qga0g14k08VAUMtiFrQeh6fbCBmeqEznL0IU=",
+        "owner": "anna-oake",
+        "repo": "nixos-hardware",
+        "rev": "6af75219d7b74e9efee9f7c767801a09b162635f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "anna-oake",
+        "repo": "nixos-hardware",
         "type": "github"
       }
     },
@@ -741,6 +756,7 @@
         "nix-homebrew": "nix-homebrew",
         "nix-things": "nix-things",
         "nix-vscode-extensions": "nix-vscode-extensions",
+        "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "plasma-manager": "plasma-manager",

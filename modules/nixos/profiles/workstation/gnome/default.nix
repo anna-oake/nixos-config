@@ -24,15 +24,14 @@ in
     enable = lib.mkEnableOption "GNOME workstation profile";
     dockItems = {
       left = mkDockOption [
-        "microsoft-edge.desktop"
+        "chromium-browser.desktop"
         "org.telegram.desktop.desktop"
         "discord.desktop"
       ];
       middle = mkDockOption [ ];
       right = mkDockOption [
         "1password.desktop"
-        "code.desktop"
-        "org.gnome.Console.desktop"
+        "dev.zed.Zed.desktop"
         "org.gnome.Nautilus.desktop"
       ];
     };
@@ -63,9 +62,6 @@ in
     services.displayManager.gdm.enable = true;
     services.xserver.enable = true;
 
-    # M365 sync
-    services.gnome.evolution-data-server.plugins = [ pkgs.evolution-ews ];
-
     # fix crash on fast login (nixpkgs/issues/103746)
     systemd.services."getty@tty1".enable = false;
     systemd.services."autovt@tty1".enable = false;
@@ -78,18 +74,6 @@ in
         breezex-cursor
       ]
       ++ cfg.shellExtensions;
-
-    # systemd.user.services.libinput-three-finger-drag = {
-    #   description = "three-finger-drag daemon";
-    #   wantedBy = [ "default.target" ];
-    #   after = [ "graphical-session-pre.target" ];
-
-    #   serviceConfig = {
-    #     ExecStart = "${libinput-three-finger-drag}/bin/libinput-three-finger-drag";
-    #     Type = "simple";
-    #     Restart = "always";
-    #   };
-    # };
 
     # environment variables
     environment.sessionVariables = {
@@ -106,16 +90,6 @@ in
       simple-scan
       yelp
     ];
-
-    # profile picture
-    boot.postBootCommands =
-      let
-        username = config.me.username;
-        pfp = inputs.self + /assets/pfp.jpg;
-      in
-      ''
-        echo -e "[User]\nIcon=${pfp}\n" > /var/lib/AccountsService/users/${username}
-      '';
 
     fonts.packages = with pkgs; [
       cantarell-fonts
@@ -178,9 +152,11 @@ in
             "org/gnome/shell/extensions/user-theme" = {
               name = "Lion";
             };
+
             "org/gnome/desktop/background" = {
-              picture-uri-dark = "file://${inputs.self + /assets/wallpaper.jpg}";
+              picture-uri-dark = "file://${inputs.self + "/assets/wallpaper-ariane.png"}";
             };
+
             "org/gnome/shell/extensions/just-perfection" = {
               events-button = true;
               invert-calendar-column-items = true;
@@ -204,7 +180,7 @@ in
             };
             "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
               binding = "<Super>Return";
-              command = "kgx";
+              command = "ghostty";
               name = "run terminal";
             };
             "org/gnome/desktop/wm/keybindings" = {
