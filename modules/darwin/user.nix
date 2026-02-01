@@ -10,10 +10,6 @@
   };
   system.primaryUser = config.me.username;
 
-  security.sudo.extraConfig = ''
-    anna ALL=(root) NOPASSWD: /run/current-system/sw/bin/darwin-rebuild switch
-  '';
-
   security.pam.services.sudo_local.touchIdAuth = true;
 
   nix.settings.trusted-users = [ config.me.username ];

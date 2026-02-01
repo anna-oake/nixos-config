@@ -17,8 +17,3 @@ export EDITOR := "nano"
 #
 #  personal recipes go below
 #
-
-# run darwin-rebuild switch
-[group('tools')]
-@rebuild: _add
-    sudo darwin-rebuild switch
