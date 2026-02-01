@@ -20,14 +20,15 @@
   environment.systemPackages = with pkgs; [
     libimobiledevice
     ifuse
+    quicktime-video-hack
   ];
-
-  home-manager.backupFileExtension = ".bak";
 
   services.usbmuxd = {
     enable = true;
     package = pkgs.usbmuxd2;
   };
+
+  home-manager.backupFileExtension = ".bak";
 
   system.stateVersion = "26.05";
 }
