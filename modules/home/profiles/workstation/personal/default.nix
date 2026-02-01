@@ -88,7 +88,7 @@ in
 
     programs.ghostty = {
       enable = true;
-      package = null;
+      package = lib.mkIf pkgs.stdenvNoCC.isDarwin null;
       settings = {
         auto-update = "off";
         shell-integration = "zsh";

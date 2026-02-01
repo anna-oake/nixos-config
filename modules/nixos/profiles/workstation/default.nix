@@ -6,6 +6,9 @@
 }:
 {
   imports = [
+    ./gnome
+    ./laptop
+    ./wifi
     ./localisation.nix
     ./network.nix
     ./user.nix

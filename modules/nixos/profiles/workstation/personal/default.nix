@@ -15,6 +15,7 @@
         telegram-desktop
         github-desktop
         charles
+        chromium
       ]
       ++ onlyX86 [
         spotify
@@ -24,5 +25,14 @@
       ++ onlyArm [
         legcord
       ];
+
+    programs.chromium = {
+      enable = true;
+      extensions = [
+        "aeblfdkhhhdcdjpifhhbdiojplfjncoa" # 1Password
+        "cdglnehniifkbagbbombnjghhcihifij" # Kagi
+        "kpmjjdhbcfebfjgdnpjagcndoelnidfj" # Control Panel for Twitter
+      ];
+    };
   };
 }

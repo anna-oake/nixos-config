@@ -1,14 +1,15 @@
 {
   config,
   pkgs,
+  inputs,
   ...
 }:
 {
   system.activationScripts.postActivation.text =
     let
       desktoppr = "${pkgs.desktoppr}/bin/desktoppr";
-      ariane = ./assets/wallpaper-ariane.png;
-      elster = ./assets/wallpaper-elster.png;
+      ariane = inputs.self + "/assets/wallpaper-ariane.png";
+      elster = inputs.self + "/assets/wallpaper-elster.png";
     in
     ''
       echo >&2 "Setting up wallpapers..."
