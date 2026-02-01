@@ -95,6 +95,12 @@ in
       cantarell-fonts
     ];
 
+    systemd.tmpfiles.rules = [
+      "f+ /var/lib/AccountsService/users/${config.me.username} 0600 root root - [User]\\nIcon=${
+        inputs.self + /assets/userpic.png
+      }\\n"
+    ];
+
     programs.dconf = {
       enable = true;
       profiles.user.databases = [
