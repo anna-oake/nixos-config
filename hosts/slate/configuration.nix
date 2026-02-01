@@ -24,7 +24,10 @@
 
   home-manager.backupFileExtension = ".bak";
 
-  services.usbmuxd.enable = true;
+  services.usbmuxd = {
+    enable = true;
+    package = pkgs.usbmuxd2;
+  };
 
   system.stateVersion = "26.05";
 }
