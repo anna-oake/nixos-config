@@ -95,6 +95,16 @@ in
       cantarell-fonts
     ];
 
+    # profile picture
+    boot.postBootCommands =
+      let
+        username = config.me.username;
+        pfp = inputs.self + /assets/userpic.png;
+      in
+      ''
+        echo -e "[User]\nIcon=${pfp}\n" > /var/lib/AccountsService/users/${username}
+      '';
+
     programs.dconf = {
       enable = true;
       profiles.user.databases = [
