@@ -16,6 +16,7 @@
         github-desktop
         charles
         chromium
+        element-desktop
       ]
       ++ onlyX86 [
         spotify

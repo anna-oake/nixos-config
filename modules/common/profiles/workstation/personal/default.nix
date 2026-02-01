@@ -20,7 +20,6 @@
       codex
       codex-acp
       zone-wizard
-      element-desktop
       imhex
       httpie
     ];

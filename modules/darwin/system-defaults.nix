@@ -173,7 +173,6 @@
         "/Applications/Nix Apps/Spotify.app"
         "/Applications/Telegram.app"
         "/Applications/Nix Apps/Slack.app"
-        "/Applications/Nix Apps/Element.app"
         "/Applications/Ghostty.app"
         "${pkgs.zed-editor}/Applications/Zed.app"
         "/Applications/Nix Apps/ChatGPT.app"
