@@ -47,6 +47,7 @@
     "dosbox"
     "autodesk-fusion"
     "helium-browser"
+    "mqttx"
   ];
 
   services.netbird.enable = true;
