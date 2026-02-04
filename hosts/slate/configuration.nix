@@ -12,7 +12,7 @@
 
   profiles.workstation = {
     enable = true;
-    gnome.enable = true;
+    niri.enable = true;
     laptop.enable = true;
     wifi.enable = true;
   };

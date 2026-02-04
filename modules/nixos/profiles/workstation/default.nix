@@ -8,11 +8,12 @@
   imports = [
     ./gnome
     ./laptop
+    ./niri
+    ./personal
     ./wifi
     ./localisation.nix
     ./network.nix
     ./user.nix
-    ./personal
   ];
 
   config = lib.mkIf config.profiles.workstation.enable {
