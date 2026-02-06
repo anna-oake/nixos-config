@@ -38,7 +38,7 @@ in
     enable = lib.mkEnableOption "GNOME workstation profile";
     dockItems = {
       left = mkDockOption [
-        "chromium-browser.desktop"
+        "helium.desktop"
         "org.telegram.desktop.desktop"
         "discord.desktop"
       ];

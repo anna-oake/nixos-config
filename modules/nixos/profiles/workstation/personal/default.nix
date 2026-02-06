@@ -15,7 +15,6 @@
         telegram-desktop
         github-desktop
         charles
-        chromium
         element-desktop
       ]
       ++ onlyX86 [
@@ -27,8 +26,8 @@
         legcord
       ];
 
+    # Force-installed in Helium via Chromium policy (see the workstation profile).
     programs.chromium = {
-      enable = true;
       extensions = [
         "aeblfdkhhhdcdjpifhhbdiojplfjncoa" # 1Password
         "cdglnehniifkbagbbombnjghhcihifij" # Kagi

@@ -62,7 +62,7 @@ in
         ui_font_size = 15;
         buffer_font_size = 13;
         buffer_font_family = "Comic Code Ligatures";
-        theme = {
+        theme = lib.mkDefault {
           mode = "system";
           light = "Gruvbox Light";
           dark = "Gruvbox Dark";

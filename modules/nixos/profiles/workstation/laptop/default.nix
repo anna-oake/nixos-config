@@ -15,5 +15,7 @@ in
 
     systemd.sleep.settings.Sleep.HibernateDelaySec = lib.mkIf isx86_64 "4h";
     services.logind.settings.Login.HandleLidSwitch = lib.mkIf isx86_64 "suspend-then-hibernate";
+
+    services.automatic-timezoned.enable = true;
   };
 }

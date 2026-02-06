@@ -88,7 +88,7 @@ in
         unfocused-split-opacity = 0.3;
         macos-icon = "retro";
         keybind = "global:cmd+grave_accent=toggle_quick_terminal";
-        theme = "Gruvbox Dark";
+        theme = lib.mkDefault "Gruvbox Dark";
 
         font-size = 12;
         font-family = "Comic Code";

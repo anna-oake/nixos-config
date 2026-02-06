@@ -12,11 +12,7 @@
 
   profiles.workstation = {
     enable = true;
-    gnome = {
-      enable = true;
-      dockItems.middle = [ "ke.oa.miaow.desktop" ];
-      shellExtensions = [ pkgs.miaow ];
-    };
+    niri.enable = true;
     laptop.enable = true;
     wifi.enable = true;
   };
@@ -38,6 +34,7 @@
   };
 
   home-manager.backupFileExtension = ".bak";
+  home-manager.overwriteBackup = true;
 
   system.stateVersion = "26.05";
 }

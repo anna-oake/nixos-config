@@ -10,6 +10,7 @@ let
 in
 {
   imports = [
+    ./niri
     ./personal
   ];
 
