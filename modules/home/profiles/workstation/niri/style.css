@@ -1,0 +1,341 @@
+/* Catppuccin Mocha color scheme */
+@define-color rosewater #f5e0dc;
+@define-color flamingo #f2cdcd;
+@define-color pink #f5c2e7;
+@define-color mauve #cba6f7;
+@define-color red #f38ba8;
+@define-color maroon #eba0ac;
+@define-color peach #fab387;
+@define-color yellow #f9e2af;
+@define-color green #a6e3a1;
+@define-color teal #94e2d5;
+@define-color sky #89dceb;
+@define-color sapphire #74c7ec;
+@define-color blue #89b4fa;
+@define-color lavender #b4befe;
+@define-color text #cdd6f4;
+@define-color subtext1 #bac2de;
+@define-color subtext0 #a6adc8;
+@define-color overlay2 #9399b2;
+@define-color overlay1 #7f849c;
+@define-color overlay0 #6c7086;
+@define-color surface2 #585b70;
+@define-color surface1 #45475a;
+@define-color surface0 #313244;
+@define-color base #1e1e2e;
+@define-color mantle #181825;
+@define-color crust #11111b;
+
+* {
+    font-family: "Monaspace Neon Frozen", "CaskaydiaCove Nerd Font";
+    font-size: 15px;
+    min-height: 0;
+    border: none;
+    border-radius: 0;
+}
+
+window.HDMI-A-1 * {
+    font-size: 12px;
+}
+
+window.eDP-1 * {
+    font-size: 12px;
+}
+
+window.eDP-1 #custom-toggl-icon,
+window.eDP-1 #custom-toggl {
+    font-size: 0px;
+    padding: 0;
+    border: 0;
+    margin: 0;
+    background-color: transparent;
+}
+
+window.HDMI-A-1 #custom-toggl-icon,
+window.HDMI-A-1 #custom-audio-icon,
+window.HDMI-A-1 #custom-network-icon,
+window.HDMI-A-1 #custom-backlight-icon,
+window.HDMI-A-1 #custom-battery-icon,
+window.HDMI-A-1 #custom-mpris-icon,
+window.HDMI-A-1 #custom-idle-icon,
+window.HDMI-A-1 #custom-vpn-icon,
+window.HDMI-A-1 #network,
+window.HDMI-A-1 #mpris,
+window.HDMI-A-1 #idle_inhibitor,
+window.HDMI-A-1 #cpu,
+window.HDMI-A-1 #memory,
+window.HDMI-A-1 #backlight,
+window.HDMI-A-1 #battery,
+window.HDMI-A-1 #custom-toggl,
+window.HDMI-A-1 #custom-vpn,
+window.HDMI-A-1 #pulseaudio {
+    font-size: 0px;
+    padding: 0;
+    border: 0;
+    margin: 0;
+    background-color: transparent;
+}
+
+#waybar {
+    /* background: rgba(17, 17, 17, 0.5); */
+    background: transparent;
+    color: @text;
+    border-radius: 0px 5px 5px 18px;
+}
+
+#custom-spacer {
+    background: @yellow;
+    color: @crust;
+    padding: 0rem 0.7rem;
+    border-radius: 0px 18px 0px 18px;
+    margin-right: 5px;
+}
+
+#image {
+    background: @crust;
+    border-radius: 0px 18px 0px 18px;
+    margin-right: 5px;
+    padding: 0rem 0.7rem;
+    border: 2px solid @text;
+}
+
+#workspaces {
+    background: @crust;
+    border: 2px solid @mauve;
+    border-radius: 5px 5px 5px 5px;
+    font-weight: bold;
+    font-style: normal;
+    opacity: 1;
+    color: @text;
+}
+
+#workspaces button {
+    border-radius: 3px 3px 3px 3px;
+    padding: 0px 6px;
+    margin: 3px 2px;
+    color: @blue;
+    transition: all 0.3s ease-in-out;
+    opacity: 0.8;
+}
+
+#workspaces button.active {
+    color: @crust;
+    background: @blue;
+    padding: 0px 6px;
+    margin: 3px 2px;
+    border-radius: 3px 3px 3px 3px;
+    min-width: 30px;
+    transition: all 0.3s ease-in-out;
+    opacity: 1;
+}
+
+#workspaces button:hover {
+    color: @crust;
+    background: @mauve;
+    border-radius: 3px 3px 3px 3px;
+    opacity: 0.7;
+}
+
+#workspaces button.empty {
+    color: @overlay2;
+    opacity: 0.4;
+}
+
+#workspaces button.visible {
+    color: @blue;
+    transition: all 0.3s ease-in-out;
+}
+
+#workspaces button.focused {
+    color: @crust;
+    background: @mauve;
+    transition: all 0.3s ease-in-out;
+}
+
+.modules-left > widget:first-child > #workspaces {
+    margin-left: 0;
+}
+
+.modules-right > widget:last-child > #workspaces {
+    margin-right: 0;
+}
+
+#window {
+    background: @crust;
+    font-family: "Monaspace Radon Frozen", "CaskaydiaCove Nerd Font";
+    border-radius: 0;
+    padding: 0rem 0.7rem;
+    border: 2px solid @blue;
+}
+
+#taskbar {
+    background: @crust;
+    border-radius: 5px 0 0 5px;
+    padding: 0rem 0rem;
+    border: 2px solid @blue;
+}
+
+window#waybar.fullscreen,
+window#waybar.swallowing {
+    color: @red;
+}
+
+#network,
+#cpu,
+#memory,
+#tray,
+#pulseaudio {
+    background: @crust;
+    padding: 0 5px;
+    border-top: 2px solid @text;
+    border-bottom: 2px solid @text;
+}
+
+#backlight,
+#battery {
+    background: @crust;
+    padding: 0 5px;
+}
+
+#network {
+    color: @yellow;
+}
+
+#cpu {
+    color: @pink;
+}
+
+#memory {
+    color: @pink;
+}
+
+#clock {
+    background: @crust;
+    color: @pink;
+    border-radius: 0 5px 5px 0;
+    border: 2px solid @pink;
+    padding: 0rem 0.7rem;
+}
+
+#battery {
+    color: @pink;
+}
+
+#battery.charging {
+    color: @pink;
+}
+
+#battery.warning:not(.charging) {
+    color: @mauve;
+}
+
+#backlight,
+#battery {
+    background: @crust;
+    color: @yellow;
+    border-top: 2px solid @text;
+    border-bottom: 2px solid @text;
+}
+
+#custom-toggl {
+    background: @crust;
+    font-family: "Monaspace Radon Frozen", "CaskaydiaCove Nerd Font";
+    color: @red;
+    border-radius: 0 5px 5px 0;
+    border: 2px solid @red;
+    padding: 0rem 0.7rem;
+}
+
+#pulseaudio {
+    color: @yellow;
+}
+
+#tray {
+    background: @crust;
+    padding: 0rem 0.7rem;
+    border-radius: 0 5px 5px 0;
+    border-top: 2px solid @text;
+    border-bottom: 2px solid @text;
+    border-right: 2px solid @text;
+}
+
+#custom-toggl-icon,
+#custom-audio-icon,
+#custom-network-icon,
+#custom-backlight-icon,
+#custom-battery-icon,
+#custom-clock-icon,
+#custom-tray-icon {
+    background: @crust;
+    color: @crust;
+    margin-left: 5px;
+    padding: 0px 10px;
+    border-radius: 5px 0 0 5px;
+}
+
+#custom-toggl-icon {
+    background: @red;
+}
+
+#custom-audio-icon {
+    background: @green;
+}
+
+#custom-network-icon {
+    background: @peach;
+}
+
+#custom-clock-icon {
+    background: @pink;
+}
+
+#custom-tray-icon {
+    margin-left: 5px;
+    background: @text;
+}
+
+#custom-vpn,
+#idle_inhibitor {
+    background: @crust;
+    padding: 0 5px;
+    border-top: 2px solid @text;
+    border-bottom: 2px solid @text;
+}
+
+#custom-vpn {
+    color: @yellow;
+}
+#idle_inhibitor {
+    color: @yellow;
+}
+#mpris {
+    background: @crust;
+    font-family: "Monaspace Radon Frozen", "CaskaydiaCove Nerd Font";
+    color: @green;
+    padding: 0rem 0.7rem;
+    border-radius: 5px 0 0 5px;
+    border: 2px solid @green;
+}
+
+#custom-vpn-icon,
+#custom-idle-icon,
+#custom-mpris-icon,
+#custom-window-icon {
+    color: @crust;
+    padding: 0px 10px;
+    border-radius: 0 5px 5px 0;
+    margin-right: 5px;
+}
+
+#custom-vpn-icon {
+    background: @peach;
+}
+#custom-idle-icon {
+    background: @yellow;
+}
+#custom-mpris-icon {
+    background: @green;
+}
+#custom-window-icon {
+    background: @blue;
+}
