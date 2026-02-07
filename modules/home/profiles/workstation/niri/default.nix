@@ -80,6 +80,8 @@ in
       ];
     };
 
+    programs.niri.package = pkgs.niri-unstable;
+
     programs.niri.settings = {
       prefer-no-csd = true;
 
