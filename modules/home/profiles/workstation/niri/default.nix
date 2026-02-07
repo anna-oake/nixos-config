@@ -108,7 +108,7 @@ in
       binds = with config.lib.niri.actions; {
         "Mod+Q".action = spawn "ghostty";
         "Mod+X".action = spawn "fuzzel";
-        "Mod+L".action = spawn "swaylock";
+        "Mod+L".action = spawn "swaylock-plugin";
         "Mod+E".action = spawn "thunar";
 
         # XF86AudioRaiseVolume = {
