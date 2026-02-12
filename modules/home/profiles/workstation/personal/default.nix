@@ -16,6 +16,12 @@ in
       target = sockLink;
     };
 
+    programs.nh = {
+      enable = true;
+      darwinFlake = "/etc/nix-darwin";
+      osFlake = "/home/${config.home.username}/Projects/Nix/nixos-config";
+    };
+
     programs.ssh = {
       enable = true;
       enableDefaultConfig = false;
