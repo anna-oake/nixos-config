@@ -19,7 +19,6 @@
 
   environment.systemPackages = with pkgs; [
     raycast
-    daisydisk
     hexfiend
     keka
     proxmoxbar
