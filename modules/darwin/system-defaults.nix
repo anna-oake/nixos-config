@@ -176,6 +176,7 @@
         "/Applications/Ghostty.app"
         "${pkgs.zed-editor}/Applications/Zed.app"
         "/Applications/Nix Apps/ChatGPT.app"
+        "/Applications/Modrinth App.app"
       ];
     };
 

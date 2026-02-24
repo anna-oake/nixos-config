@@ -47,6 +47,7 @@
     "autodesk-fusion"
     "helium-browser"
     "mqttx"
+    "modrinth"
   ];
 
   services.netbird.enable = true;
