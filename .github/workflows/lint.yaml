@@ -10,7 +10,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Set up Nix
-        uses: DeterminateSystems/nix-installer-action@main
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+          nix_path: nixpkgs=channel:nixos-unstable
       - name: nixfmt
-        run: "nix-shell -p treefmt nixfmt-rfc-style --run 'treefmt --no-cache --fail-on-change'"
+        run: "nix-shell -p treefmt nixfmt --run 'treefmt --no-cache --fail-on-change'"
