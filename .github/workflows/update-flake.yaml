@@ -13,11 +13,14 @@ jobs:
         with:
           ref: main
 
-      - name: Set up Nix
-        uses: DeterminateSystems/nix-installer-action@main
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+          nix_path: nixpkgs=channel:nixos-unstable
 
       - name: Update flake.lock
-        uses: DeterminateSystems/update-flake-lock@v24
+        uses: DeterminateSystems/update-flake-lock@v28
         with:
           token: ${{ secrets.FLAKE_LOCK_PAT }}
           branch: flake-update
