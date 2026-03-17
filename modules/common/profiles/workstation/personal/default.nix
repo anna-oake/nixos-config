@@ -13,6 +13,7 @@
 
     environment.systemPackages = with pkgs; [
       gh
+      ripgrep
       nixfmt
       go
       nixd
