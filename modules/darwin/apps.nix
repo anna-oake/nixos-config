@@ -27,6 +27,7 @@
     spotify
     slack
     discord
+    ripgrep
   ];
 
   homebrew.casks = [
