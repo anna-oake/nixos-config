@@ -23,11 +23,12 @@
     memory = 30720;
     diskSize = 80;
     mounts = [
-      "/storage,mp=/storage"
-      "/storage-fast,mp=/storage-fast"
-      "/storage-fast/attic,mp=/storage-fast/attic"
       "/storage-fast/docker,mp=/var/lib/docker/volumes"
     ];
+    recursiveMounts = {
+      "/storage" = "/storage";
+      "/storage-fast" = "/storage-fast";
+    };
     nvidia.enable = true;
   };
 

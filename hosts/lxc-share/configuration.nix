@@ -57,9 +57,9 @@
 
   lxc = {
     enable = true;
-    mounts = [
-      "/storage,mp=/storage"
-    ];
+    recursiveMounts = {
+      "/storage" = "/storage";
+    };
   };
 
   # Arq Backup can't connect otherwise
