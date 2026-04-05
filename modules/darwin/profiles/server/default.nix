@@ -4,7 +4,12 @@
   ...
 }:
 {
+  imports = [
+    ./system-defaults.nix
+  ];
+
   config = lib.mkIf config.profiles.server.enable {
+    # the following doesn't seem to work, it enables screen sharing but connection fails. re-enabling with GUI helps
     system.activationScripts.postActivation.text = ''
       echo "Enabling Screen Sharing (VNC)..."
       launchctl enable system/com.apple.screensharing
