@@ -11,10 +11,6 @@
         autohide = true;
         autohide-delay = 0.0;
         autohide-time-modifier = 0.3;
-        tilesize = 70;
-        orientation = "bottom";
-        magnification = false;
-        show-recents = false;
         # top left hot corner - start screen saver
         wvous-tl-corner = 5;
         # bottom right hot corner - do nothing
