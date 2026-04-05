@@ -98,7 +98,7 @@
         };
       bootstrapScripts = mkBootstrapScripts blueprint.nixosConfigurations;
       lxcScripts = mkLxcScripts blueprint.nixosConfigurations;
-      deployCfgs = mkDeployNodes blueprint.nixosConfigurations;
+      deployCfgs = mkDeployNodes (blueprint.nixosConfigurations // blueprint.darwinConfigurations);
     in
     {
       inherit (blueprint)
