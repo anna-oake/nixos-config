@@ -9,6 +9,7 @@
   # common configuration for macOS machines
 
   imports = [
+    inputs.nix-things.darwinModules.default
     inputs.nix-homebrew.darwinModules.nix-homebrew
     inputs.self.commonModules.default
   ];
