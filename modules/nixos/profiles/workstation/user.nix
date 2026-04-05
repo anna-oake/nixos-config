@@ -7,7 +7,7 @@
   config = lib.mkIf config.profiles.workstation.enable {
     age.secrets."user-password" = { };
 
-    users.users.anna = {
+    users.users.${config.me.username} = {
       isNormalUser = true;
       uid = 1000;
       extraGroups = [

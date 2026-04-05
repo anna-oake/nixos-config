@@ -7,6 +7,9 @@
   users.users.${config.me.username} = {
     uid = 501;
     home = "/Users/${config.me.username}";
+    openssh.authorizedKeys.keys = [
+      config.me.sshKey
+    ];
   };
   system.primaryUser = config.me.username;
 

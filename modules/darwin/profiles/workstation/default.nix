@@ -11,7 +11,7 @@
 
   config = lib.mkIf config.profiles.workstation.enable {
     environment.systemPath = [
-      "/Users/anna/.local/bin"
+      "/Users/${config.me.username}/.local/bin"
     ];
 
     launchd.daemons.nix-daemon.environment = {
