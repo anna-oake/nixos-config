@@ -172,5 +172,12 @@
       NowPlaying = false;
       Sound = true;
     };
+
+    dock = {
+      tilesize = 70;
+      orientation = "bottom";
+      magnification = false;
+      show-recents = false;
+    };
   };
 }
