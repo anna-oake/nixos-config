@@ -1,5 +1,6 @@
 {
   config,
+  pkgs,
   ...
 }:
 {
@@ -10,6 +11,7 @@
     openssh.authorizedKeys.keys = [
       config.me.sshKey
     ];
+    shell = pkgs.zsh;
   };
   system.primaryUser = config.me.username;
 

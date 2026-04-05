@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 {
@@ -26,5 +27,25 @@
       autorestart = 1;
       acwake = 1;
     };
+
+    environment.enableAllTerminfo = true;
+
+    environment.systemPackages = [
+      (pkgs.stdenvNoCC.mkDerivation {
+        pname = "ghostty-terminfo";
+        version = "1";
+
+        src = ./ghostty.terminfo;
+
+        nativeBuildInputs = [ pkgs.ncurses ];
+
+        dontUnpack = true;
+
+        installPhase = ''
+          mkdir -p $out/share/terminfo
+          tic -x -o $out/share/terminfo $src
+        '';
+      })
+    ];
   };
 }
