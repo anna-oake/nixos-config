@@ -35,9 +35,12 @@ in
     programs.git = {
       enable = true;
       lfs.enable = true;
-      settings.user = {
-        email = osConfig.me.email;
-        name = "Anna Oake";
+      settings = {
+        user = {
+          email = osConfig.me.email;
+          name = "Anna Oake";
+        };
+        url."git@github.com:".insteadOf = "https://github.com/";
       };
       signing = {
         key = osConfig.me.sshKey;
