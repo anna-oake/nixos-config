@@ -55,6 +55,7 @@
         tool_progress_command = true;
         streaming = true;
       };
+      cron.wrap_response = false;
     };
   };
 
