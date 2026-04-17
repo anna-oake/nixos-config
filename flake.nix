@@ -1,14 +1,9 @@
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nix-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nix-darwin = {
       url = "github:nix-darwin/nix-darwin/master";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-
-    blueprint = {
-      url = "github:numtide/blueprint";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -37,16 +32,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-vscode-extensions = {
-      url = "github:nix-community/nix-vscode-extensions";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     nix-things = {
       url = "github:oake/nix-things";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nix-unstable.follows = "nixpkgs";
-      inputs.blueprint.follows = "blueprint";
+      inputs.nix-unstable.follows = "nix-unstable";
     };
 
     jovian = {
@@ -80,56 +69,12 @@
   outputs =
     inputs:
     let
-      inherit (inputs.nixpkgs) lib;
-      inherit (inputs.nix-things.lib)
-        mkDiskoChecks
-        mkDeployNodes
-        mkBootstrapScripts
-        mkLxcScripts
-        ;
-
-      blueprint = inputs.blueprint {
+      blueprint = inputs.nix-things.lib.mkFlake {
         inherit inputs;
-        nixpkgs.config.allowUnfree = true;
       };
-
-      mkModules =
-        modules:
-        modules
-        // {
-          default = {
-            imports = lib.attrsets.attrValues modules;
-          };
-        };
-      bootstrapScripts = mkBootstrapScripts blueprint.nixosConfigurations;
-      lxcScripts = mkLxcScripts blueprint.nixosConfigurations;
-      deployCfgs = mkDeployNodes (blueprint.nixosConfigurations // blueprint.darwinConfigurations);
     in
-    {
-      inherit (blueprint)
-        nixosConfigurations
-        darwinConfigurations
-        lib
-        ;
-
-      commonModules = mkModules blueprint.modules.common;
-      homeModules = mkModules blueprint.homeModules;
-      nixosModules = mkModules blueprint.nixosModules;
-      darwinModules = mkModules blueprint.darwinModules;
-
-      checks = lib.foldl' lib.recursiveUpdate blueprint.checks [
-        (mkDiskoChecks blueprint.nixosConfigurations)
-        bootstrapScripts.checks
-        lxcScripts.checks
-        deployCfgs.checks
-      ];
-
-      apps = lib.foldl' lib.recursiveUpdate bootstrapScripts.apps [
-        lxcScripts.apps
-      ];
-
-      deploy.nodes = deployCfgs.nodes;
-
+    blueprint
+    // {
       agenix-rekey = inputs.agenix-rekey.configure {
         userFlake = inputs.self;
         nixosConfigurations = blueprint.nixosConfigurations // blueprint.darwinConfigurations;
