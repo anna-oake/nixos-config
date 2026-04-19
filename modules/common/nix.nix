@@ -1,5 +1,4 @@
 {
-  inputs,
   config,
   lib,
   ...
@@ -18,9 +17,4 @@
   age.secrets = lib.mkIf config.age.ready {
     attic-netrc = { };
   };
-
-  # overlays
-  nixpkgs.overlays = [
-    inputs.nix-vscode-extensions.overlays.default
-  ];
 }
