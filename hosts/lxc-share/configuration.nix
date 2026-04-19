@@ -24,6 +24,7 @@
           "family"
           "oake"
           "media"
+          "slopster"
         ];
       };
       maeve = {
@@ -52,6 +53,7 @@
       "family" = "/storage/share/family";
       "oake" = "/storage/share/oake";
       "media" = "/storage/media";
+      "slopster" = "/storage-fast/slopster";
     };
   };
 
@@ -59,6 +61,7 @@
     enable = true;
     recursiveMounts = {
       "/storage" = "/storage";
+      "/storage-fast" = "/storage-fast";
     };
   };
 
