@@ -18,7 +18,7 @@
     remoteJobs.pull = {
       mynah-buyan = {
         address = "zrepl-mynah-buyan.me.ow:28000";
-        interval = "manual";
+        interval = "24h";
         bandwidthLimit = "10 Mb"; # bitch got dial up 😭
       };
     };
