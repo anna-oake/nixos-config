@@ -32,6 +32,7 @@
       spotify
       slack
       discord
+      element-desktop
     ];
 
     homebrew.casks = [

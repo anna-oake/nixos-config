@@ -16,11 +16,12 @@
         # bottom right hot corner - do nothing
         wvous-br-corner = 1;
         persistent-apps = [
-          "/System/Cryptexes/App/System/Applications/Safari.app"
+          "/Applications/Helium.app"
           "/System/Applications/Calendar.app"
           "/System/Applications/Mail.app"
           "/Applications/Nix Apps/Spotify.app"
           "/Applications/Telegram.app"
+          "/Applications/Nix Apps/Element.app"
           "/Applications/Nix Apps/Slack.app"
           "/Applications/Ghostty.app"
           "${pkgs.zed-editor}/Applications/Zed.app"
