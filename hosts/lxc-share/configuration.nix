@@ -25,6 +25,8 @@
           "oake"
           "media"
           "slopster"
+          "kalicraft"
+          "kalicraft-extra"
         ];
       };
       maeve = {
@@ -40,6 +42,8 @@
         allowedExtraShares = [
           "family"
           "media"
+          "kalicraft"
+          "kalicraft-extra"
         ];
       };
       eule = {
@@ -54,6 +58,8 @@
       "oake" = "/storage/share/oake";
       "media" = "/storage/media";
       "slopster" = "/storage-fast/slopster";
+      "kalicraft" = "/storage-fast/kalicraft";
+      "kalicraft-extra" = "/storage/kalicraft-extra";
     };
   };
 
