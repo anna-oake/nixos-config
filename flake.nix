@@ -71,6 +71,9 @@
     let
       blueprint = inputs.nix-things.lib.mkFlake {
         inherit inputs;
+        nixpkgs.overlays = [
+          (import ./overlays.nix)
+        ];
       };
     in
     blueprint
