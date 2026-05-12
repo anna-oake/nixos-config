@@ -28,7 +28,6 @@
       keka
       proxmoxbar
       utm
-      chatgpt
       spotify
       slack
       discord
@@ -54,6 +53,8 @@
       "helium-browser"
       "mqttx"
       "modrinth"
+      "chatgpt"
+      "codex-app"
     ];
   };
 }
