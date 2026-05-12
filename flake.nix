@@ -1,7 +1,6 @@
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nix-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nix-darwin = {
       url = "github:nix-darwin/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -35,7 +34,6 @@
     nix-things = {
       url = "github:oake/nix-things";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nix-unstable.follows = "nix-unstable";
     };
 
     jovian = {

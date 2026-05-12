@@ -569,40 +569,21 @@
         "disko": "disko",
         "impermanence": "impermanence",
         "lanzaboote": "lanzaboote",
-        "nix-unstable": [
-          "nix-unstable"
-        ],
         "nixpkgs": [
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1777909224,
-        "narHash": "sha256-rnpv1n2rrd3H9xp627QaP+fgEvacLBl69gHn9QNtRZk=",
+        "lastModified": 1778610133,
+        "narHash": "sha256-1zK7ir+UkvAEhOb9fp1ZPS7zgzwJZrC0mhPEzx2q7fA=",
         "owner": "oake",
         "repo": "nix-things",
-        "rev": "dea6ebf4dc84bf961079bad1d0801a15b77fb29e",
+        "rev": "058bf5e431756473172c2162ca00129718fb4640",
         "type": "github"
       },
       "original": {
         "owner": "oake",
         "repo": "nix-things",
-        "type": "github"
-      }
-    },
-    "nix-unstable": {
-      "locked": {
-        "lastModified": 1777954456,
-        "narHash": "sha256-hGdgeU2Nk87RAuZyYjyDjFL6LK7dAZN5RE9+hrDTkDU=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "549bd84d6279f9852cae6225e372cc67fb91a4c1",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "nixos-unstable",
-        "repo": "nixpkgs",
         "type": "github"
       }
     },
@@ -845,7 +826,6 @@
         "nix-darwin": "nix-darwin",
         "nix-homebrew": "nix-homebrew",
         "nix-things": "nix-things",
-        "nix-unstable": "nix-unstable",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_2",
         "plasma-manager": "plasma-manager",
