@@ -13,9 +13,9 @@
 
     # mynah host driver
     lxc.nvidia.package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
-      version = "580.119.02";
-      sha256_64bit = "sha256-gCD139PuiK7no4mQ0MPSr+VHUemhcLqerdfqZwE47Nc=";
-      openSha256 = "sha256-l3IQDoopOt0n0+Ig+Ee3AOcFCGJXhbH1Q1nh1TEAHTE=";
+      version = "595.71.05";
+      sha256_64bit = "sha256-NiA7iWC35JyKQva6H1hjzeNKBek9KyS3mK8G3YRva4I=";
+      openSha256 = "sha256-Lfz71QWKM6x/jD2B22SWpUi7/og30HRlXg1kL3EWzEw=";
       useSettings = false;
       usePersistenced = false;
     };
