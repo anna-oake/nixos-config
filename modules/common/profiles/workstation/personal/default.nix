@@ -23,6 +23,8 @@
       zone-wizard
       imhex
       httpie
+      nodejs_24
+      temurin-bin-25
     ];
 
     fonts.packages = with pkgs; [
