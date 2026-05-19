@@ -30,7 +30,6 @@
       utm
       spotify
       slack
-      discord
       element-desktop
     ];
 
@@ -55,6 +54,7 @@
       "modrinth"
       "chatgpt"
       "codex-app"
+      "discord"
     ];
   };
 }
