@@ -29,7 +29,6 @@
       proxmoxbar
       utm
       spotify
-      slack
       element-desktop
     ];
 
@@ -55,6 +54,7 @@
       "chatgpt"
       "codex-app"
       "discord"
+      "slack"
     ];
   };
 }

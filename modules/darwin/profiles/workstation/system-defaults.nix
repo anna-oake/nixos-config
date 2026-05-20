@@ -22,7 +22,7 @@
           "/Applications/Nix Apps/Spotify.app"
           "/Applications/Telegram.app"
           "/Applications/Nix Apps/Element.app"
-          "/Applications/Nix Apps/Slack.app"
+          "/Applications/Slack.app"
           "/Applications/Ghostty.app"
           "${pkgs.zed-editor}/Applications/Zed.app"
           "/Applications/ChatGPT.app"
