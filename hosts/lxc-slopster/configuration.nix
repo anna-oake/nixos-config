@@ -16,8 +16,6 @@
     "lxc-slopster/telegram-token" = { };
   };
 
-  environment.systemPackages = config.services.hermes-agent.extraPackages;
-
   services.hermes-agent = {
     enable = true;
     stateDir = "/storage-fast/slopster";
@@ -29,6 +27,11 @@
       gh
       go
       python3
+      temurin-bin-25
+    ];
+
+    extraDependencyGroups = [
+      "messaging"
     ];
 
     environmentFiles = [
