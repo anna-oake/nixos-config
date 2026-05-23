@@ -44,6 +44,11 @@
         provider = "openai-codex";
         base_url = "https://chatgpt.com/backend-api/codex";
       };
+      mcp_servers = {
+        pcbparts = {
+          url = "https://pcbparts.dev/mcp";
+        };
+      };
       toolsets = [
         "all"
       ];
