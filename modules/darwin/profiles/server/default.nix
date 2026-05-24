@@ -28,8 +28,6 @@
       acwake = 1;
     };
 
-    environment.enableAllTerminfo = true;
-
     environment.systemPackages = [
       (pkgs.stdenvNoCC.mkDerivation {
         pname = "ghostty-terminfo";
