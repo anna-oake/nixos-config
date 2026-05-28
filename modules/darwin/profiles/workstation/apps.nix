@@ -55,6 +55,7 @@
       "codex-app"
       "discord"
       "slack"
+      "obs"
     ];
   };
 }
