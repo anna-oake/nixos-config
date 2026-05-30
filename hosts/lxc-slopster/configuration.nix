@@ -40,10 +40,15 @@
 
     settings = {
       model = {
-        default = "gpt-5.4";
         provider = "openai-codex";
-        base_url = "https://chatgpt.com/backend-api/codex";
+        default = "gpt-5.4";
       };
+      fallback_providers = [
+        {
+          provider = "xai-oauth";
+          model = "grok-4.3";
+        }
+      ];
       mcp_servers = {
         pcbparts = {
           url = "https://pcbparts.dev/mcp";
