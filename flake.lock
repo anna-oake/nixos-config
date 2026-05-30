@@ -347,11 +347,11 @@
         "uv2nix": "uv2nix_2"
       },
       "locked": {
-        "lastModified": 1779917515,
-        "narHash": "sha256-rnmBfyyzthuIl6OlcFw05GToHhoVuqreTVTvnl9KDkQ=",
+        "lastModified": 1780112712,
+        "narHash": "sha256-0ZcV14XjhiLWiVLzGWyudDyKchaU3ZqV0L6nQFQvrUQ=",
         "owner": "NousResearch",
         "repo": "hermes-agent",
-        "rev": "2d5dcfabc312d43f87a4f0f44c45f62cf24a09b2",
+        "rev": "aa32edcac5ee3c3359f2bf8ba2aa372f40787975",
         "type": "github"
       },
       "original": {
@@ -388,11 +388,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1779726696,
-        "narHash": "sha256-/p37CB5n6Wpw250b0Lq0CYwNq2D8uGKzDoBulyLcQqA=",
+        "lastModified": 1780099287,
+        "narHash": "sha256-efIPwVGtIWIjWcznhaop6XN6HxnOL8800hF6CBNvlqQ=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "1a95e2efb477959b70b4a14c51035975c0481df6",
+        "rev": "7d8127d308c3fb9664f7e643eec944be74ebb37d",
         "type": "github"
       },
       "original": {
@@ -404,11 +404,11 @@
     "homebrew-cask": {
       "flake": false,
       "locked": {
-        "lastModified": 1779924672,
-        "narHash": "sha256-PCJb7BSCiNkjHEIOiUdWvVOVtQivGTdWFkpjKAYm4Xg=",
+        "lastModified": 1780110058,
+        "narHash": "sha256-i3JplTfQ7LhfTxSFfjZLcF2MP+/XkUalyiY42SvX52Y=",
         "owner": "homebrew",
         "repo": "homebrew-cask",
-        "rev": "c0ee04040718ad4f12d90e844661fc2752911ce9",
+        "rev": "def0d56bb899060aca425461297a41ed5fdb0fba",
         "type": "github"
       },
       "original": {
@@ -420,11 +420,11 @@
     "homebrew-core": {
       "flake": false,
       "locked": {
-        "lastModified": 1779924334,
-        "narHash": "sha256-UokvZOABBN2PV95u43g1EZGtmnVbovVZwqSDI5KKnSw=",
+        "lastModified": 1780101772,
+        "narHash": "sha256-rwjAfsEibNW9O1XtkyBLA9rojoov+8XYUDTxzLvKdKY=",
         "owner": "homebrew",
         "repo": "homebrew-core",
-        "rev": "5552bc6966d96e4f8fec30ac8e1eb5ba32703e35",
+        "rev": "405a3b5fa18811782aaf2af39c638cad973605d1",
         "type": "github"
       },
       "original": {
@@ -464,11 +464,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1779910845,
-        "narHash": "sha256-K+ugPxAsjCT4soO3vadlKs7MKIfH3WqB5Z4xt/jeWyU=",
+        "lastModified": 1780037506,
+        "narHash": "sha256-z7lnxUsYex11x73HiRCzRZDYF2OGqnB0QqouMYcHSX4=",
         "owner": "jovian-experiments",
         "repo": "jovian-nixos",
-        "rev": "3565a61af78debd93ae92a121a6f4683c952d862",
+        "rev": "aee8bab39b309b038c14f216538e6141f28808c6",
         "type": "github"
       },
       "original": {
