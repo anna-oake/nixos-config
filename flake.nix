@@ -6,7 +6,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixos-hardware.url = "github:anna-oake/nixos-hardware";
+    nixos-hardware.url = "github:nixos/nixos-hardware";
 
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
 
@@ -62,6 +62,11 @@
       url = "github:NousResearch/hermes-agent";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    macos-speech-server = {
+      url = "github:jasonrm/macos-speech-server";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -71,6 +76,7 @@
         inherit inputs;
         nixpkgs.overlays = [
           (import ./overlays.nix)
+          inputs.macos-speech-server.overlays.default
         ];
       };
     in
