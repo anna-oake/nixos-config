@@ -56,6 +56,7 @@
       "discord"
       "slack"
       "obs"
+      "rustdesk"
     ];
   };
 }
