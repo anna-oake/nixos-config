@@ -17,7 +17,7 @@
       nixfmt
       go
       nixd
-      ffmpeg-full
+      ffmpeg
       codex
       codex-acp
       zone-wizard
