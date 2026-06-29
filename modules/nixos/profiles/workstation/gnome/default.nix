@@ -91,9 +91,9 @@ in
       yelp
     ];
 
-    fonts.packages = with pkgs; [
-      cantarell-fonts
-    ];
+    # fonts.packages = with pkgs; [
+    #   cantarell-fonts
+    # ];
 
     systemd.tmpfiles.rules = [
       "f+ /var/lib/AccountsService/users/${config.me.username} 0600 root root - [User]\\nIcon=${
@@ -117,7 +117,7 @@ in
             "org/gnome/desktop/wm/preferences" = {
               auto-raise = false;
               focus-mode = "sloppy";
-              titlebar-font = "Cantarell Bold 11";
+              # titlebar-font = "Cantarell Bold 11";
             };
             "org/gnome/desktop/peripherals/mouse" = {
               accel-profile = "flat";
@@ -152,8 +152,8 @@ in
               gtk-enable-primary-paste = false;
               show-battery-percentage = true;
               clock-show-seconds = true;
-              font-name = "Cantarell 11";
-              document-font-name = "Cantarell 11";
+              # font-name = "Cantarell 11";
+              # document-font-name = "Cantarell 11";
             };
             "org/gnome/shell/extensions/user-theme" = {
               name = "Lion";
