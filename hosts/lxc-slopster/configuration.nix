@@ -65,9 +65,10 @@
       };
       display = {
         tool_progress = "off";
-        tool_progress_command = true;
+        tool_progress_command = false;
         streaming = true;
       };
+      streaming.enabled = true;
       cron.wrap_response = false;
     };
   };
