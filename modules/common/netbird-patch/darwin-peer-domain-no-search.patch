@@ -1,0 +1,23 @@
+--- a/client/internal/dns/host_darwin.go
++++ b/client/internal/dns/host_darwin.go
+@@ -87,13 +87,18 @@ func (s *systemConfigurator) applyDNSConfig(config HostDNSConfig, stateManager *
+ 
+ 	for _, dConf := range config.Domains {
++		domain := strings.TrimSuffix(dConf.Domain, ".")
+ 		if dConf.Disabled {
+ 			continue
+ 		}
+ 		if dConf.MatchOnly {
+-			matchDomains = append(matchDomains, strings.TrimSuffix(dConf.Domain, "."))
++			matchDomains = append(matchDomains, domain)
+ 			continue
+ 		}
+-		searchDomains = append(searchDomains, strings.TrimSuffix(""+dConf.Domain, "."))
++		if strings.EqualFold(domain, "me.ow") {
++			matchDomains = append(matchDomains, domain)
++			continue
++		}
++		searchDomains = append(searchDomains, domain)
+ 	}
+ 
+ 	if err := s.removeKeysContaining(matchSuffix); err != nil {
