@@ -10,6 +10,7 @@
     ./hardware-configuration.nix
     ./gaming.nix
     ./samba.nix
+    ./led.nix
     inputs.self.nixosModules.default
     inputs.jovian.nixosModules.default
   ];
