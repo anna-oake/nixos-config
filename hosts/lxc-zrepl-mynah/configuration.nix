@@ -18,6 +18,7 @@
     snapshotting = {
       datasets = [
         "rpool/storage/kalicraft<"
+        "rpool/storage/kalicraft-create<"
       ];
       cron = "0 * * * *"; # snapshots will be created on each hour
     };
@@ -25,6 +26,7 @@
     localJob = {
       datasets = [
         "rpool/storage/kalicraft<"
+        "rpool/storage/kalicraft-create<"
       ];
       interval = "30m"; # SSD -> HDD replication of new snapshots every 30 minutes
     };
