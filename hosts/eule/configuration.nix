@@ -20,7 +20,13 @@
     personal.enable = false;
   };
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # hdmi 2.1!!!!
+
+  boot.kernelPackages = pkgs.linuxPackages_testing;
+
+  boot.kernelParams = [
+    "amdgpu.dcfeaturemask=0x400"
+  ];
 
   time.timeZone = "Europe/Amsterdam";
 
