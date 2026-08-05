@@ -40,7 +40,7 @@
   ];
 
   boot.kernelParams = [
-    "amdgpu.dcfeaturemask=0x402"
+    "amdgpu.dcfeaturemask=0x400"
   ];
 
   time.timeZone = "Europe/Amsterdam";
