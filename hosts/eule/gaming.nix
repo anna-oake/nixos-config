@@ -1,6 +1,5 @@
 {
   config,
-  pkgs,
   ...
 }:
 {
@@ -17,16 +16,6 @@
     };
     decky-loader = {
       enable = true;
-      # TODO remove the following override
-      package =
-        (pkgs.decky-loader.override {
-          pnpm_9 = pkgs.pnpm_10;
-        }).overridePythonAttrs
-          (old: {
-            pnpmDeps = old.pnpmDeps.overrideAttrs {
-              outputHash = "sha256-X1L8JYG5hgYMmfg0aa8XhkRU6/oFrYTPiXDIyq77puE=";
-            };
-          });
       user = "gamer";
       stateDir = "/home/gamer/decky-loader";
     };
