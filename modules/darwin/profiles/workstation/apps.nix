@@ -57,6 +57,7 @@
       "slack"
       "obs"
       "rustdesk"
+      "t3-code"
     ];
   };
 }
