@@ -10,6 +10,10 @@ let
   sockLink = ".1password/agent.sock";
 in
 {
+  imports = [
+    ./zed.nix
+  ];
+
   config = lib.mkIf config.profiles.workstation.personal.enable {
     home.file.sock = lib.mkIf pkgs.stdenvNoCC.isDarwin {
       source = config.lib.file.mkOutOfStoreSymlink darwinSockPath;
@@ -51,53 +55,6 @@ in
           else
             "${pkgs._1password-gui}/share/1password/op-ssh-sign";
         signByDefault = true;
-      };
-    };
-
-    programs.zed-editor = {
-      enable = true;
-      extensions = [
-        "nix"
-        "just"
-        "just-ls"
-        "graphql"
-        "toml"
-        "git-firefly"
-        "swift"
-        "liquid"
-        "lua"
-      ];
-      extraPackages = [
-        pkgs.gopls
-      ];
-      userSettings = {
-        ui_font_size = 15;
-        buffer_font_size = 13;
-        buffer_font_family = "Comic Code Ligatures";
-        theme = {
-          mode = "system";
-          light = "Gruvbox Light";
-          dark = "Gruvbox Dark";
-        };
-        languages = {
-          Nix = {
-            language_servers = [
-              "nixd"
-              "!nil"
-            ];
-          };
-        };
-        telemetry = {
-          metrics = false;
-          diagnostics = false;
-        };
-        load_direnv = "shell_hook";
-        agent_servers = lib.mkIf pkgs.stdenvNoCC.isLinux {
-          "Codex" = {
-            type = "custom";
-            command = "${pkgs.codex-acp}/bin/codex-acp";
-          };
-        };
       };
     };
 
