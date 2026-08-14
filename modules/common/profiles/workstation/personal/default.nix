@@ -18,13 +18,15 @@
       go
       nixd
       ffmpeg
-      codex
-      codex-acp
       zone-wizard
       imhex
       httpie
       nodejs_24
       temurin-bin-25
+      codex
+      codex-acp
+      claude-code
+      claude-agent-acp
     ];
 
     fonts.packages = with pkgs; [
