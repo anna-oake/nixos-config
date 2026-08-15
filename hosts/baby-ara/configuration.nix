@@ -12,21 +12,18 @@
 
   profiles.workstation = {
     enable = true;
-    personal.enable = false;
+    personal.enable = true;
+    gnome.enable = true;
   };
 
   environment.systemPackages = with pkgs; [
-    gnomeExtensions.appindicator
-    btrfs-progs
     libimobiledevice
     ifuse
   ];
 
   services.usbmuxd.enable = true;
 
-  services.xserver.enable = true;
-  services.displayManager.gdm.enable = true;
-  services.desktopManager.gnome.enable = true;
+  home-manager.backupFileExtension = ".bak";
 
   system.stateVersion = "26.05";
 }
