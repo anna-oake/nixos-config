@@ -18,13 +18,7 @@ in
     gnome = {
       enable = true;
       dockItems.middle = [ "ke.oa.miaow.desktop" ];
-      shellExtensions =
-        (with pkgs.gnomeExtensions; [
-          user-themes
-          just-perfection
-          appindicator
-        ])
-        ++ [ miaow ];
+      shellExtensions = [ miaow ];
     };
     laptop.enable = true;
     wifi.enable = true;

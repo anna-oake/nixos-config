@@ -8,6 +8,14 @@
 let
   cfg = config.profiles.workstation.gnome;
 
+  defaultShellExtensions = with pkgs.gnomeExtensions; [
+    user-themes
+    just-perfection
+    appindicator
+  ];
+
+  shellExtensions = lib.unique (defaultShellExtensions ++ cfg.shellExtensions);
+
   mkDockOption =
     default:
     lib.mkOption (
@@ -44,15 +52,8 @@ in
 
     shellExtensions = lib.mkOption {
       type = lib.types.listOf lib.types.package;
-      description = "List of packages containing GNOME Shell Extensions to install.";
-      default =
-        with pkgs;
-        with pkgs.gnomeExtensions;
-        [
-          user-themes
-          just-perfection
-          appindicator
-        ];
+      default = [ ];
+      description = "Additional packages containing GNOME Shell extensions to install.";
     };
   };
 
@@ -74,7 +75,7 @@ in
         breezex-cursor
         adwaita-icon-theme
       ]
-      ++ cfg.shellExtensions;
+      ++ shellExtensions;
 
     # environment variables
     environment.sessionVariables = {
@@ -142,7 +143,7 @@ in
             # dock & extensions
             "org/gnome/shell" = {
               favorite-apps = with cfg.dockItems; left ++ middle ++ right;
-              enabled-extensions = map (p: p.extensionUuid) cfg.shellExtensions;
+              enabled-extensions = map (p: p.extensionUuid) shellExtensions;
             };
 
             # appearance
