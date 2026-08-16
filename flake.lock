@@ -85,6 +85,21 @@
     },
     "crane": {
       "locked": {
+        "lastModified": 1785782307,
+        "narHash": "sha256-MPaRdVkf6zZP5fCPxYCi8Dr4pZzgmXzg8T9nVEbp3Mw=",
+        "owner": "ipetkov",
+        "repo": "crane",
+        "rev": "2c71e194474d13de031d729b729c968ddbe3507f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ipetkov",
+        "repo": "crane",
+        "type": "github"
+      }
+    },
+    "crane_2": {
+      "locked": {
         "lastModified": 1781825982,
         "narHash": "sha256-SlXKwIRIhrOSAcTjCB3ftPLzJWZStQIPS7J1FlZPnKk=",
         "owner": "ipetkov",
@@ -497,7 +512,7 @@
     },
     "lanzaboote": {
       "inputs": {
-        "crane": "crane",
+        "crane": "crane_2",
         "nixpkgs": [
           "nix-things",
           "nixpkgs"
@@ -538,6 +553,27 @@
       "original": {
         "owner": "jasonrm",
         "repo": "macos-speech-server",
+        "type": "github"
+      }
+    },
+    "miaow": {
+      "inputs": {
+        "crane": "crane",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1786909753,
+        "narHash": "sha256-OrjOgdKbT3nuwMuVKuZsMHMQbo0P10jNCRRRwqdpxvo=",
+        "owner": "oake",
+        "repo": "miaow-linux",
+        "rev": "24ce18fbf1d73e3e9ca751141125e98b997599d4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oake",
+        "repo": "miaow-linux",
         "type": "github"
       }
     },
@@ -841,6 +877,7 @@
         "homebrew-core": "homebrew-core",
         "jovian": "jovian",
         "macos-speech-server": "macos-speech-server",
+        "miaow": "miaow",
         "nix-darwin": "nix-darwin",
         "nix-homebrew": "nix-homebrew",
         "nix-things": "nix-things",

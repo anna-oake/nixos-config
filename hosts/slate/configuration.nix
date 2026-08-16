@@ -3,6 +3,9 @@
   pkgs,
   ...
 }:
+let
+  miaow = inputs.miaow.packages.x86_64-linux.default;
+in
 {
   imports = [
     inputs.self.nixosModules.default
@@ -12,7 +15,17 @@
 
   profiles.workstation = {
     enable = true;
-    gnome.enable = true;
+    gnome = {
+      enable = true;
+      dockItems.middle = [ "ke.oa.miaow.desktop" ];
+      shellExtensions =
+        (with pkgs.gnomeExtensions; [
+          user-themes
+          just-perfection
+          appindicator
+        ])
+        ++ [ miaow ];
+    };
     laptop.enable = true;
     wifi.enable = true;
   };
