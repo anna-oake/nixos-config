@@ -28,6 +28,11 @@
     package = pkgs.usbmuxd2;
   };
 
+  services.fprintd = {
+    enable = true;
+    cs9711 = true;
+  };
+
   home-manager.backupFileExtension = ".bak";
 
   system.stateVersion = "26.05";
