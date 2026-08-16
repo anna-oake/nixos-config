@@ -72,6 +72,7 @@ in
         gnome-tweaks
         lion-theme
         breezex-cursor
+        adwaita-icon-theme
       ]
       ++ cfg.shellExtensions;
 
@@ -152,6 +153,7 @@ in
               gtk-enable-primary-paste = false;
               show-battery-percentage = true;
               clock-show-seconds = true;
+              icon-theme = "Adwaita";
               # font-name = "Cantarell 11";
               # document-font-name = "Cantarell 11";
             };
