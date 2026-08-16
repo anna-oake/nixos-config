@@ -99,7 +99,7 @@
             { "device.name" = "alsa_card.pci-0000_03_00.1"; }
           ];
           actions.update-props = {
-            "device.profile" = "output:hdmi-surround";
+            "device.profile" = "output:hdmi-surround-extra3";
           };
         }
       ];
