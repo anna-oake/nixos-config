@@ -11,6 +11,8 @@
     programs._1password.enable = true;
     programs._1password-gui.enable = true;
 
+    nix.settings.trusted-users = [ config.me.username ];
+
     environment.systemPackages = with pkgs; [
       gh
       ripgrep
