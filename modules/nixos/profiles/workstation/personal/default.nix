@@ -35,5 +35,13 @@
         "kpmjjdhbcfebfjgdnpjagcndoelnidfj" # Control Panel for Twitter
       ];
     };
+
+    age.secrets.gh-miaow-linux = {
+      owner = config.me.username;
+    };
+
+    nix.extraOptions = ''
+      !include ${config.age.secrets.gh-miaow-linux.path}
+    '';
   };
 }
