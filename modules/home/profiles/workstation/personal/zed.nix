@@ -26,6 +26,7 @@ in
         "swift"
         "liquid"
         "lua"
+        "sieve"
       ];
       extraPackages = [
         pkgs.gopls
