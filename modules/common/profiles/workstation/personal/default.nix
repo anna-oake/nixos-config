@@ -36,6 +36,8 @@
       comic-code-font
     ];
 
+    services.protonmail-bridge.enable = true;
+
     security.sudo.extraConfig =
       let
         rebuildBin = if pkgs.stdenv.isDarwin then "darwin-rebuild" else "nixos-rebuild";
