@@ -15,11 +15,7 @@ in
 
   profiles.workstation = {
     enable = true;
-    gnome = {
-      enable = true;
-      dockItems.middle = [ "ke.oa.miaow.desktop" ];
-      shellExtensions = [ miaow ];
-    };
+    gnome.enable = true;
     laptop.enable = true;
     wifi.enable = true;
   };
