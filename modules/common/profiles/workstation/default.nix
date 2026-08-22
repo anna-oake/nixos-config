@@ -16,6 +16,7 @@
       just
       wget
       p7zip
+      dua
     ];
   };
 }
