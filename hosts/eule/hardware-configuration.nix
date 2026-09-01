@@ -10,7 +10,7 @@
     # device = "/dev/disk/by-id/usb-KIOXIA_EXCERIA_PLUS_635FC19CFPH4-0:0";
 
     # production disk:
-    device = "/dev/disk/by-id/nvme-KINGSTON_SNV3S2000G_50026B73834AB709";
+    device = "/dev/disk/by-id/nvme-WD_BLACK_SN850X_HS_2000GB_2348ML455804";
     rootType = "btrfs";
     impermanence.enable = true;
   };
