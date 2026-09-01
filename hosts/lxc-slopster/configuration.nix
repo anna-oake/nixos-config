@@ -41,12 +41,12 @@
     settings = {
       model = {
         provider = "openai-codex";
-        default = "gpt-5.4";
+        default = "gpt-5.6-sol";
       };
       fallback_providers = [
         {
           provider = "xai-oauth";
-          model = "grok-4.3";
+          model = "grok-4.6";
         }
       ];
       mcp_servers = {
