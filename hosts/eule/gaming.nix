@@ -1,8 +1,19 @@
 {
   config,
+  lib,
   ...
 }:
 {
+  nixpkgs.overlays = lib.mkAfter [
+    (_: prev: {
+      jovian-stubs = prev.jovian-stubs.overrideAttrs (old: {
+        buildCommand = old.buildCommand + ''
+          substituteInPlace $out/bin/steamos-polkit-helpers/steamos-update --replace-fail 'readlink /' 'readlink -f /'
+        '';
+      });
+    })
+  ];
+
   jovian = {
     hardware = {
       has.amd.gpu = true;
