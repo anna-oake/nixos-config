@@ -1,6 +1,7 @@
 #!/bin/sh
 
-if [ "$(readlink -f /run/current-system)" != "$(readlink -f /nix/var/nix/profiles/system)" ]; then
+# Resolve through deploy-rs' activation wrapper to the underlying system.
+if [ "$(readlink -f /run/current-system/init)" != "$(readlink -f /nix/var/nix/profiles/system/init)" ]; then
     exit 8
 fi
 
