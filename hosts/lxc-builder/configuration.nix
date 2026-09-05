@@ -10,7 +10,10 @@
 
   profiles.server.enable = true;
 
-  age.secrets."lxc-builder/deploy-ssh-key" = { };
+  age.secrets = {
+    "lxc-builder/deploy-ssh-key" = { };
+    "lxc-builder/deploy-attic-token" = { };
+  };
 
   services.deployer = {
     enable = true;
@@ -18,6 +21,7 @@
     hosts = [ "eule" ];
     atticServer = "attic.oa.ke";
     atticCache = "nixos";
+    atticTokenFile = config.age.secrets."lxc-builder/deploy-attic-token".path;
     sshKeyFile = config.age.secrets."lxc-builder/deploy-ssh-key".path;
   };
 
