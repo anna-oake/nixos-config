@@ -37,6 +37,10 @@
       name = "hdmi21-vrr-hf-vsdb";
       patch = ./patches/3-hdmi21-vrr-hf-vsdb.patch;
     }
+    {
+      name = "hdmi21-allm";
+      patch = ./patches/4-hdmi21-allm.patch;
+    }
   ];
 
   boot.kernelParams = [

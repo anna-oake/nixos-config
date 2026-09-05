@@ -1,27 +1,34 @@
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index ccf882a22a57..223b562f7005 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -5781,6 +5781,14 @@ STATIC_IFN_KUNIT void get_freesync_config_for_crtc(
- 	}
- out:
- 	new_crtc_state->freesync_config = config;
-+
-+	drm_dbg_driver(new_con_state->base.connector->dev,
-+		       "VRR: cfg vrr_enabled=%d vrr_supported=%d fs_capable=%d vrefresh=%d min=%d max=%d state=%d\n",
-+		       new_crtc_state->base.vrr_enabled,
-+		       new_crtc_state->vrr_supported,
-+		       new_con_state->freesync_capable, vrefresh,
-+		       aconnector->min_vfreq, aconnector->max_vfreq,
-+		       config.state);
- }
- EXPORT_IF_KUNIT(get_freesync_config_for_crtc);
- 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index 2deb5abae264..ebead39939a6 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -3605,5 +3605,14 @@ void amdgpu_dm_update_freesync_caps(struct drm_connector *connector,
+Subject: [PATCH v4 3/4] drm/amd/display: Add HDMI 2.1 VRR support from HF-VSDB
+
+why:
+HDMI 2.1 sinks advertise their VRR range in the HDMI Forum VSDB
+(HF-VSDB), but amdgpu derived FreeSync capability only from the AMD
+VSDB. Sinks that expose just the HDMI Forum VRR capability (e.g. HDMI
+compliance EDIDs) were therefore reported as not VRR capable.
+
+how:
+- In amdgpu_dm_update_freesync_caps(), when the AMD VSDB does not
+  provide a valid FreeSync range, fall back to the HDMI 2.1 VRR range
+  parsed by DRM core from the HF-VSDB
+  (connector->display_info.hdmi.vrr_cap). VRRMAX = 0 means "up to the
+  Base Refresh Rate"; when the EDID provides no monitor range maximum
+  either, fall back to the Base Refresh Rate (the highest refresh-rate
+  mode of the preferred timing) so a valid VRR range is still reported
+  to userspace.
+- Add VRR debug logging along the FreeSync capability and config paths.
+
+Signed-off-by: Fangzhi Zuo <Jerry.Zuo at amd.com>
+Reviewed-by: Harry Wentland <harry.wentland at amd.com>
+---
+ .../display/amdgpu_dm/amdgpu_dm_connector.c   | 67 +++++++++++++++++++
+ .../display/amdgpu_dm/amdgpu_dm_freesync.c    |  8 +++
+ 2 files changed, 75 insertions(+)
+
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_connector.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_connector.c
+index 9eaa20ec528e..2fe7bfb1e88f 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_connector.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_connector.c
+@@ -3812,6 +3812,15 @@ void amdgpu_dm_update_freesync_caps(struct drm_connector *connector,
  	if (!adev->dm.freesync_module || !dc_supports_vrr(sink->ctx->dce_version))
  		goto update;
  
@@ -34,9 +41,10 @@ index 2deb5abae264..ebead39939a6 100644
 +		       connector->display_info.hdmi.vrr_cap.vrr_min,
 +		       connector->display_info.hdmi.vrr_cap.vrr_max);
 +
- 	edid = drm_edid_raw(drm_edid); // FIXME: Get rid of drm_edid_raw()
+ 	/* FIXME: Get rid of drm_edid_raw() */
+ 	edid = drm_edid_raw(drm_edid);
  
-@@ -3649,6 +3658,59 @@ void amdgpu_dm_update_freesync_caps(struct drm_connector *connector,
+@@ -3856,6 +3865,59 @@ void amdgpu_dm_update_freesync_caps(struct drm_connector *connector,
  				connector->display_info.monitor_range.max_vfreq = vsdb_info.max_refresh_rate_hz;
  			}
  		}
@@ -76,7 +84,7 @@ index 2deb5abae264..ebead39939a6 100644
 +				 */
 +				if (!amdgpu_dm_connector->max_vfreq) {
 +					struct drm_display_mode *brr_mode =
-+						get_highest_refresh_rate_mode(amdgpu_dm_connector, true);
++						amdgpu_dm_get_highest_refresh_rate_mode(amdgpu_dm_connector, true);
 +
 +					if (brr_mode)
 +						amdgpu_dm_connector->max_vfreq =
@@ -96,7 +104,7 @@ index 2deb5abae264..ebead39939a6 100644
  	}
  
  	if (amdgpu_dm_connector->dc_link)
-@@ -3692,6 +3754,11 @@ void amdgpu_dm_update_freesync_caps(struct drm_connector *connector,
+@@ -3911,6 +3973,11 @@ void amdgpu_dm_update_freesync_caps(struct drm_connector *connector,
  	if (dm_con_state)
  		dm_con_state->freesync_capable = freesync_capable;
  
@@ -108,3 +116,25 @@ index 2deb5abae264..ebead39939a6 100644
  	if (connector->state && amdgpu_dm_connector->dc_link && !freesync_capable &&
  	    amdgpu_dm_connector->dc_link->replay_settings.config.replay_supported) {
  		amdgpu_dm_connector->dc_link->replay_settings.config.replay_supported = false;
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_freesync.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_freesync.c
+index 035d7e88c3ed..382c339b67b1 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_freesync.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_freesync.c
+@@ -152,6 +152,14 @@ void amdgpu_dm_get_freesync_config_for_crtc(
+ 	}
+ out:
+ 	new_crtc_state->freesync_config = config;
++
++	drm_dbg_driver(new_con_state->base.connector->dev,
++		       "VRR: cfg vrr_enabled=%d vrr_supported=%d fs_capable=%d vrefresh=%d min=%d max=%d state=%d\n",
++		       new_crtc_state->base.vrr_enabled,
++		       new_crtc_state->vrr_supported,
++		       new_con_state->freesync_capable, vrefresh,
++		       aconnector->min_vfreq, aconnector->max_vfreq,
++		       config.state);
+ }
+ EXPORT_IF_KUNIT(amdgpu_dm_get_freesync_config_for_crtc);
+ 
+-- 
+2.53.0
+
