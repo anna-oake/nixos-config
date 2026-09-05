@@ -8,7 +8,8 @@
     (_: prev: {
       jovian-stubs = prev.jovian-stubs.overrideAttrs (old: {
         buildCommand = old.buildCommand + ''
-          substituteInPlace $out/bin/steamos-polkit-helpers/steamos-update --replace-fail 'readlink /' 'readlink -f /'
+          install -m 755 ${./holo-update} $out/bin/holo-update
+          install -m 755 ${./holo-update} $out/bin/steamos-polkit-helpers/steamos-update
         '';
       });
     })

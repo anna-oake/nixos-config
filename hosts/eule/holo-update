@@ -1,0 +1,7 @@
+#!/bin/sh
+
+if [ "$(readlink -f /run/current-system)" != "$(readlink -f /nix/var/nix/profiles/system)" ]; then
+    exit 8
+fi
+
+exit 7

@@ -1,5 +1,6 @@
 {
   inputs,
+  config,
   ...
 }:
 {
@@ -8,6 +9,17 @@
   ];
 
   profiles.server.enable = true;
+
+  age.secrets."lxc-builder/deploy-ssh-key" = { };
+
+  services.deployer = {
+    enable = true;
+    githubRepo = "anna-oake/nixos-config";
+    hosts = [ "eule" ];
+    atticServer = "attic.oa.ke";
+    atticCache = "nixos";
+    sshKeyFile = config.age.secrets."lxc-builder/deploy-ssh-key".path;
+  };
 
   lxc = {
     enable = true;
