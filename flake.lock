@@ -120,6 +120,26 @@
         "type": "github"
       }
     },
+    "decky-plugins": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1788802839,
+        "narHash": "sha256-oROw5ne9AAab57WK2HzfpybxAbjdBk0AXsTUNYq1U98=",
+        "owner": "anna-oake",
+        "repo": "decky-plugins",
+        "rev": "b0071b495b15fe8829d062c6bea89713f7c2679f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "anna-oake",
+        "repo": "decky-plugins",
+        "type": "github"
+      }
+    },
     "deploy-rs": {
       "inputs": {
         "flake-compat": "flake-compat_3",
@@ -857,6 +877,7 @@
         "agenix": "agenix",
         "agenix-rekey": "agenix-rekey",
         "apple-silicon-support": "apple-silicon-support",
+        "decky-plugins": "decky-plugins",
         "hermes-agent": "hermes-agent",
         "home-manager": "home-manager_3",
         "homebrew-cask": "homebrew-cask",

@@ -41,6 +41,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    decky-plugins = {
+      url = "github:anna-oake/decky-plugins";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     steam-rom-manager = {
       url = "github:mjallen18/nix-steam-rom-manager";
       inputs.nixpkgs.follows = "nixpkgs";

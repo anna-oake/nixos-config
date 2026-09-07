@@ -9,6 +9,7 @@
   imports = [
     ./hardware-configuration.nix
     ./gaming.nix
+    ./decky-plugins.nix
     ./samba.nix
     ./led.nix
     inputs.self.nixosModules.default
