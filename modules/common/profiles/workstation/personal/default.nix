@@ -45,5 +45,13 @@
       lib.mkAfter ''
         ${config.me.username} ALL=(root) NOPASSWD: /run/current-system/sw/bin/${rebuildBin} switch --flake .
       '';
+
+    age.secrets.github-token-public = {
+      owner = config.me.username;
+    };
+
+    nix.extraOptions = ''
+      !include ${config.age.secrets.github-token-public.path}
+    '';
   };
 }
