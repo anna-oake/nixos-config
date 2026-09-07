@@ -36,9 +36,16 @@ in
       };
     };
 
+    # Keep git-lfs on PATH when using portable filters for GitHub Desktop.
+    home.packages = lib.optionals pkgs.stdenvNoCC.isDarwin [ pkgs.git-lfs ];
+
     programs.git = {
       enable = true;
-      lfs.enable = true;
+      lfs = {
+        enable = true;
+        # GitHub Desktop expects the canonical commands, without Nix store paths.
+        package = lib.mkIf pkgs.stdenvNoCC.isDarwin null;
+      };
       settings = {
         user = {
           email = osConfig.me.email;
