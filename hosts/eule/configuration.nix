@@ -95,6 +95,13 @@
   services.orca.enable = false; # failing to build otherwise
 
   security.rtkit.enable = true;
+  services.pipewire-denon = {
+    enable = true;
+    user = "gamer";
+    targetNode = "alsa_output.pci-0000_03_00.1.hdmi-surround-extra3";
+    host = "iot-avr.lan.al";
+  };
+
   services.pipewire.wireplumber.extraConfig = {
     # auto select the 5.1 surround sound profile AND disable restoring user selected profile
     "99-surround-by-default" = {
