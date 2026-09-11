@@ -9,10 +9,17 @@ let
 
   phone = extra: lib.recursiveUpdate common extra;
 
-  devices = lib.mapAttrs' (file: type: {
-    name = lib.removeSuffix ".nix" file;
-    value = phone (import (./phones + "/${file}"));
-  }) (lib.filterAttrs (file: type: type == "regular" && lib.hasSuffix ".nix" file) (builtins.readDir ./phones));
+  devices =
+    lib.mapAttrs'
+      (file: type: {
+        name = lib.removeSuffix ".nix" file;
+        value = phone (import (./phones + "/${file}"));
+      })
+      (
+        lib.filterAttrs (file: type: type == "regular" && lib.hasSuffix ".nix" file) (
+          builtins.readDir ./phones
+        )
+      );
 in
 {
   imports = [
