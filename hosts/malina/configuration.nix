@@ -6,6 +6,7 @@
   imports = [
     inputs.self.nixosModules.default
     ./hardware-configuration.nix
+    ./rtl-sdr.nix
   ];
 
   profiles.server.enable = true;
