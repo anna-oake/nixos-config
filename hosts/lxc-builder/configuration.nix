@@ -18,7 +18,12 @@
   services.deployer = {
     enable = true;
     githubRepo = "anna-oake/nixos-config";
-    hosts = [ "eule" ];
+    hosts = [
+      "eule"
+      "malina"
+      "star"
+      "gratis"
+    ];
     atticServer = "attic.oa.ke";
     atticCache = "nixos";
     atticTokenFile = config.age.secrets."lxc-builder/deploy-attic-token".path;
