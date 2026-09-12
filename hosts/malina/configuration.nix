@@ -7,6 +7,7 @@
     inputs.self.nixosModules.default
     ./hardware-configuration.nix
     ./rtl-sdr.nix
+    ./wifi.nix
   ];
 
   profiles.server.enable = true;
