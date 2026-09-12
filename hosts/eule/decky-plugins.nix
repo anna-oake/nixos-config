@@ -12,6 +12,7 @@
   jovian.decky-loader.plugins = with pkgs.decky-plugins; [
     audio_loader
     protondb_badges
+    hltb_for_deck
   ];
 
   # Includes the fix for Steam's renamed initialization API (Decky PR #947).
