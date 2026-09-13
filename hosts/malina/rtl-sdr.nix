@@ -1,43 +1,23 @@
-{ pkgs, ... }:
 {
-  hardware.rtl-sdr = {
+  services.rtl-tcp = {
     enable = true;
-    package = pkgs.rtl-sdr-blog;
+    biasTee = true;
   };
 
-  users = {
-    groups.rtl-tcp = { };
-    users.rtl-tcp = {
-      isSystemUser = true;
-      group = "rtl-tcp";
-      extraGroups = [ "plugdev" ];
-    };
-  };
+  services.rtl-proxy = {
+    enable = true;
 
-  systemd.services.rtl-tcp = {
-    description = "RTL-SDR TCP server";
-    documentation = [ "https://github.com/rtlsdrblog/rtl-sdr-blog" ];
-    wantedBy = [ "multi-user.target" ];
-    wants = [ "network-online.target" ];
-    after = [
-      "network-online.target"
-      "systemd-udevd.service"
-    ];
+    frequencyOffsetHertz = 50000;
 
-    serviceConfig = {
-      User = "rtl-tcp";
-      Group = "rtl-tcp";
-      ExecStart = "${pkgs.rtl-sdr-blog}/bin/rtl_tcp -a 0.0.0.0 -p 1234 -T";
-      Restart = "always";
-      RestartSec = "2s";
-
-      NoNewPrivileges = true;
-      PrivateTmp = true;
-      ProtectControlGroups = true;
-      ProtectHome = true;
-      ProtectKernelModules = true;
-      ProtectKernelTunables = true;
-      ProtectSystem = "strict";
+    clients = {
+      satdump = {
+        listen = "0.0.0.0:13000";
+        priority = 0;
+      };
+      openwebrx = {
+        listen = "0.0.0.0:13100";
+        priority = 100;
+      };
     };
   };
 }
