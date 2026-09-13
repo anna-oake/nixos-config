@@ -141,6 +141,9 @@
     ];
   };
 
+  # drkonqi is freaky, it keeps crashing and trying to report on itself and crashing over and over and over and over and over
+  systemd.services."drkonqi-coredump-processor@".enable = false;
+
   programs.steam = {
     extest.enable = true;
     protontricks.enable = true;
