@@ -20,9 +20,20 @@
     githubRepo = "anna-oake/nixos-config";
     hosts = [
       "eule"
+      "gratis"
       "malina"
       "star"
-      "gratis"
+      "lxc-builder"
+      "lxc-docker"
+      "lxc-lancache"
+      "lxc-monitor"
+      "lxc-net-router"
+      "lxc-net-router-2"
+      "lxc-phones"
+      "lxc-proxy"
+      "lxc-share"
+      "lxc-slopster"
+      "lxc-zrepl-mynah"
     ];
     atticServer = "attic.oa.ke";
     atticCache = "nixos";
