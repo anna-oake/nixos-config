@@ -4,6 +4,20 @@
   pkgs,
   ...
 }:
+let
+  # Temporary workaround until our nixpkgs includes NixOS/nixpkgs#564554.
+  # Skip only the Node 26 test that fails in the Linux build sandbox.
+  hermesPkgs = pkgs.extend (
+    final: prev: {
+      nodejs-slim_26 = prev.nodejs-slim_26.overrideAttrs (old: {
+        checkFlags = map (
+          flag:
+          if final.lib.hasPrefix "CI_SKIP_TESTS=" flag then "${flag},test-fs-cp-async-file-modes" else flag
+        ) old.checkFlags;
+      });
+    }
+  );
+in
 {
   imports = [
     inputs.self.nixosModules.default
@@ -18,6 +32,10 @@
 
   services.hermes-agent = {
     enable = true;
+    # Hermes uses its own flake package, so a host overlay alone is insufficient.
+    package = inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
+      callPackage = hermesPkgs.callPackage;
+    };
     stateDir = "/storage-fast/slopster";
     addToSystemPackages = true;
 
