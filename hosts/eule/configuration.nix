@@ -152,9 +152,11 @@
 
   home-manager.backupFileExtension = ".bak";
 
-  monitoring.logs.systemd.enable = true;
-
-  monitoring.metrics.gpu = "amd";
+  monitoring = {
+    logs.system.enable = true;
+    metrics.enable = true;
+    metrics.gpu = "amd";
+  };
 
   services.eule-rebooter.enable = true;
 

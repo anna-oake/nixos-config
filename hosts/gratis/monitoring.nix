@@ -1,9 +1,11 @@
 {
   config,
+  lib,
   ...
 }:
 {
   monitoring.machineType = "remote";
+  monitoring.metrics.namePrefixes = lib.mkForce [ ];
   age.secrets.netbird-monitor = {
     owner = "netbird";
     group = "netbird";

@@ -21,6 +21,8 @@
     ];
   };
 
+  monitoring.metrics.gpu = "apple";
+
   # networking
   networking.computerName = hostName;
 

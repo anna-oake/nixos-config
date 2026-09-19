@@ -20,9 +20,7 @@
       usePersistenced = false;
     };
 
-    monitoring.logs = {
-      systemd.enable = lib.mkDefault true;
-      docker.enable = lib.mkDefault config.virtualisation.docker.enable;
-    };
+    monitoring.logs.system.enable = lib.mkDefault true;
+    monitoring.logs.docker.enable = lib.mkDefault config.virtualisation.docker.enable;
   };
 }

@@ -1,6 +1,8 @@
 {
   inputs,
   pkgs,
+  lib,
+  config,
   ...
 }:
 {
@@ -15,4 +17,10 @@
   environment.systemPackages = with pkgs; [
     ghostty.terminfo
   ];
+
+  monitoring.metrics.namePrefixes = lib.mkIf config.lxc.enable (
+    lib.mkAfter [
+      (builtins.head (lib.splitString "." config.lxc.pve.host))
+    ]
+  );
 }
