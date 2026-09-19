@@ -20,8 +20,6 @@
     uboot.enable = true;
   };
 
-  boot.loader.generic-extlinux-compatible.configurationLimit = 3;
-
   boot.initrd.systemd.tpm2.enable = false;
 
   zramSwap.enable = true;

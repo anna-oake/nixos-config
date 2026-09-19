@@ -14,6 +14,13 @@
   programs.zsh.enable = true;
   users.defaultUserShell = pkgs.zsh;
 
+  # Bound boot partition usage when deploying repeatedly without rebooting.
+  boot.loader = {
+    grub.configurationLimit = 2;
+    systemd-boot.configurationLimit = 2;
+    generic-extlinux-compatible.configurationLimit = 2;
+  };
+
   environment.systemPackages = with pkgs; [
     ghostty.terminfo
   ];
