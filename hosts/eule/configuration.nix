@@ -154,6 +154,8 @@
 
   monitoring.logs.systemd.enable = true;
 
+  monitoring.metrics.gpu = "amd";
+
   services.eule-rebooter.enable = true;
 
   fileSystems."/mnt/windows" = {
