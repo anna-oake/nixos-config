@@ -41,9 +41,11 @@
     ];
   };
 
-  boot.kernel.sysctl = {
-    "net.ipv4.conf.wg0.route_localnet" = true;
-  };
+  # Apply after wg0 exists, including when WireGuard recreates the interface.
+  # systemd-sysctl runs too early at boot in this LXC and skips this setting.
+  systemd.services.wireguard-wg0.postStart = ''
+    echo 1 > /proc/sys/net/ipv4/conf/wg0/route_localnet
+  '';
 
   # we'll route all connections through redsocks except ones destined for the lxc itself
   networking.nftables = {
