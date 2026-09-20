@@ -35,7 +35,7 @@ in
   };
 
   # funny right?
-  monitoring.logs.systemd.enable = false;
+  monitoring.logs.system.enable = false;
 
   services.opensearch.package = opensearch_2_19;
 
