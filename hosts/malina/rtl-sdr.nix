@@ -7,7 +7,7 @@
   services.rtl-proxy = {
     enable = true;
 
-    frequencyOffsetHertz = 50000;
+    frequencyOffsetHertz = 250000;
 
     clients = {
       satdump = {
