@@ -20,6 +20,17 @@
     uboot.enable = true;
   };
 
+  hardware.raspberry-pi.configtxt = {
+    settings.all.dtparam = lib.mkForce [
+      "audio=off"
+      "hdmi=off"
+    ];
+
+    deviceTreeOverlays.all = lib.mkForce [
+      { disable-bt = { }; }
+    ];
+  };
+
   boot.initrd.systemd.tpm2.enable = false;
 
   zramSwap.enable = true;
