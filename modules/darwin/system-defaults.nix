@@ -68,6 +68,18 @@
           "64".enabled = false;
           # Finder search window
           "65".enabled = false;
+          # Siri / "type to Siri" double-press Command
+          "176" = {
+            enabled = false;
+            value = {
+              parameters = [
+                32
+                54
+                1048592
+              ];
+              type = "SAE1.0";
+            };
+          };
           # Set 'Cmd + Space' for layout switcher
           "60" = {
             enabled = true;
@@ -137,6 +149,10 @@
     CustomSystemPreferences = {
       "com.apple.CoreBrightness"."DisplayPreferences"."37D8832A-2D66-02CA-B9F7-8F30A301B230" = {
         AutoBrightnessEnable = false;
+      };
+
+      "/Library/Preferences/com.apple.SpotlightServer" = {
+        ExternalVolumesIgnore = true;
       };
     };
 
