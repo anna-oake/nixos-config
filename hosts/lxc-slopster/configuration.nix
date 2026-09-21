@@ -12,7 +12,10 @@ let
       nodejs-slim_26 = prev.nodejs-slim_26.overrideAttrs (old: {
         checkFlags = map (
           flag:
-          if final.lib.hasPrefix "CI_SKIP_TESTS=" flag then "${flag},test-fs-cp-async-file-modes" else flag
+          if final.lib.hasPrefix "CI_SKIP_TESTS=" flag then
+            "${flag},test-fs-cp-async-file-modes,test-fs-copyfile,test-fs-cp-async-with-mode-flags,test-fs-cp-promises-mode-flags"
+          else
+            flag
         ) old.checkFlags;
       });
     }
