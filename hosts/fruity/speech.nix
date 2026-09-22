@@ -1,5 +1,7 @@
 {
+  config,
   inputs,
+  lib,
   ...
 }:
 {
@@ -18,4 +20,10 @@
       tts.engine = "avspeech";
     };
   };
+
+  launchd.daemons.speech-server.serviceConfig.ProgramArguments = lib.mkForce [
+    "/bin/sh"
+    "-c"
+    "/bin/wait4path /nix/store && exec ${lib.getExe config.services.speech-server.package} serve"
+  ];
 }
