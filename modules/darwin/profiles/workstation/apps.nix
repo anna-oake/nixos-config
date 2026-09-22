@@ -30,6 +30,7 @@
       utm
       spotify
       element-desktop
+      cleanshot
     ];
 
     homebrew.casks = [
@@ -37,7 +38,6 @@
       "ghostty"
       "github"
       "bambu-studio"
-      "cleanshot"
       "httpie-desktop"
       "charles" # installs from nixpkgs but doesn't show up as .app
       "ocenaudio"

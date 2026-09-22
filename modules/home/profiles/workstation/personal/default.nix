@@ -39,6 +39,11 @@ in
     # Keep git-lfs on PATH when using portable filters for GitHub Desktop.
     home.packages = lib.optionals pkgs.stdenvNoCC.isDarwin [ pkgs.git-lfs ];
 
+    home.file = {
+      "Library/Application Support/CleanShotRedirect/host".text = "s-api.anya.cat";
+      "Library/Application Support/CleanShotRedirect/dashboard-url".text = "https://anya.cat/s/";
+    };
+
     programs.git = {
       enable = true;
       lfs = {
