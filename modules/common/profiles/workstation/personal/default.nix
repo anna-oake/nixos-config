@@ -50,6 +50,9 @@
       owner = config.me.username;
     };
 
+    age.secrets."atuin/key".owner = config.me.username;
+    age.secrets."atuin/password".owner = config.me.username;
+
     nix.extraOptions = ''
       !include ${config.age.secrets.github-token-public.path}
     '';

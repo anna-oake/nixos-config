@@ -11,6 +11,7 @@ let
 in
 {
   imports = [
+    ./atuin.nix
     ./zed.nix
   ];
 

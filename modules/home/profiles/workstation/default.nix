@@ -12,7 +12,8 @@
     programs.zsh.enable = true;
     programs.zsh.dotDir = config.home.homeDirectory;
 
-    programs.fzf.enable = true;
+    # Personal workstations use atuin for history search instead.
+    programs.fzf.enable = !config.profiles.workstation.personal.enable;
     programs.zoxide = {
       enable = true;
       options = [
