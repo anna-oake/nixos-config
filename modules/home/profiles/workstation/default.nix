@@ -83,13 +83,7 @@ in
         typeset -g POWERLEVEL9K_VCS_LOADING_CONTENT_EXPANSION='${vcsExpansion "0"}'
         source ${p10k}/powerlevel10k.zsh-theme
 
-        ssh() {
-          printf '\e]11;#2a1a1a\a'
-          command ssh "$@"
-          local rc=$?
-          printf '\e]111\a'
-          return $rc
-        }
+        source ${./ssh-tint.zsh}
       ''
     ];
   };
