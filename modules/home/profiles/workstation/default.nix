@@ -20,5 +20,19 @@
         "--cmd cd"
       ];
     };
+    programs.starship = {
+      enable = true;
+      settings.status.disabled = false;
+    };
+
+    programs.zsh.initContent = ''
+      ssh() {
+        printf '\e]11;#2a1a1a\a'
+        command ssh "$@"
+        local rc=$?
+        printf '\e]111\a'
+        return $rc
+      }
+    '';
   };
 }
