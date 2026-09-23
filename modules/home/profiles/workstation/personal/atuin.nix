@@ -17,14 +17,28 @@ in
       flags = [ "--disable-up-arrow" ];
       settings = {
         update_check = false;
+
+        style = "compact";
+        inline_height = 20;
+        invert = true;
+        show_tabs = false;
+        show_help = false;
+        show_numeric_shortcuts = false;
+        ui.columns = [
+          "time"
+          "command"
+        ];
+
         auto_sync = true;
         sync_frequency = "5m";
         sync_address = "https://atuin.lan.al";
         key_path = keyPath;
+
         ai = {
           enabled = true;
           endpoint = "https://atuin.lan.al";
           endpoint_protocol = "oss";
+          tips = false;
         };
       };
     };
