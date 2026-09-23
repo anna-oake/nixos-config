@@ -22,7 +22,25 @@
     };
     programs.starship = {
       enable = true;
-      settings.status.disabled = false;
+      settings = {
+        add_newline = false;
+        status.disabled = false;
+
+        format = lib.concatStrings [
+          "$username"
+          "$hostname"
+          "$directory"
+          "$git_branch"
+          "$git_commit"
+          "$git_state"
+          "$git_metrics"
+          "$git_status"
+          "$cmd_duration"
+          "$jobs"
+          "$status"
+          "$character"
+        ];
+      };
     };
 
     programs.zsh.initContent = ''
