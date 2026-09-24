@@ -1,0 +1,25 @@
+{
+  "nix.enableLanguageServer": true,
+  "nix.serverPath": "nixd",
+  "nix.serverSettings": {
+    "nixd": {
+      "nixpkgs": {
+        "expr": "(builtins.getFlake (\"git+file://\" + toString ./.)).nixd.${builtins.currentSystem}.pkgs"
+      },
+      "options": {
+        "nixos": {
+          "expr": "(builtins.getFlake (\"git+file://\" + toString ./.)).nixd.${builtins.currentSystem}.options.nixos",
+          "order": 1
+        },
+        "darwin": {
+          "expr": "(builtins.getFlake (\"git+file://\" + toString ./.)).nixd.${builtins.currentSystem}.options.darwin",
+          "order": 2
+        },
+        "home": {
+          "expr": "(builtins.getFlake (\"git+file://\" + toString ./.)).nixd.${builtins.currentSystem}.options.home-manager",
+          "order": 3
+        }
+      }
+    }
+  }
+}
