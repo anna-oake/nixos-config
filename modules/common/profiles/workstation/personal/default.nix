@@ -29,6 +29,7 @@
       codex-acp
       claude-code
       claude-agent-acp
+      plezy
     ];
 
     fonts.packages = with pkgs; [
