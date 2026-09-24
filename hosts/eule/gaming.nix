@@ -31,6 +31,10 @@
       user = "gamer";
       stateDir = "/home/gamer/decky-loader";
     };
+    game-stream = {
+      enable = true;
+      webrtcPublicHost = "me.jorking.it";
+    };
   };
 
   age.secrets."eule/gamer-password" = { };
