@@ -26,7 +26,7 @@ in
       ];
     };
 
-    home.file.".hushlogin" = lib.mkIf pkgs.stdenvNoCC.isDarwin { text = ""; };
+    home.file.".hushlogin" = lib.mkIf pkgs.stdenvNoCC.hostPlatform.isDarwin { text = ""; };
 
     # p10k instant prompt, must stay at the top of ~/.zshrc
     programs.zsh.initContent = lib.mkMerge [

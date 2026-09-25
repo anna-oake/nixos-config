@@ -68,6 +68,11 @@
       url = "github:NousResearch/hermes-agent";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
+      inputs.uv2nix = {
+        url = "github:pyproject-nix/uv2nix/a24323e9e6ecbbf305c238845ff6c612d50467c0";
+        inputs.nixpkgs.follows = "nixpkgs";
+        inputs.pyproject-nix.follows = "hermes-agent/pyproject-nix";
+      };
     };
 
     macos-speech-server = {

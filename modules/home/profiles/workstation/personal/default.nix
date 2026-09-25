@@ -16,7 +16,7 @@ in
   ];
 
   config = lib.mkIf config.profiles.workstation.personal.enable {
-    home.file.sock = lib.mkIf pkgs.stdenvNoCC.isDarwin {
+    home.file.sock = lib.mkIf pkgs.stdenvNoCC.hostPlatform.isDarwin {
       source = config.lib.file.mkOutOfStoreSymlink darwinSockPath;
       target = sockLink;
     };
@@ -38,7 +38,7 @@ in
     };
 
     # Keep git-lfs on PATH when using portable filters for GitHub Desktop.
-    home.packages = lib.optionals pkgs.stdenvNoCC.isDarwin [ pkgs.git-lfs ];
+    home.packages = lib.optionals pkgs.stdenvNoCC.hostPlatform.isDarwin [ pkgs.git-lfs ];
 
     home.file = {
       "Library/Application Support/CleanShotRedirect/host".text = "s-api.anya.cat";
@@ -50,7 +50,7 @@ in
       lfs = {
         enable = true;
         # GitHub Desktop expects the canonical commands, without Nix store paths.
-        package = lib.mkIf pkgs.stdenvNoCC.isDarwin null;
+        package = lib.mkIf pkgs.stdenvNoCC.hostPlatform.isDarwin null;
       };
       settings = {
         user = {
@@ -63,7 +63,7 @@ in
         key = osConfig.me.sshKey;
         format = "ssh";
         signer =
-          if pkgs.stdenvNoCC.isDarwin then
+          if pkgs.stdenvNoCC.hostPlatform.isDarwin then
             "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
           else
             "${pkgs._1password-gui}/share/1password/op-ssh-sign";
@@ -73,7 +73,7 @@ in
 
     programs.ghostty = {
       enable = true;
-      package = lib.mkIf pkgs.stdenvNoCC.isDarwin null;
+      package = lib.mkIf pkgs.stdenvNoCC.hostPlatform.isDarwin null;
       settings = {
         auto-update = "off";
         shell-integration = "zsh";
