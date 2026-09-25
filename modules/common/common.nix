@@ -11,6 +11,4 @@
   networking.hostName = hostName;
 
   services.openssh.enable = true;
-
-  system.configurationRevision = inputs.self.rev or "dirty";
 }
