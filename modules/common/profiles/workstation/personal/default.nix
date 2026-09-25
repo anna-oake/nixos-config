@@ -41,7 +41,7 @@
 
     security.sudo.extraConfig =
       let
-        rebuildBin = if pkgs.stdenv.isDarwin then "darwin-rebuild" else "nixos-rebuild";
+        rebuildBin = if pkgs.stdenv.hostPlatform.isDarwin then "darwin-rebuild" else "nixos-rebuild";
       in
       lib.mkAfter ''
         ${config.me.username} ALL=(root) NOPASSWD: /run/current-system/sw/bin/${rebuildBin} switch --flake .
