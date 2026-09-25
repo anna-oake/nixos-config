@@ -7,6 +7,12 @@
 }:
 let
   cfg = config.profiles.workstation.gnome;
+  asset =
+    name:
+    builtins.path {
+      path = inputs.self + "/assets/${name}";
+      inherit name;
+    };
 
   defaultShellExtensions = with pkgs.gnomeExtensions; [
     user-themes
@@ -98,9 +104,7 @@ in
     # ];
 
     systemd.tmpfiles.rules = [
-      "f+ /var/lib/AccountsService/users/${config.me.username} 0600 root root - [User]\\nIcon=${
-        inputs.self + /assets/userpic.png
-      }\\n"
+      "f+ /var/lib/AccountsService/users/${config.me.username} 0600 root root - [User]\\nIcon=${asset "userpic.png"}\\n"
     ];
 
     programs.dconf = {
@@ -163,7 +167,7 @@ in
             };
 
             "org/gnome/desktop/background" = {
-              picture-uri-dark = "file://${inputs.self + "/assets/wallpaper-ariane.png"}";
+              picture-uri-dark = "file://${asset "wallpaper-ariane.png"}";
             };
 
             "org/gnome/shell/extensions/just-perfection" = {

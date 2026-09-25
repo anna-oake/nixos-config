@@ -8,8 +8,14 @@
   system.activationScripts.postActivation.text =
     let
       desktoppr = "${pkgs.desktoppr}/bin/desktoppr";
-      ariane = inputs.self + "/assets/wallpaper-ariane.png";
-      elster = inputs.self + "/assets/wallpaper-elster.png";
+      asset =
+        name:
+        builtins.path {
+          path = inputs.self + "/assets/${name}";
+          inherit name;
+        };
+      ariane = asset "wallpaper-ariane.png";
+      elster = asset "wallpaper-elster.png";
     in
     ''
       echo >&2 "Setting up wallpapers..."
