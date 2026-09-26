@@ -31,6 +31,7 @@
       spotify
       element-desktop
       cleanshot
+      qlmarkdown
     ];
 
     homebrew.casks = [
