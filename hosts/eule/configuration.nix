@@ -173,7 +173,7 @@
     ];
   };
 
-  deploy.auto.enable = true;
+  infra.deploy.auto = true;
 
   system.stateVersion = "25.05";
 }

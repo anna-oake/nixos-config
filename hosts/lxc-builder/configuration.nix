@@ -12,16 +12,13 @@
 
   age.secrets = {
     "lxc-builder/deploy-ssh-key" = { };
-    "lxc-builder/deploy-attic-token" = { };
   };
 
-  services.deployer = {
-    enable = true;
-    githubRepo = "anna-oake/nixos-config";
-    atticServer = "attic.oa.ke";
-    atticCache = "nixos";
-    atticTokenFile = config.age.secrets."lxc-builder/deploy-attic-token".path;
-    sshKeyFile = config.age.secrets."lxc-builder/deploy-ssh-key".path;
+  infra = {
+    deployer = {
+      enable = true;
+      sshKeyFile = config.age.secrets."lxc-builder/deploy-ssh-key".path;
+    };
   };
 
   lxc = {

@@ -20,7 +20,7 @@
       usePersistenced = false;
     };
 
-    deploy.auto.enable = lib.mkDefault true;
+    infra.deploy.auto = lib.mkDefault true;
 
     monitoring.logs.system.enable = lib.mkDefault true;
     monitoring.logs.docker.enable = lib.mkDefault config.virtualisation.docker.enable;
