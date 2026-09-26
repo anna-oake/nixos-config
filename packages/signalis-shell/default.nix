@@ -21,7 +21,10 @@ let
     };
   };
 
-  wallpaper = flake + "/assets/wallpaper-ariane.png";
+  wallpaper = builtins.path {
+    path = flake + "/assets/wallpaper-ariane.png";
+    name = "wallpaper-ariane.png";
+  };
 
   # The lock screen shows the wallpaper at 12%; bake that in at a sane size so
   # it decodes in the same frame the lock appears.
