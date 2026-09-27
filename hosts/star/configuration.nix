@@ -23,7 +23,7 @@
     };
   };
 
-  infra.deploy.fqdn = "star.oa.ke";
+  infra.deploy.fqdn = [ "star.oa.ke" ];
 
   monitoring.machineType = "remote";
   monitoring.metrics.namePrefixes = lib.mkForce [ ];

@@ -12,7 +12,7 @@
 
   profiles.server.enable = true;
 
-  infra.deploy.fqdn = "gratis.oa.ke";
+  infra.deploy.fqdn = [ "gratis.oa.ke" ];
 
   system.stateVersion = "25.11";
 }
