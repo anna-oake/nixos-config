@@ -44,7 +44,7 @@ in
       ];
       middle = mkDockOption [ ];
       right = mkDockOption [
-        "1password.desktop"
+        "com.onepassword.OnePassword.desktop"
         "dev.zed.Zed.desktop"
         "org.gnome.Nautilus.desktop"
       ];
