@@ -7,6 +7,7 @@
 }:
 {
   imports = [
+    ./charles.nix
     ./gnome
     ./laptop
     ./niri
