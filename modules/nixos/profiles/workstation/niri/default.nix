@@ -82,16 +82,7 @@ in
       };
     };
 
-    environment.etc."xdg/autostart/1password.desktop" =
-      lib.mkIf config.programs._1password-gui.autoStart
-        {
-          source = lib.mkForce (
-            pkgs.runCommand "1password-autostart.desktop" { } ''
-              sed 's|^Exec=1password|Exec=1password --silent|' \
-                ${config.programs._1password-gui.package}/share/applications/1password.desktop > $out
-            ''
-          );
-        };
+    programs._1password-gui.autostart.silent = true;
 
     programs.thunar = {
       enable = true;
