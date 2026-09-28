@@ -17,6 +17,8 @@ Rectangle {
     // Shown in a popup below the readout while hovered; one entry per line,
     // with a blank line between sections.
     property string tooltip: ""
+    // Held in the hover look, e.g. while the readout's popup is open.
+    property bool active: false
 
     signal clicked(var mouse)
     signal scrolled(int delta)
@@ -25,7 +27,7 @@ Rectangle {
     implicitHeight: 20
     color: Theme.surface
     border.width: 1
-    border.color: hovered ? Theme.red : (blinkOn ? frameColor : Theme.redDark)
+    border.color: hovered || active ? Theme.red : (blinkOn ? frameColor : Theme.redDark)
 
     property bool blinkOn: true
 

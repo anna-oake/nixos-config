@@ -165,12 +165,14 @@ pkgs.stdenvNoCC.mkDerivation (finalAttrs: {
                 }
             }
             ${lib.concatStrings (lib.mapAttrsToList output outputs)}
-            ${lib.optionalString (cursor != null) ''
-              cursor {
+            // Hidden from the first frame: nothing on the black before the greeter maps.
+            cursor {
+                hide-after-inactive-ms 0
+                ${lib.optionalString (cursor != null) ''
                   xcursor-theme ${str cursor.name}
                   xcursor-size ${toString cursor.size}
-              }
-            ''}
+                ''}
+            }
             layout {
                 background-color ${str palette.bg}
             }

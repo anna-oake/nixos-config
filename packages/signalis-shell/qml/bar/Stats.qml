@@ -87,6 +87,7 @@ Row {
         readonly property bool weak: Link.wifi && dbm !== 0 && quality < 50
 
         label: "LNK"
+        active: wifiMenu.open
         value: !Link.up ? "NO SIGNAL" : (!Link.wifi ? "WIRED" : (dbm !== 0 ? pct(quality) : "···"))
         valueColor: !Link.up || weak ? Theme.red : (Link.wifi && quality < 66 ? Theme.yellow : Theme.ink)
         frameColor: !Link.up ? Theme.redAlert : Theme.line
