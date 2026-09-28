@@ -7,6 +7,7 @@
   imports = [
     inputs.self.nixosModules.default
     ./hardware-configuration.nix
+    ./power.nix
     # ./face.nix
   ];
 

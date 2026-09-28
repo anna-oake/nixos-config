@@ -6,10 +6,13 @@ import Quickshell.Widgets
 Row {
     id: root
 
-    required property var bar
-
     spacing: 8
     rightPadding: 6
+
+    TrayMenu {
+        id: menu
+        anchorItem: root
+    }
 
     Repeater {
         model: SystemTray.items
@@ -24,8 +27,7 @@ Row {
             acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
 
             function openMenu() {
-                const p = item.mapToItem(null, 0, item.height + 8);
-                modelData.display(root.bar, p.x, p.y);
+                menu.show(modelData, item);
             }
 
             onClicked: mouse => {

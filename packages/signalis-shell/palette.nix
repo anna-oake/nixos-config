@@ -22,12 +22,14 @@ let
     redDeep = "#af1717"; # active site-selector block, black text on it
     redHover = "#cd241f";
     redBorder = "#6c4843"; # idle button outline
+    redAlert = "#b8483a"; # readout outline in an alert state (muted, no signal, low)
     redDark = "#76332b"; # recording blink off-phase
-    hover = "#211714"; # row hover
+    hover = "#33201b"; # row hover
     selection = "#38201c"; # selected row
 
     yellow = "#e4c56b"; # mid elevation
     green = "#9dca83"; # high elevation
+    greenAlert = "#7a9e62"; # readout outline while on the charger
     teal = "#293632"; # progress fill
     tealOver = "#6b2620"; # progress fill past the limit
 

@@ -45,7 +45,7 @@ Row {
 
         value: pct(percent)
         valueColor: over ? Theme.red : Theme.ink
-        frameColor: over ? Theme.redBorder : Theme.line
+        frameColor: over ? Theme.redAlert : Theme.line
         fill: percent / 100
         fillColor: over ? Theme.tealOver : Theme.teal
     }
@@ -65,7 +65,7 @@ Row {
         label: "VOL"
         value: sink?.audio?.muted ? "MUTE" : pct(Math.round((sink?.audio?.volume ?? 0) * 100))
         valueColor: sink?.audio?.muted ? Theme.red : Theme.ink
-        frameColor: sink?.audio?.muted ? Theme.redBorder : Theme.line
+        frameColor: sink?.audio?.muted ? Theme.redAlert : Theme.line
         onClicked: if (sink?.audio) sink.audio.muted = !sink.audio.muted
         onScrolled: delta => {
             if (sink?.audio)
@@ -82,12 +82,14 @@ Row {
         id: link
 
         readonly property int dbm: Link.signal
-        readonly property bool weak: Link.wifi && dbm !== 0 && dbm < -75
+        // Linear over -100..-50 dBm, as NetworkManager reports strength.
+        readonly property int quality: Math.max(0, Math.min(100, 2 * (dbm + 100)))
+        readonly property bool weak: Link.wifi && dbm !== 0 && quality < 50
 
-        label: "LINK"
-        value: !Link.up ? "NO SIGNAL" : (!Link.wifi ? "WIRED" : (dbm !== 0 ? dbm + " dBm" : "···"))
-        valueColor: !Link.up || weak ? Theme.red : (Link.wifi && dbm < -67 ? Theme.yellow : Theme.ink)
-        frameColor: !Link.up ? Theme.redBorder : Theme.line
+        label: "LNK"
+        value: !Link.up ? "NO SIGNAL" : (!Link.wifi ? "WIRED" : (dbm !== 0 ? pct(quality) : "···"))
+        valueColor: !Link.up || weak ? Theme.red : (Link.wifi && quality < 66 ? Theme.yellow : Theme.ink)
+        frameColor: !Link.up ? Theme.redAlert : Theme.line
         onClicked: if (Link.wifiAdapter) wifiMenu.toggle()
         tooltip: {
             if (wifiMenu.open)
@@ -105,15 +107,17 @@ Row {
     }
 
     Readout {
-        readonly property bool charging: battery?.state === UPowerDeviceState.Charging || battery?.state === UPowerDeviceState.FullyCharged || battery?.state === UPowerDeviceState.PendingCharge
+        // Charger connected, whether or not the battery is taking charge.
+        readonly property bool charging: !UPower.onBattery
         readonly property int level: Math.round((battery?.percentage ?? 0) * 100)
+        readonly property bool low: level < 20
 
         visible: battery?.isLaptopBattery ?? false
-        label: charging ? "CHG" : "BAT"
+        label: "BAT"
         value: pct(level)
-        valueColor: charging ? Theme.green : (level <= 15 ? Theme.red : (level <= 30 ? Theme.yellow : Theme.ink))
-        frameColor: !charging && level <= 30 ? (level <= 15 ? Theme.red : Theme.yellow) : Theme.line
-        blink: !charging && level <= 15
+        valueColor: low ? Theme.red : Theme.inkBright
+        frameColor: charging ? Theme.greenAlert : (low ? Theme.redAlert : Theme.line)
+        tooltip: (charging ? "CHARGE " : "DRAW   ") + Math.abs(battery?.changeRate ?? 0).toFixed(1) + " W"
     }
 
     Readout {
@@ -121,7 +125,7 @@ Row {
         value: Niri.layout
         // The first layout is the default; anything else is worth noticing.
         valueColor: Niri.layoutIndex > 0 ? Theme.red : Theme.soft
-        frameColor: Niri.layoutIndex > 0 ? Theme.redBorder : Theme.line
+        frameColor: Niri.layoutIndex > 0 ? Theme.redAlert : Theme.line
         onClicked: Niri.action("switch-layout", "next")
     }
 

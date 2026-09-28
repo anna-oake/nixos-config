@@ -10,6 +10,7 @@ import qs.launcher
 import qs.notifications
 import qs.osd
 import qs.polkit
+import qs.power
 import qs.wallpaper
 
 // Desktop shell: everything except the lock screen, which runs as its own
@@ -37,6 +38,7 @@ ShellRoot {
     Notifications {}
     Osd {}
     Polkit {}
+    Power {}
 
     IdleMonitor {
         timeout: 300

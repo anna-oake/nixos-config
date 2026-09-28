@@ -32,6 +32,43 @@ ShellRoot {
         function lock(): void {
             root.lock();
         }
+
+        // Bound to the power key, which niri lets through on the lock screen:
+        // sleep while locked, otherwise open the shell's power menu.
+        function powerKey(): void {
+            if (Resume.justResumed(2000))
+                return;
+            if (sessionLock.locked)
+                Quickshell.execDetached(["systemctl", "suspend-then-hibernate"]);
+            else
+                Quickshell.execDetached(["signalis-ctl", "power", "toggle"]);
+        }
+    }
+
+    // Whether the session is locked, kept across restarts of this instance: niri
+    // stays locked when the lock client goes away and lets a new one take over,
+    // so a restart while locked has to lock again straight away.
+    FileView {
+        id: lockedMarker
+        path: Quickshell.env("XDG_RUNTIME_DIR") + "/signalis-locked"
+        blockLoading: true
+        printErrors: false
+    }
+
+    Connections {
+        target: sessionLock
+
+        function onLockedChanged() {
+            lockedMarker.setText(sessionLock.locked ? "1" : "0");
+        }
+    }
+
+    Component.onCompleted: {
+        // Start the heartbeat now; the singleton would otherwise be created
+        // lazily by the first power key press or keystroke after a resume.
+        Resume.tick();
+        if (lockedMarker.text().trim() === "1")
+            root.lock();
     }
 
     // Passwords are always typed in the default layout: switch back if it

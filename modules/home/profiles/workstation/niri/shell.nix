@@ -27,9 +27,9 @@ in
     };
 
     systemd.user.services.signalis-lock = {
-      Unit = unit "Signalis lock screen" // {
-        X-SwitchMethod = "keep-old";
-      };
+      # Restarted on switch like the shell; a restart while locked re-locks,
+      # see lock.qml.
+      Unit = unit "Signalis lock screen";
       Service = {
         ExecStart = lib.getExe' shell "signalis-lock";
         Restart = "always";

@@ -109,7 +109,6 @@ PanelWindow {
 
         Tray {
             anchors.verticalCenter: parent.verticalCenter
-            bar: bar
         }
 
         Stats {

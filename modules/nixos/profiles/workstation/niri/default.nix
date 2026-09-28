@@ -32,6 +32,9 @@ in
 
     xdg.portal.xdgOpenUsePortal = true;
 
+    # battery readout in the shell bar
+    services.upower.enable = true;
+
     environment.systemPackages = with pkgs; [
       file-roller
       brightnessctl

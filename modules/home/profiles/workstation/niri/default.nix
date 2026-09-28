@@ -71,6 +71,10 @@ in
         "Mod+X".action = spawn "signalis-ctl" "launcher" "toggle";
         "Mod+L".action = spawn "signalis-ctl" "lock";
         "Mod+E".action = spawn "thunar";
+        XF86PowerOff = {
+          allow-when-locked = true;
+          action = spawn "signalis-ctl" "power-key";
+        };
 
         XF86AudioRaiseVolume = {
           allow-when-locked = true;
@@ -155,6 +159,9 @@ in
       };
 
       input = {
+        # the power key opens the shell's power menu instead
+        power-key-handling.enable = false;
+
         keyboard = {
           xkb = {
             layout = "us,ru";

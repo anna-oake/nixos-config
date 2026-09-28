@@ -110,6 +110,7 @@ pkgs.stdenvNoCC.mkDerivation (finalAttrs: {
     #!${pkgs.runtimeShell}
     case "\$1" in
       lock) exec ${quickshell} -p $share/lock.qml ipc call lock lock ;;
+      power-key) exec ${quickshell} -p $share/lock.qml ipc call lock powerKey ;;
       *) exec ${quickshell} -p $share/shell.qml ipc call "\$@" ;;
     esac
     EOF

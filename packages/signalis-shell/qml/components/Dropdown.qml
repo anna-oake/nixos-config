@@ -16,8 +16,17 @@ Scope {
 
     readonly property var window: anchorItem.QsWindow.window
 
-    // Right edge of the panel lines up with the right edge of the item.
-    property real rightMargin: 0
+    // By default the panel's right edge lines up with the item's; centred puts
+    // the panel's middle under the item's, kept on screen.
+    property bool centered: false
+    // The item's right edge or middle in window coordinates, taken on open.
+    property real anchorX: 0
+    readonly property real rightMargin: {
+        const width = window?.width ?? 0;
+        if (!centered)
+            return width - anchorX;
+        return Math.max(gap, Math.min(width - panel.implicitWidth - gap, width - anchorX - panel.implicitWidth / 2));
+    }
 
     function toggle() {
         open = !open;
@@ -25,7 +34,7 @@ Scope {
 
     onOpenChanged: {
         if (open && window)
-            rightMargin = window.width - anchorItem.mapToItem(null, anchorItem.width, 0).x;
+            anchorX = anchorItem.mapToItem(null, centered ? anchorItem.width / 2 : anchorItem.width, 0).x;
     }
 
     PanelWindow {

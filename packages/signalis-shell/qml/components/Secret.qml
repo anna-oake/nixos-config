@@ -1,5 +1,6 @@
 import QtQuick
 import qs.config
+import qs.services
 
 // Password entry drawn as a row of cells: each character fills one, the next
 // one blinks as the cursor. `busy` sweeps the cells, `error` flashes them red.
@@ -28,6 +29,21 @@ Item {
     property bool cursorOn: true
     property int sweep: 0
 
+    // Don't leave a half-typed password sitting there.
+    Timer {
+        id: idle
+        interval: 10000
+        onTriggered: root.clear()
+    }
+
+    Connections {
+        target: Resume
+
+        function onResumed() {
+            root.clear();
+        }
+    }
+
     Timer {
         running: input.activeFocus && !root.busy
         repeat: true
@@ -51,6 +67,9 @@ Item {
         focus: true
         enabled: !root.busy
         onAccepted: root.accepted()
+        onTextChanged: text !== "" ? idle.restart() : idle.stop()
+        // Drop the key that woke the machine from sleep.
+        Keys.onPressed: event => event.accepted = Resume.takeWakeKey()
         Keys.onEscapePressed: root.cancelled()
     }
 

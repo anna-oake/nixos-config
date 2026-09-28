@@ -104,7 +104,7 @@ Scope {
             id: frame
             width: parent.width
             label: root.kind
-            borderColor: root.muted ? Theme.redBorder : Theme.line
+            borderColor: root.muted ? Theme.redAlert : Theme.line
 
             Row {
                 spacing: 10
