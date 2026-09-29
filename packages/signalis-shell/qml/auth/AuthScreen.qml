@@ -28,18 +28,15 @@ Rectangle {
         precision: SystemClock.Seconds
     }
 
-    // Pre-darkened at build time and kept loaded by the lock instance, so it
-    // is on screen in the same frame as the lock.
-    Image {
+    ElsterEye {
+        id: eye
         anchors.fill: parent
-        source: Theme.lockWallpaper
-        fillMode: Image.PreserveAspectCrop
-        asynchronous: false
-    }
-
-    Scanlines {
-        anchors.fill: parent
-        strength: 0.03
+        typing: secret.engaged || root.busy
+        cursorTarget: {
+            // Only geometry crosses into the renderer, never password content.
+            const point = secret.mapToItem(frame, secret.cursorX, secret.height / 2);
+            return Qt.point(frame.x + point.x, frame.y + point.y);
+        }
     }
 
     // Masthead: station name and the mode as the selected site, sharing a baseline.
@@ -93,7 +90,8 @@ Rectangle {
 
     Frame {
         id: frame
-        anchors.centerIn: parent
+        anchors.horizontalCenter: parent.horizontalCenter
+        y: Math.min(parent.height * 0.78, parent.height - height - 24)
         width: secret.implicitWidth + padding * 2
         height: implicitHeight
         label: "Authorization"
@@ -148,6 +146,12 @@ Rectangle {
         hoverEnabled: true
         acceptedButtons: Qt.NoButton
         cursorShape: Qt.BlankCursor
+    }
+
+    ElsterEyeTouch {
+        anchors.fill: parent
+        z: 100
+        avatar: eye
     }
 
     Component.onCompleted: reset()
