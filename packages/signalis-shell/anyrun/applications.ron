@@ -1,0 +1,9 @@
+Config(
+    desktop_actions: true,
+    max_entries: 100,
+    hide_description: false,
+    terminal: Some(Terminal(
+        command: "ghostty",
+        args: "-e {}",
+    )),
+)

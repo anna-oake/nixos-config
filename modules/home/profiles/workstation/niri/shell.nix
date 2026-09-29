@@ -22,6 +22,9 @@ in
         ExecStart = lib.getExe' shell "signalis-shell";
         Restart = "on-failure";
         Slice = "session.slice";
+        # `:`, `?`, and desktop entries launched by the launcher run in this
+        # service. The wrapper prepends its own tools to this path.
+        Environment = [ "PATH=/etc/profiles/per-user/%u/bin:/run/current-system/sw/bin" ];
       };
       Install.WantedBy = [ target ];
     };

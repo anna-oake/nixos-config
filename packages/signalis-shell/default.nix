@@ -74,6 +74,46 @@ let
     }
   '';
 
+  # The anyrun package builds its plugins and then drops the shared libraries.
+  # The provider and these libraries share one anyrun-interface revision.
+  anyrunWithPlugins = pkgs.anyrun.overrideAttrs (old: {
+    postInstall = old.postInstall + ''
+      mkdir -p $out/lib
+      for lib in libapplications.so librink.so libshell.so libwebsearch.so; do
+        path=$(find target -type f -name "$lib" -print -quit)
+        if [ -z "$path" ]; then
+          echo "anyrun plugin $lib was not built" >&2
+          find target -name '*.so' >&2 || true
+          exit 1
+        fi
+        cp -f "$path" $out/lib/
+      done
+    '';
+  });
+
+  anyrunPlugins = lib.concatStringsSep ":" (
+    map (name: "${anyrunWithPlugins}/lib/lib${name}.so") [
+      "applications"
+      "rink"
+      "shell"
+      "websearch"
+    ]
+  );
+
+  anyrunConfig = pkgs.runCommand "signalis-anyrun-config" { } ''
+    mkdir -p $out
+    cp ${./anyrun}/applications.ron $out/applications.ron
+    cp ${./anyrun}/rink.ron $out/rink.ron
+    cp ${./anyrun}/shell.ron $out/shell.ron
+    cp ${./anyrun}/websearch.ron $out/websearch.ron
+  '';
+
+  # Writes one line to a unix socket. Mod+X uses this instead of starting quickshell.
+  signalis-poke = pkgs.runCommandCC "signalis-poke" { } ''
+    mkdir -p $out/bin
+    $CC -O2 -o $out/bin/signalis-poke ${./signalis-poke.c}
+  '';
+
   runtimePath = lib.makeBinPath (
     with pkgs;
     [
@@ -81,11 +121,14 @@ let
       wireplumber
       systemd
       glib
+      xdg-utils
       coreutils
       iproute2
       iw
       gawk
       networkmanager
+      wl-clipboard
+      bash
     ]
   );
 
@@ -110,15 +153,27 @@ pkgs.stdenvNoCC.mkDerivation (finalAttrs: {
     for entry in shell lock greeter; do
       makeWrapper ${quickshell} $out/bin/signalis-$entry \
         --prefix PATH : $out/bin:${runtimePath} \
+        --set SIGNALIS_ANYRUN_PROVIDER ${lib.getExe pkgs.anyrun-provider} \
+        --set SIGNALIS_ANYRUN_PLUGINS ${anyrunPlugins} \
+        --set SIGNALIS_ANYRUN_CONFIG ${anyrunConfig} \
         --add-flags "-p $share/$entry.qml"
     done
 
     # IPC into the running instances, e.g. `signalis-ctl lock` or `signalis-ctl launcher toggle`.
+    # The launcher socket is served by the shell. The quickshell client is the fallback.
     cat > $out/bin/signalis-ctl <<EOF
     #!${pkgs.runtimeShell}
     case "\$1" in
       lock) exec ${quickshell} -p $share/lock.qml ipc call lock lock ;;
       power-key) exec ${quickshell} -p $share/lock.qml ipc call lock powerKey ;;
+      launcher)
+        if [ "\$2" = toggle ] && [ -n "\$XDG_RUNTIME_DIR" ] \
+          && ${signalis-poke}/bin/signalis-poke "\$XDG_RUNTIME_DIR/signalis-launcher.sock" toggle
+        then
+          exit 0
+        fi
+        exec ${quickshell} -p $share/shell.qml ipc call "\$@"
+        ;;
       *) exec ${quickshell} -p $share/shell.qml ipc call "\$@" ;;
     esac
     EOF
