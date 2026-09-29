@@ -26,6 +26,12 @@ let
     name = "wallpaper-ariane.png";
   };
 
+  desktopWallpaper =
+    pkgs.runCommand "signalis-wallpaper.png" { nativeBuildInputs = [ pkgs.imagemagick ]; }
+      ''
+        magick ${wallpaper} -resize '3840x>' -strip $out
+      '';
+
   # The lock screen shows the wallpaper at 12%; bake that in at a sane size so
   # it decodes in the same frame the lock appears.
   lockWallpaper =
@@ -57,7 +63,7 @@ let
     ${colorProps}
       readonly property string fontUi: "${fonts.ui.name}"
       readonly property string fontDisplay: "${fonts.display.name}"
-      readonly property string wallpaper: "file://${wallpaper}"
+      readonly property string wallpaper: "file://${desktopWallpaper}"
       readonly property string lockWallpaper: "file://${lockWallpaper}"
 
       function alpha(c, a) {
