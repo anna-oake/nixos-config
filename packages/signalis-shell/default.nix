@@ -34,14 +34,6 @@ let
         magick ${wallpaper} -resize '3840x>' -strip $out
       '';
 
-  # The lock screen shows the wallpaper at 12%; bake that in at a sane size so
-  # it decodes in the same frame the lock appears.
-  lockWallpaper =
-    pkgs.runCommand "signalis-lock-wallpaper.png" { nativeBuildInputs = [ pkgs.imagemagick ]; }
-      ''
-        magick ${wallpaper} -resize 3200x -fill black -colorize 88% -strip $out
-      '';
-
   colorProps = lib.concatStrings (
     lib.mapAttrsToList
       (name: value: ''
@@ -66,7 +58,6 @@ let
       readonly property string fontUi: "${fonts.ui.name}"
       readonly property string fontDisplay: "${fonts.display.name}"
       readonly property string wallpaper: "file://${desktopWallpaper}"
-      readonly property string lockWallpaper: "file://${lockWallpaper}"
 
       function alpha(c, a) {
         return Qt.rgba(c.r, c.g, c.b, a);
@@ -140,7 +131,33 @@ pkgs.stdenvNoCC.mkDerivation (finalAttrs: {
 
   src = ./qml;
 
-  nativeBuildInputs = [ pkgs.makeWrapper ];
+  # qsb is only a build tool; the runtime already uses wrapped Quickshell.
+  dontWrapQtApps = true;
+
+  nativeBuildInputs = [
+    pkgs.makeWrapper
+    pkgs.imagemagick
+    pkgs.qt6.qtshadertools
+  ];
+
+  buildPhase = ''
+    runHook preBuild
+
+    qsb --glsl "100 es,120,150" --hlsl 50 --msl 12 \
+      -o auth/elstereye-crt.frag.qsb auth/elstereye-crt.frag
+
+    # Both original masks have the same size, transform, and breathing motion.
+    # Compose in source-over order once, retaining all original artwork on disk.
+    for frame in 0 1 4 5; do
+      magick auth/elstereye/blink0.png auth/elstereye/blink"$frame".png \
+        -compose Over -composite "PNG32:auth/elstereye/mask$frame.png"
+    done
+    # The closed-eye frame is fully opaque: preserve its RGB format so Qt can
+    # avoid alpha blending. Nothing from the base mask contributes to it.
+    cp auth/elstereye/blink2.png auth/elstereye/mask2.png
+
+    runHook postBuild
+  '';
 
   installPhase = ''
     runHook preInstall
@@ -150,7 +167,7 @@ pkgs.stdenvNoCC.mkDerivation (finalAttrs: {
     cp -r . $share
     install -Dm644 ${theme} $share/config/Theme.qml
 
-    for entry in shell lock greeter; do
+    for entry in shell lock greeter eye-preview; do
       makeWrapper ${quickshell} $out/bin/signalis-$entry \
         --prefix PATH : $out/bin:${runtimePath} \
         --set SIGNALIS_ANYRUN_PROVIDER ${lib.getExe pkgs.anyrun-provider} \

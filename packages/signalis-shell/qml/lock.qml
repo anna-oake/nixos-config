@@ -115,11 +115,16 @@ ShellRoot {
         }
     }
 
-    // Holds the lock wallpaper in the pixmap cache between locks.
-    Image {
-        visible: false
-        source: Theme.lockWallpaper
-        asynchronous: false
+    // Keep native eye layers decoded between locks without running animations.
+    Repeater {
+        model: ["face", "hair", "mask0", "mask1", "mask2", "mask4", "mask5",
+            "pupil", "pupil_mask", "sensor", "highlight_height", "highlight_low", "highlight_white"]
+        Image {
+            required property string modelData
+            visible: false
+            source: "auth/elstereye/" + modelData + ".png"
+            asynchronous: false
+        }
     }
 
     WlSessionLock {

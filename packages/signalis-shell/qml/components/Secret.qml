@@ -11,6 +11,8 @@ Item {
     property bool busy: false
     property bool error: false
     property alias text: input.text
+    readonly property bool engaged: input.text.length > 0
+    readonly property real cursorX: Math.min(input.cursorPosition, cells - 1) * 13 + 5
 
     signal accepted
     signal cancelled
@@ -84,7 +86,7 @@ Item {
 
                 readonly property int length: input.text.length
                 readonly property bool filled: index < length || (index === root.cells - 1 && length > root.cells)
-                readonly property bool cursor: index === length && !root.busy
+                readonly property bool cursor: index === Math.min(input.cursorPosition, root.cells - 1) && !root.busy
                 readonly property bool swept: root.busy && Math.abs(index - root.sweep) < 3
 
                 width: 10
