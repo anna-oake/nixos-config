@@ -144,6 +144,13 @@ in
         "Mod+Shift+Minus".action = set-window-height "-10%";
         "Mod+Shift+Equal".action = set-window-height "+10%";
 
+        # Super plus a two-finger slide. Bind names match finger direction
+        # because the touchpad has natural scroll on.
+        "Mod+TouchpadScrollLeft".action = set-column-width "-10";
+        "Mod+TouchpadScrollRight".action = set-column-width "+10";
+        "Mod+TouchpadScrollUp".action = set-window-height "+10";
+        "Mod+TouchpadScrollDown".action = set-window-height "-10";
+
         "Mod+V".action = toggle-window-floating;
         "Mod+Shift+V".action = switch-focus-between-floating-and-tiling;
 
