@@ -1,0 +1,5 @@
+Config(
+    prefix: "",
+    // The bundled currency table. A startup fetch would block the first paint.
+    pull_currencies: false,
+)
