@@ -19,6 +19,8 @@ in
         ghostty.opacity.enable = false;
         zed.fonts.enable = false;
 
+        rofi.enable = false;
+
         # Stylix derives GTK's accent from base0D (blue); put the red back, and
         # square everything off like the shell.
         gtk.extraCss = ''
