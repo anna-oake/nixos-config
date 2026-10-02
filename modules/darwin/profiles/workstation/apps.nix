@@ -61,6 +61,7 @@
       "t3-code"
       "grok-build"
       "claude"
+      "steam"
     ];
   };
 }
