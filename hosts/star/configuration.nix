@@ -25,7 +25,6 @@
 
   infra.deploy.fqdn = [ "star.oa.ke" ];
 
-  monitoring.machineType = "remote";
   monitoring.metrics.namePrefixes = lib.mkForce [ ];
 
   # the server is shared with maeve

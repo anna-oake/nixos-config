@@ -5,9 +5,12 @@
 }:
 {
   age.secrets.metrics-token = lib.mkIf config.monitoring.metrics.enable { };
+  age.secrets.logs-token = lib.mkIf (
+    config.monitoring.logs.system.enable || config.monitoring.logs.docker.enable
+  ) { };
 
   monitoring = {
-    logs.target = if config.monitoring.machineType == "local" then "10.10.0.6" else "100.94.10.42";
+    logs.tokenFile = config.age.secrets.logs-token.path;
 
     metrics = {
       namePrefixes = lib.mkBefore [ "kitezh" ];
