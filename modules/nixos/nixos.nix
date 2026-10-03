@@ -14,6 +14,8 @@
   programs.zsh.enable = true;
   users.defaultUserShell = pkgs.zsh;
 
+  networking.enableIPv6 = false;
+
   # Bound boot partition usage when deploying repeatedly without rebooting.
   boot.loader = {
     grub.configurationLimit = 2;
