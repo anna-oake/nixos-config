@@ -15,6 +15,7 @@
   infra.deploy.fqdn = [ "gratis.oa.ke" ];
 
   monitoring.metrics.namePrefixes = lib.mkForce [ ];
+  monitoring.metrics.smart = false;
 
   system.stateVersion = "25.11";
 }

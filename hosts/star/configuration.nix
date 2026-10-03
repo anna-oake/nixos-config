@@ -26,6 +26,7 @@
   infra.deploy.fqdn = [ "star.oa.ke" ];
 
   monitoring.metrics.namePrefixes = lib.mkForce [ ];
+  monitoring.metrics.smart = false;
 
   # the server is shared with maeve
   users.users.root.openssh.authorizedKeys.keys = [
