@@ -1,4 +1,6 @@
 {
+  ip = "10.10.0.84";
+
   macAddress = "$MAC_ANNA";
   wallpaperFile = ../wallpapers/dunder-mifflin.png;
 

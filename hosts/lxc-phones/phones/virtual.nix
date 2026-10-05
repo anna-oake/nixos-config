@@ -1,4 +1,6 @@
 {
+  ip = "10.10.0.88";
+
   macAddress = "3E945827FF05"; # it's an emulated raccoon so i'm comfortable with the MAC being public
   wallpaperFile = ../wallpapers/bliss.png;
 

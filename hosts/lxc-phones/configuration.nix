@@ -28,12 +28,12 @@ in
 
   profiles.server.enable = true;
 
-  age.secrets."cisco-secrets" = { };
+  age.secrets."lxc-phones/cisco-secrets" = { };
 
   services.cisco = {
     enable = true;
 
-    secretsPath = config.age.secrets."cisco-secrets".path;
+    secretsPath = config.age.secrets."lxc-phones/cisco-secrets".path;
 
     ringtones = {
       "Penis" = ./ringtones/penis.raw;
