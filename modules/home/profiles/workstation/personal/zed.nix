@@ -106,12 +106,6 @@ in
           diagnostics = false;
         };
         load_direnv = "shell_hook";
-        agent_servers = lib.mkIf pkgs.stdenvNoCC.hostPlatform.isLinux {
-          "Codex" = {
-            type = "custom";
-            command = "${pkgs.codex-acp}/bin/codex-acp";
-          };
-        };
       };
     };
   };

@@ -25,10 +25,6 @@
       httpie
       nodejs_24
       temurin-bin-25
-      codex
-      codex-acp
-      claude-code
-      claude-agent-acp
       plezy
     ];
 

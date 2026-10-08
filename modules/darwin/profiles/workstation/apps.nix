@@ -59,7 +59,6 @@
       "obs"
       "rustdesk"
       "t3-code"
-      "grok-build"
       "claude"
       "steam"
     ];
