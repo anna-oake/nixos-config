@@ -1,6 +1,5 @@
 {
   inputs,
-  pkgs,
   ...
 }:
 {
@@ -16,17 +15,6 @@
     niri.enable = true;
     laptop.enable = true;
     wifi.enable = true;
-  };
-
-  environment.systemPackages = with pkgs; [
-    libimobiledevice
-    ifuse
-    quicktime-video-hack
-  ];
-
-  services.usbmuxd = {
-    enable = true;
-    package = pkgs.usbmuxd2;
   };
 
   services.fprintd = {
