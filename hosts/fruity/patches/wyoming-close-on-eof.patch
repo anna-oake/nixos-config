@@ -1,0 +1,71 @@
+--- a/Sources/speech-server/Wyoming/WyomingNIOHandler.swift
++++ b/Sources/speech-server/Wyoming/WyomingNIOHandler.swift
+@@ -56,0 +57,3 @@
++            // A peer may close its sending side while awaiting our final response.
++            // Drain queued requests before releasing the half-closed socket.
++            channel.close(promise: nil)
+@@ -73,0 +77,7 @@
++    func userInboundEventTriggered(context: ChannelHandlerContext, event: Any) {
++        if let channelEvent = event as? ChannelEvent, channelEvent == .inputClosed {
++            eventContinuation?.finish()
++        }
++        context.fireUserInboundEventTriggered(event)
++    }
++
+--- /dev/null
++++ b/Tests/speech-serverTests/WyomingConnectionLifecycleTests.swift
+@@ -0,0 +1,54 @@
++import Darwin
++import Foundation
++import Logging
++import NIOCore
++import NIOPosix
++import XCTest
++
++@testable import speech_server
++
++final class WyomingConnectionLifecycleTests: XCTestCase {
++    func testHalfClosedClientReceivesInfoThenServerCloses() throws {
++        let group = MultiThreadedEventLoopGroup(numberOfThreads: 1)
++        defer { try? group.syncShutdownGracefully() }
++        let closed = expectation(description: "server releases disconnected client")
++        let server = try ServerBootstrap(group: group)
++            .childChannelOption(ChannelOptions.allowRemoteHalfClosure, value: true)
++            .childChannelInitializer { channel in
++                channel.closeFuture.whenComplete { _ in closed.fulfill() }
++                return channel.pipeline.addHandler(
++                    WyomingChannelHandler(
++                        session: WyomingSession(ttsService: MockTTSService(), sttService: MockSTTService()),
++                        logger: Logger(label: "lifecycle-test")))
++            }.bind(host: "127.0.0.1", port: 0).wait()
++        defer { try? server.close().wait() }
++        let fd = socket(AF_INET, SOCK_STREAM, 0)
++        defer { Darwin.close(fd) }
++        var timeout = timeval(tv_sec: 2, tv_usec: 0)
++        setsockopt(fd, SOL_SOCKET, SO_RCVTIMEO, &timeout, socklen_t(MemoryLayout<timeval>.size))
++        var address = sockaddr_in()
++        address.sin_family = sa_family_t(AF_INET)
++        address.sin_port = UInt16(server.localAddress!.port!).bigEndian
++        address.sin_addr.s_addr = inet_addr("127.0.0.1")
++        let connected = withUnsafePointer(to: &address) {
++            $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {
++                Darwin.connect(fd, $0, socklen_t(MemoryLayout<sockaddr_in>.size))
++            }
++        }
++        XCTAssertEqual(connected, 0)
++        let request = Data("{\"type\":\"describe\",\"version\":\"1.0.0\"}\n".utf8)
++        _ = request.withUnsafeBytes { Darwin.send(fd, $0.baseAddress, $0.count, 0) }
++        XCTAssertEqual(Darwin.shutdown(fd, SHUT_WR), 0)
++        var response = Data()
++        var buffer = [UInt8](repeating: 0, count: 4096)
++        var count: Int
++        repeat {
++            count = Darwin.recv(fd, &buffer, buffer.count, 0)
++            if count > 0 { response.append(contentsOf: buffer.prefix(count)) }
++        } while count > 0
++        XCTAssertEqual(count, 0, "server must send EOF after draining responses")
++        var decoder = WyomingFrameDecoder()
++        XCTAssertEqual(decoder.process(response).first?.type, "info")
++        wait(for: [closed], timeout: 3)
++    }
++}
