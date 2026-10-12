@@ -20,6 +20,10 @@
         mutableSettings = true;
         enableMcpIntegration = true;
       };
+      opencode = {
+        enable = true;
+        enableMcpIntegration = true;
+      };
       grok-build = {
         enable = true;
         mutableSettings = true;
