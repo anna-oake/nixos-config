@@ -35,7 +35,7 @@
   launchd.daemons.speech-server-health.serviceConfig = {
     ProgramArguments = [
       (lib.getExe pkgs.python3)
-      (toString ./speech-health.py)
+      "${./speech-health.py}"
     ];
     StartInterval = 60;
     RunAtLoad = true;
