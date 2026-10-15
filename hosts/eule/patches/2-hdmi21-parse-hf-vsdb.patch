@@ -1,6 +1,11 @@
-Subject: [PATCH v4 2/4] drm/edid: parse HDMI 2.1 gaming (ALLM/VRR)  capabilities from HF-VSDB
-
-From: Tomasz Paku?a <tomasz.pakula.oficjalny at gmail.com>
+From 0505751e5019dbeab0435c8812f4f5d8e1104c0b Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Tomasz=20Paku=C5=82a?= <tomasz.pakula.oficjalny@gmail.com>
+Date: Fri, 24 Jul 2026 15:34:43 -0400
+Subject: [PATCH] drm/edid: parse HDMI 2.1 gaming (ALLM/VRR) capabilities from
+ HF-VSDB
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
 Parse the HDMI 2.1 gaming-related capabilities advertised in the HDMI
 Forum VSDB (HF-VSDB) and expose them through struct drm_hdmi_info so
@@ -19,17 +24,15 @@ within 1-48 and VRRmax is either 0 (maximum based on the video mode) or
 >= 100. It is invoked from drm_parse_hdmi_forum_scds(), and the parsed
 values are logged for debugging.
 
-Signed-off-by: Tomasz Paku?a <tomasz.pakula.oficjalny at gmail.com>
-Signed-off-by: Fangzhi Zuo <Jerry.Zuo at amd.com>
-Tested-by: Bernhard Berger <bernhard.berger at gmail.com>
-Reviewed-by: Harry Wentland <harry.wentland at amd.com>
----
- drivers/gpu/drm/drm_edid.c  | 42 +++++++++++++++++++++++++++++++++
- include/drm/drm_connector.h | 47 +++++++++++++++++++++++++++++++++++++
- 2 files changed, 89 insertions(+)
+Signed-off-by: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
+Signed-off-by: Fangzhi Zuo <Jerry.Zuo@amd.com>
+Tested-by: Bernhard Berger <bernhard.berger@gmail.com>
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
 
+Rebased for Linux 7.3-rc6; apply in numbered order.
+---
 diff --git a/drivers/gpu/drm/drm_edid.c b/drivers/gpu/drm/drm_edid.c
-index ae26618a9a57..d508ec633c9b 100644
+index 07970e5b5f65e552e220c7dc101eb336e957a18c..6a729b0655b48e3464cb01d9c1364e7c45f92ed7 100644
 --- a/drivers/gpu/drm/drm_edid.c
 +++ b/drivers/gpu/drm/drm_edid.c
 @@ -6182,6 +6182,33 @@ static void drm_parse_ycbcr420_deep_color_info(struct drm_connector *connector,
@@ -96,7 +99,7 @@ index ae26618a9a57..d508ec633c9b 100644
  
  static void drm_parse_hdmi_deep_color_info(struct drm_connector *connector,
 diff --git a/include/drm/drm_connector.h b/include/drm/drm_connector.h
-index cd06a3b914a0..9f8f109c2dd1 100644
+index a0cf0268de483abc49c1dc1de797b0add818303a..1659a220f1244d4fce312f45e353a96633682fe5 100644
 --- a/include/drm/drm_connector.h
 +++ b/include/drm/drm_connector.h
 @@ -254,6 +254,44 @@ struct drm_scdc {
@@ -160,6 +163,4 @@ index cd06a3b914a0..9f8f109c2dd1 100644
  	/** @dsc_cap: DSC capabilities of the sink */
  	struct drm_hdmi_dsc_cap dsc_cap;
  };
--- 
-2.53.0
 

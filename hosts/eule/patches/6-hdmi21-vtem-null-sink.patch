@@ -1,0 +1,34 @@
+Subject: [PATCH] drm/amd/display: Fix NULL deref of new_stream->sink in VTEM guard
+
+From: Fangzhi Zuo <Jerry.Zuo at amd.com>
+
+[Why & How]
+amdgpu_dm_update_freesync_state_on_stream() keyed the VTEM guard off
+new_stream->sink->sink_signal, but new_stream->sink can be NULL, leading
+to a NULL pointer dereference.
+
+Use new_stream->signal instead, which is a direct field of the already
+validated new_stream and carries the same HDMI signal type. This matches
+the ALLM block in the same function, which already uses new_stream->signal.
+
+Fixes: fabf2169cb45 ("drm/amd/display: Emit VTEM for HF-VSDB VRR on TMDS links")
+Reviewed-by: Tom Chung <chiahsuan.chung at amd.com>
+Signed-off-by: Fangzhi Zuo <Jerry.Zuo at amd.com>
+Signed-off-by: Ray Wu <ray.wu at amd.com>
+
+Rebased for Linux 7.3-rc6; apply in numbered order.
+---
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_freesync.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_freesync.c
+index 59bb8296a24b20bef3b9093082416076249a7a73..d3238fc4da7351242902e9df66ad621d1834e715 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_freesync.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_freesync.c
+@@ -239,8 +239,8 @@ void amdgpu_dm_update_freesync_state_on_stream(
+ 		pack_sdp_v1_3);
+ 
+ 	/* Per HDMI 2.1, VTEM is valid on TMDS as well as FRL */
+-	if (new_stream->sink->sink_signal == SIGNAL_TYPE_HDMI_FRL ||
+-	    (new_stream->sink->sink_signal == SIGNAL_TYPE_HDMI_TYPE_A &&
++	if (new_stream->signal == SIGNAL_TYPE_HDMI_FRL ||
++	    (new_stream->signal == SIGNAL_TYPE_HDMI_TYPE_A &&
+ 	     aconn && aconn->base.display_info.hdmi.vrr_cap.supported))
+ 		mod_build_infopacket_vtem(new_stream, &vrr_params, 0, &vrr_infopacket);

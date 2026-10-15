@@ -1,4 +1,10 @@
-Subject: [PATCH v4 4/4] drm/amd/display: Enable HDMI ALLM for Gaming-VRR
+From 2151ff7f88f39ac95ce1c8c987f83fb7e6cddeb3 Mon Sep 17 00:00:00 2001
+From: Fangzhi Zuo <jerry.zuo@amd.com>
+Date: Fri, 24 Jul 2026 16:01:14 -0400
+Subject: [PATCH] drm/amd/display: Enable HDMI ALLM for Gaming-VRR
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
 why:
 HDMI 2.1 Auto Low-Latency Mode (ALLM) lets a Source request the Sink's
@@ -13,20 +19,19 @@ how:
   i.e. VRR_EN=1) and the sink advertises ALLM, per HDMI 2.1 Section
   7.6.6, and push the updated HF-VSIF (vsp_infopacket) as a stream
   update.
+- ALLM is driven by the mandatory Gaming-VRR case.
 
-ALLM is driven only by the mandatory Gaming-VRR case.
+Signed-off-by: Fangzhi Zuo <Jerry.Zuo@amd.com>
+Signed-off-by: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
 
-Signed-off-by: Fangzhi Zuo <Jerry.Zuo at amd.com>
+Rebased for Linux 7.3-rc6; apply in numbered order.
 ---
- .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |  5 +++-
- .../display/amdgpu_dm/amdgpu_dm_freesync.c    | 29 +++++++++++++++++++
- 2 files changed, 33 insertions(+), 1 deletion(-)
-
 diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index 567bf04979ee..ff0db0cb9880 100644
+index 1b42c4606002eeacf8b034f09cea5a207403e413..df2f8ae04095a62fd3a729e1b6328ab060ebfe5c 100644
 --- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
 +++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -4029,9 +4029,12 @@ static void amdgpu_dm_commit_planes(struct drm_atomic_commit *state,
+@@ -4046,9 +4046,12 @@ static void amdgpu_dm_commit_planes(struct drm_atomic_commit *state,
  		}
  
  		if (acrtc_state->stream) {
@@ -41,7 +46,7 @@ index 567bf04979ee..ff0db0cb9880 100644
  	}
  
 diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_freesync.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_freesync.c
-index 382c339b67b1..63d10cb7f5ed 100644
+index cb49184813deec720d3e08989fdde007587c3219..45297ee3cf136fb442bc3d294db714a6004d5547 100644
 --- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_freesync.c
 +++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_freesync.c
 @@ -252,6 +252,35 @@ void amdgpu_dm_update_freesync_state_on_stream(
@@ -80,6 +85,4 @@ index 382c339b67b1..63d10cb7f5ed 100644
  	if (new_crtc_state->freesync_vrr_info_changed)
  		drm_dbg_kms(adev_to_drm(adev), "VRR packet update: crtc=%u enabled=%d state=%d",
  			      new_crtc_state->base.crtc->base.id,
--- 
-2.53.0
 

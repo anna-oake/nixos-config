@@ -1,6 +1,7 @@
-Subject: [PATCH v4 1/4] drm/amd/display: Add 2.1 FreeSync support for AMD VSDB  EDID Block
-
-From: Fangzhi Zuo <Jerry.Zuo at amd.com>
+From f13a8b4a7e86985b16fa48f2c648573aca80ba5f Mon Sep 17 00:00:00 2001
+From: Fangzhi Zuo <Jerry.Zuo@amd.com>
+Date: Thu, 21 May 2026 16:46:38 -0400
+Subject: [PATCH] drm/amd/display: Add HDMI 2.1 FreeSync support for AMD VSDB
 
 why:
 HDMI FRL sinks were not parsed for the AMD VSDB and no VTEM info packet
@@ -25,20 +26,16 @@ how:
   enabled. When VRR becomes active the full Data_Set_Length = 4 payload
   with VRR_EN = 1 is sent as before.
 
-Signed-off-by: Fangzhi Zuo <Jerry.Zuo at amd.com>
-Reviewed-by: Harry Wentland <harry.wentland at amd.com>
----
- .../display/amdgpu_dm/amdgpu_dm_connector.c   |   4 +-
- .../display/amdgpu_dm/amdgpu_dm_freesync.c    |   4 +
- .../amd/display/modules/inc/mod_info_packet.h |   4 +
- .../display/modules/info_packet/info_packet.c | 109 ++++++++++++++++++
- 4 files changed, 120 insertions(+), 1 deletion(-)
+Signed-off-by: Fangzhi Zuo <Jerry.Zuo@amd.com>
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
 
+Rebased for Linux 7.3-rc6; apply in numbered order.
+---
 diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_connector.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_connector.c
-index 2cc3734c992b..9eaa20ec528e 100644
+index d386bb1475bb83cf4a16bd5a0ddbb527aa123bfb..7de983af049ed9e4533d0c3f10d6538208343fc5 100644
 --- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_connector.c
 +++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_connector.c
-@@ -3838,7 +3838,9 @@ void amdgpu_dm_update_freesync_caps(struct drm_connector *connector,
+@@ -3916,7 +3916,9 @@ void amdgpu_dm_update_freesync_caps(struct drm_connector *connector,
  			amdgpu_dm_connector->as_type = ADAPTIVE_SYNC_TYPE_EDP;
  		}
  
@@ -50,7 +47,7 @@ index 2cc3734c992b..9eaa20ec528e 100644
  		if (i >= 0) {
  			amdgpu_dm_connector->vsdb_info = vsdb_info;
 diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_freesync.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_freesync.c
-index 46674b83183c..035d7e88c3ed 100644
+index 7e484adb4120fd87b8931dd0873fa7c9c9624a98..1fa078cdba527cfdacbf144f88e20a6c9a2c37d3 100644
 --- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_freesync.c
 +++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_freesync.c
 @@ -37,6 +37,7 @@
@@ -72,7 +69,7 @@ index 46674b83183c..035d7e88c3ed 100644
  		(memcmp(&new_crtc_state->vrr_infopacket,
  			&vrr_infopacket,
 diff --git a/drivers/gpu/drm/amd/display/modules/inc/mod_info_packet.h b/drivers/gpu/drm/amd/display/modules/inc/mod_info_packet.h
-index eee8206bc531..5181d889fe7f 100644
+index eee8206bc531a8c621ac331755feedc8b6b9c4df..5181d889fe7fed5c3429f30cd0d60ea7dad11b6f 100644
 --- a/drivers/gpu/drm/amd/display/modules/inc/mod_info_packet.h
 +++ b/drivers/gpu/drm/amd/display/modules/inc/mod_info_packet.h
 @@ -67,6 +67,10 @@ struct AS_Df_params {
@@ -87,7 +84,7 @@ index eee8206bc531..5181d889fe7f 100644
  		enum adaptive_sync_type asType, const struct AS_Df_params *param,
  		struct dc_info_packet *info_packet);
 diff --git a/drivers/gpu/drm/amd/display/modules/info_packet/info_packet.c b/drivers/gpu/drm/amd/display/modules/info_packet/info_packet.c
-index f5ac4bf32a78..32b697f46788 100644
+index f5ac4bf32a784cee51b1d0f23e60d795398b0c29..32b697f46788b596c9dd76a4cc22cb22a10aa8b5 100644
 --- a/drivers/gpu/drm/amd/display/modules/info_packet/info_packet.c
 +++ b/drivers/gpu/drm/amd/display/modules/info_packet/info_packet.c
 @@ -291,6 +291,21 @@ void set_vsc_packet_colorimetry_data(
@@ -213,6 +210,4 @@ index f5ac4bf32a78..32b697f46788 100644
  void mod_build_adaptive_sync_infopacket(const struct dc_stream_state *stream,
  		enum adaptive_sync_type asType,
  		const struct AS_Df_params *param,
--- 
-2.53.0
 

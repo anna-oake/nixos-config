@@ -42,6 +42,18 @@
       name = "hdmi21-allm";
       patch = ./patches/4-hdmi21-allm.patch;
     }
+    {
+      name = "hdmi21-vrr-tmds";
+      patch = ./patches/5-hdmi21-vrr-tmds.patch;
+    }
+    {
+      name = "hdmi21-vtem-null-sink";
+      patch = ./patches/6-hdmi21-vtem-null-sink.patch;
+    }
+    {
+      name = "hdmi21-vtem-packet-slot";
+      patch = ./patches/7-hdmi21-vtem-packet-slot.patch;
+    }
   ];
 
   boot.kernelParams = [
