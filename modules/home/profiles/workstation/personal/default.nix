@@ -67,7 +67,7 @@ in
           if pkgs.stdenvNoCC.hostPlatform.isDarwin then
             "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
           else
-            "${pkgs._1password-gui}/share/1password/op-ssh-sign";
+            "${osConfig.programs._1password-gui.package}/share/1password/op-ssh-sign";
         signByDefault = true;
       };
     };
