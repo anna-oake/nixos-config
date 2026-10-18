@@ -1,0 +1,144 @@
+--- a/src/filter-touchpad.c
++++ b/src/filter-touchpad.c
+@@ -35,0 +36,2 @@
++#include "evdev-mt-touchpad.h"
++#include "slate-macos-pointer.h"
+@@ -58,0 +61 @@
++	usec_t macos_last_motion;
+@@ -99,0 +103,19 @@
++
++	struct tp_dispatch *tp = data;
++	if (tp && libevdev_get_id_vendor(tp->device->evdev) == 0x045e &&
++	    libevdev_get_id_product(tp->device->evdev) == 0x09af &&
++	    (tp->gesture.state == GESTURE_STATE_POINTER_MOTION ||
++	     (tp->gesture.state == GESTURE_STATE_HOLD_AND_MOTION && tp->gesture.finger_count == 1) ||
++	     tp->gesture.state == GESTURE_STATE_3FG_DRAG ||
++	     tp->gesture.state == GESTURE_STATE_3FG_DRAG_RELEASED)) {
++		const uint64_t now = usec_as_uint64_t(time);
++		const uint64_t last = usec_as_uint64_t(accel->macos_last_motion);
++		const double seconds = now > last ? (now - last) / 1000000.0 : 0;
++		const double distance = hypot(unaccelerated->x, unaccelerated->y);
++		const double factor = slate_mac_pointer_factor(distance, accel->dpi, seconds);
++		accel->macos_last_motion = time;
++		return (struct normalized_coords) {
++			.x = unaccelerated->x * factor,
++			.y = unaccelerated->y * factor,
++		};
++	}
+@@ -190,0 +213 @@
++	accel->macos_last_motion = usec_from_uint64_t(0);
+--- a/src/evdev-mt-touchpad-gestures.c
++++ b/src/evdev-mt-touchpad-gestures.c
+@@ -30,0 +31,2 @@
++#include "slate-macos-scroll.c"
++
+@@ -157,0 +160 @@
++    memset(&tp->mac_scroll.model, 0, sizeof(tp->mac_scroll.model));
+@@ -851,0 +855,5 @@
++    if (event == GESTURE_EVENT_END && tp_mac_scroll_launch(tp, time)) {
++        libinput_timer_cancel(&tp->gesture.hold_timer);
++        tp->gesture.state = GESTURE_STATE_NONE;
++        return;
++    }
+@@ -1728 +1736 @@
+-	delta = tp_filter_scroll(tp, &raw, time);
++	delta = tp_mac_scroll_filter(tp, &raw, time);
+@@ -1734,4 +1742,2 @@
+-	evdev_post_scroll(tp->device,
+-			  time,
+-			  LIBINPUT_POINTER_AXIS_SOURCE_FINGER,
+-			  &delta);
++	tp_mac_scroll_emit(tp, &delta, time);
++    tp_mac_scroll_post(tp, &delta, time);
+@@ -2086 +2092,2 @@
+-	evdev_stop_scroll(tp->device, time, LIBINPUT_POINTER_AXIS_SOURCE_FINGER);
++	tp_mac_scroll_cancel(tp, time);
++	evdev_stop_scroll(tp->device, time, tp_mac_scroll_source(tp));
+@@ -2349,0 +2357,3 @@
++	if (libevdev_get_id_vendor(tp->device->evdev) == 0x045e &&
++	    libevdev_get_id_product(tp->device->evdev) == 0x09af)
++		return LIBINPUT_CONFIG_3FG_DRAG_ENABLED_3FG;
+@@ -2382,0 +2393 @@
++    tp_mac_scroll_init(tp);
+@@ -2458,0 +2470 @@
++    libinput_timer_cancel(&tp->mac_scroll.timer);
+--- a/src/evdev-mt-touchpad.c
++++ b/src/evdev-mt-touchpad.c
+@@ -1775,0 +1776,3 @@
++    if (tp->mac_scroll.model.active && (tp->nfingers_down || tp->buttons.state ||
++        tp->dwt.keyboard_active || tp->palm.trackpoint_active))
++        tp_mac_scroll_cancel(tp, time);
+@@ -1970,0 +1974 @@
++	libinput_timer_destroy(&tp->mac_scroll.timer);
+@@ -1992,0 +1997 @@
++    tp_mac_scroll_cancel(tp, now);
+--- a/src/evdev-mt-touchpad.h
++++ b/src/evdev-mt-touchpad.h
+@@ -30,0 +31 @@
++#include "slate-macos-scroll.h"
+@@ -433,0 +435,7 @@
++	struct {
++        bool enabled;
++        bool consume_tap;
++        struct libinput_timer timer;
++        struct slate_scroll model;
++    } mac_scroll;
++
+@@ -786,0 +795,2 @@
++void tp_mac_scroll_cancel(struct tp_dispatch *tp, usec_t time);
++
+--- a/src/evdev-mt-touchpad-tap.c
++++ b/src/evdev-mt-touchpad-tap.c
+@@ -1215 +1215,3 @@
+-	if (!tp_tap_enabled(tp))
++	if (!tp_tap_enabled(tp)) {
++		if (tp->nfingers_down == 0)
++			tp->mac_scroll.consume_tap = false;
+@@ -1216,0 +1219,8 @@
++	}
++
++	/* Still process contacts/releases to keep tap finger counts balanced,
++     * but consume the entire touch sequence used to stop momentum. */
++	if (tp->mac_scroll.consume_tap) {
++		tp->tap.state = TAP_STATE_DEAD;
++		tp_tap_clear_timer(tp);
++	}
+@@ -1324,0 +1335,3 @@
++	if (tp->nfingers_down == 0)
++		tp->mac_scroll.consume_tap = false;
++
+--- a/src/evdev.c
++++ b/src/evdev.c
+@@ -2731 +2731 @@
+-evdev_post_scroll(struct evdev_device *device,
++evdev_post_scroll_scaled(struct evdev_device *device,
+@@ -2734 +2734,2 @@
+-		  const struct normalized_coords *delta)
++		  const struct normalized_coords *delta,
++			 double output_scale)
+@@ -2787,0 +2789,5 @@
++		/* Scale only the delivered values. Keep activation thresholds and
++		 * direction locking in the original input units. */
++		event.x *= output_scale;
++		event.y *= output_scale;
++
+@@ -2801,0 +2808,9 @@
++}
++
++void
++evdev_post_scroll(struct evdev_device *device,
++                  usec_t time,
++                  enum libinput_pointer_axis_source source,
++                  const struct normalized_coords *delta)
++{
++    evdev_post_scroll_scaled(device, time, source, delta, 1.0);
+--- a/src/evdev.h
++++ b/src/evdev.h
+@@ -601,0 +602,7 @@
++
++void
++evdev_post_scroll_scaled(struct evdev_device *device,
++                         usec_t time,
++                         enum libinput_pointer_axis_source source,
++                         const struct normalized_coords *delta,
++                         double output_scale);

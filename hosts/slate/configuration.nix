@@ -7,6 +7,7 @@
     inputs.self.nixosModules.default
     ./hardware-configuration.nix
     ./power.nix
+    ./trackpad.nix
     # ./face.nix
   ];
 

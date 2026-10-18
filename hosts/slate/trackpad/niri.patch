@@ -1,0 +1,5 @@
+--- a/src/input/mod.rs
++++ b/src/input/mod.rs
+@@ -3494 +3494 @@
+-        if source == AxisSource::Finger {
++        if source == AxisSource::Finger || source == AxisSource::Continuous {
