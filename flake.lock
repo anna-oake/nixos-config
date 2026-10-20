@@ -823,15 +823,15 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1791721963,
-        "narHash": "sha256-BYhx89XJltnRyQeuDKHVL5eSqbbfAcOKuDts7QRsrxQ=",
-        "owner": "nixos",
+        "lastModified": 1792502979,
+        "narHash": "sha256-mm/D2e6mBj2RfT1WZ+ApXYQrnP6GBBLiv7MyW0VYzEQ=",
+        "owner": "anna-oake",
         "repo": "nixos-hardware",
-        "rev": "60a624466c08787ee8303393b7d4752d1826f14f",
+        "rev": "6900d0a38e898e157371d2c8b6ad99a415e84216",
         "type": "github"
       },
       "original": {
-        "owner": "nixos",
+        "owner": "anna-oake",
         "repo": "nixos-hardware",
         "type": "github"
       }
