@@ -6,7 +6,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixos-hardware.url = "github:nixos/nixos-hardware";
+    nixos-hardware.url = "github:anna-oake/nixos-hardware";
 
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
 
