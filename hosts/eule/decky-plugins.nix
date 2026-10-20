@@ -15,9 +15,6 @@
     hltb_for_deck
   ];
 
-  # Includes the fix for Steam's renamed initialization API (Decky PR #947).
-  jovian.decky-loader.package = pkgs.decky-loader-prerelease;
-
   systemd.tmpfiles.settings."10-audio-loader-packs" = {
     "${config.jovian.decky-loader.stateDir}/sounds".d = {
       mode = "0755";
