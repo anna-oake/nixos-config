@@ -6,12 +6,16 @@
 {
   nixpkgs.overlays = lib.mkAfter [
     (_: prev: {
-      jovian-stubs = prev.jovian-stubs.overrideAttrs (old: {
-        buildCommand = old.buildCommand + ''
-          install -m 755 ${./holo-update} $out/bin/holo-update
-          install -m 755 ${./holo-update} $out/bin/steamos-polkit-helpers/steamos-update
-        '';
-      });
+      jovianPackages = prev.jovianPackages.overrideScope (
+        _: prevJovian: {
+          jovian-stubs = prevJovian.jovian-stubs.overrideAttrs (old: {
+            buildCommand = old.buildCommand + ''
+              install -m 755 ${./holo-update} $out/bin/holo-update
+              install -m 755 ${./holo-update} $out/bin/steamos-polkit-helpers/steamos-update
+            '';
+          });
+        }
+      );
     })
   ];
 
