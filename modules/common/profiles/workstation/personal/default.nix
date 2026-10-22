@@ -14,6 +14,7 @@
     nix.settings.trusted-users = [ config.me.username ];
 
     environment.systemPackages = with pkgs; [
+      charles
       gh
       ripgrep
       nixfmt

@@ -14,7 +14,6 @@
         httpie-desktop
         telegram-desktop
         github-desktop
-        charles
         element-desktop
       ]
       ++ onlyX86 [

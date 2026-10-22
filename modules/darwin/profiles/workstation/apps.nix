@@ -40,7 +40,6 @@
       "github"
       "bambu-studio"
       "httpie-desktop"
-      "charles" # installs from nixpkgs but doesn't show up as .app
       "ocenaudio"
       "loopback"
       "transmit"

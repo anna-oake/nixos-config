@@ -36,13 +36,7 @@
     environment.systemPackages = with pkgs; [
       usbutils
       pciutils
-      # The flake's wrapper passes --disable-background-networking, which also
-      # stops the extension downloader, so policy-installed extensions never arrive.
-      (inputs.helium.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs (old: {
-        postInstall = (old.postInstall or "") + ''
-          substituteInPlace $out/bin/helium --replace-fail " --disable-background-networking" ""
-        '';
-      }))
+      inputs.helium.packages.${pkgs.stdenv.hostPlatform.system}.default
     ];
 
     # Helium is Chromium-based and reads Chromium's managed policies, so

@@ -805,11 +805,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792600969,
-        "narHash": "sha256-/O2JY7dPYmDj+YvQ6fHVmdwtenQpNtR7SWsCEO3gaiA=",
+        "lastModified": 1792678603,
+        "narHash": "sha256-2lYStckCYInfXO62t0fTgHY2ws/pNucyffsg9nFmCeI=",
         "owner": "oake",
         "repo": "nix-things",
-        "rev": "9495b6a3540f6de59e204212ff576865f5c412d1",
+        "rev": "d1deed1d449d5965cfbb2c18f6f33edf543da39e",
         "type": "github"
       },
       "original": {
