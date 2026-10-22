@@ -18,9 +18,6 @@
   services.logind.settings.Login.HandlePowerKey = "ignore";
 
   services.udev.extraRules = ''
-    # allow the keyboard (via the surface aggregator) to wake from s2idle
-    ACTION=="add|bind", SUBSYSTEM=="serial", ENV{MODALIAS}=="acpi:MSHW0084:", ATTR{power/wakeup}="enabled"
-
     # IPTS hangs off this device; runtime suspend leaves the touchscreen dead
     ACTION=="bind", SUBSYSTEM=="pci", DRIVER=="mei_me", TEST=="power/control", ATTR{power/control}="on"
     ACTION=="bind", SUBSYSTEM=="hid", DRIVER=="hid-multitouch", TEST=="power/control", ATTR{power/control}="on"
