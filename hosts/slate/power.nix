@@ -14,6 +14,8 @@
     done
   '';
 
+  boot.initrd.systemd.services.impermanence-wipe.after = [ "systemd-hibernate-resume.service" ];
+
   # niri handles the power key (power menu), keep logind from powering off
   services.logind.settings.Login.HandlePowerKey = "ignore";
 
