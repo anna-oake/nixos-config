@@ -6,6 +6,7 @@
 }:
 {
   config = lib.mkIf config.profiles.workstation.enable {
+    programs.adrafinil.enable = true;
     programs.arqbackup.enable = true;
 
     services.netbird.enable = true;
