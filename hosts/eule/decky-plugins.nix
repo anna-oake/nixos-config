@@ -11,7 +11,8 @@
 
   jovian.decky-loader.plugins = with pkgs.decky-plugins; [
     audio_loader
-    protondb_badges
+    # this one is crashing
+    # protondb_badges
     hltb_for_deck
   ];
 
