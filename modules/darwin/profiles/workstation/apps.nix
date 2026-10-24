@@ -33,6 +33,8 @@
       element-desktop
       cleanshot
       qlmarkdown
+      ipatool
+      fairplay-decrypt
     ];
 
     homebrew.casks = [
