@@ -8,6 +8,16 @@
     (_: prev: {
       jovianPackages = prev.jovianPackages.overrideScope (
         _: prevJovian: {
+          gamescope = prevJovian.gamescope.overrideAttrs (old: {
+            postPatch = (old.postPatch or "") + ''
+              # Restore the SDR-on-HDR saturation behaviour preferred on eule's TV.
+              # TODO see https://github.com/ValveSoftware/gamescope/issues/2520
+              substituteInPlace src/color_helpers.cpp \
+                --replace-fail \
+                  'destColorLinear = glm::mix( destColorLinear, nativeColorLinear, amount );' \
+                  'destColorLinear = glm::mix( destColorLinear, sourceColorLinear, amount );'
+            '';
+          });
           jovian-stubs = prevJovian.jovian-stubs.overrideAttrs (old: {
             buildCommand = old.buildCommand + ''
               install -m 755 ${./holo-update} $out/bin/holo-update
