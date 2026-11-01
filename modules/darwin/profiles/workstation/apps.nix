@@ -35,6 +35,7 @@
       qlmarkdown
       ipatool
       fairplay-decrypt
+      hex
     ];
 
     homebrew.casks = [
