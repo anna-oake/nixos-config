@@ -94,7 +94,7 @@ in
               duration-ms = 280;
               curve = "linear";
             };
-            custom-shader = crt + ''
+            custom-shader.text = crt + ''
               vec4 open_color(vec3 coords_geo, vec3 size_geo) {
                   return crt_beam(coords_geo, size_geo, niri_clamped_progress);
               }
@@ -105,7 +105,7 @@ in
               duration-ms = 220;
               curve = "linear";
             };
-            custom-shader = crt + ''
+            custom-shader.text = crt + ''
               vec4 close_color(vec3 coords_geo, vec3 size_geo) {
                   return crt_beam(coords_geo, size_geo, 1.0 - niri_clamped_progress);
               }
