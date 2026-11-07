@@ -160,6 +160,10 @@
     extest.enable = true;
     protontricks.enable = true;
   };
+  services.steam-lancache-beacon = {
+    enable = true;
+    baseUrl = "https://lancache.lan.al";
+  };
   hardware.uinput.enable = true;
 
   home-manager.backupFileExtension = ".bak";
