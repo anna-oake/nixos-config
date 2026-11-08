@@ -163,6 +163,7 @@
   services.steam-lancache-beacon = {
     enable = true;
     baseUrl = "https://lancache.lan.al";
+    user = "gamer";
   };
   hardware.uinput.enable = true;
 
