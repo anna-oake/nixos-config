@@ -25,41 +25,6 @@
 
   boot.kernelPackages = pkgs.linuxPackages_testing;
 
-  boot.kernelPatches = [
-    {
-      name = "hdmi21-freesync-amd-vsdb";
-      patch = ./patches/1-hdmi21-freesync-amd-vsdb.patch;
-    }
-    {
-      name = "hdmi21-parse-hf-vsdb";
-      patch = ./patches/2-hdmi21-parse-hf-vsdb.patch;
-    }
-    {
-      name = "hdmi21-vrr-hf-vsdb";
-      patch = ./patches/3-hdmi21-vrr-hf-vsdb.patch;
-    }
-    {
-      name = "hdmi21-allm";
-      patch = ./patches/4-hdmi21-allm.patch;
-    }
-    {
-      name = "hdmi21-vrr-tmds";
-      patch = ./patches/5-hdmi21-vrr-tmds.patch;
-    }
-    {
-      name = "hdmi21-vtem-null-sink";
-      patch = ./patches/6-hdmi21-vtem-null-sink.patch;
-    }
-    {
-      name = "hdmi21-vtem-packet-slot";
-      patch = ./patches/7-hdmi21-vtem-packet-slot.patch;
-    }
-  ];
-
-  boot.kernelParams = [
-    "amdgpu.dcfeaturemask=0x400"
-  ];
-
   time.timeZone = "Europe/Amsterdam";
 
   boot.loader = {
