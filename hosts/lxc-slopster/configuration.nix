@@ -1,6 +1,7 @@
 {
   inputs,
   config,
+  lib,
   pkgs,
   ...
 }:
@@ -18,6 +19,17 @@
 
   services.hermes-agent = {
     enable = true;
+    # TODO: drop once hermes-agent stops patching patchelf for 0.19.2 (nixpkgs reverted to 0.15.2)
+    package = inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
+      pmPackages = lib.filterAttrs (_: lib.isDerivation) (
+        pkgs.callPackage "${inputs.hermes-agent}/nix/pm-packages.nix" {
+          # turns their `patchelf.overrideAttrs (… patch …)` into plain patchelf
+          patchelf = pkgs.patchelf // {
+            overrideAttrs = _: pkgs.patchelf;
+          };
+        }
+      );
+    };
     stateDir = "/storage-fast/slopster";
     addToSystemPackages = true;
 
