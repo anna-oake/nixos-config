@@ -1,6 +1,7 @@
 {
   inputs,
   lib,
+  pkgs,
   ...
 }:
 {
@@ -32,6 +33,16 @@
   };
 
   boot.initrd.systemd.tpm2.enable = false;
+
+  # TODO: watch nixos-hardware fix this
+  boot.kernelPackages = pkgs.linuxPackagesFor (
+    (pkgs.callPackage "${inputs.nixos-hardware}/raspberry-pi/common/kernel.nix" {
+      rpiVersion = 5;
+    }).overrideAttrs
+      (old: {
+        patches = (old.patches or [ ]) ++ [ pkgs.kernelPatches.tools_128bit_types.patch ];
+      })
+  );
 
   zramSwap.enable = true;
 
