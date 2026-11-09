@@ -66,6 +66,8 @@ let
   # The anyrun package builds its plugins and then drops the shared libraries.
   # The provider and these libraries share one anyrun-interface revision.
   anyrunWithPlugins = pkgs.anyrun.overrideAttrs (old: {
+    buildInputs = (old.buildInputs or [ ]) ++ [ pkgs.aws-lc ];
+
     postInstall = old.postInstall + ''
       mkdir -p $out/lib
       for lib in libapplications.so librink.so libshell.so libwebsearch.so; do
