@@ -36,6 +36,15 @@
 
     services.protonmail-bridge.enable = true;
 
+    services.mcpproxy-peer = {
+      enable = true;
+      user = config.me.username;
+      settings = {
+        primaryUrl = "https://mcp.lan.al";
+        listen = "127.0.0.1:3333";
+      };
+    };
+
     security.sudo.extraConfig =
       let
         rebuildBin = if pkgs.stdenv.hostPlatform.isDarwin then "darwin-rebuild" else "nixos-rebuild";

@@ -63,12 +63,6 @@
       inputs.home-manager.follows = "home-manager";
     };
 
-    hermes-agent = {
-      url = "github:NousResearch/hermes-agent";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "home-manager";
-    };
-
     macos-speech-server = {
       url = "github:jasonrm/macos-speech-server";
       inputs.nixpkgs.follows = "nixpkgs";

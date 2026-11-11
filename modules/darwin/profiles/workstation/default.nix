@@ -18,6 +18,13 @@
       SSH_AUTH_SOCK = "/Users/anna/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock";
     };
 
+    services.mcpproxy-peer.path = [
+      "/etc/profiles/per-user/${config.me.username}/bin"
+      "/run/current-system/sw/bin"
+      "/opt/homebrew/bin"
+      "/Users/${config.me.username}/.local/bin"
+    ];
+
     remoteBuilders = {
       protocol = "ssh";
       machines = {

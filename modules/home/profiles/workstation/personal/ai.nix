@@ -8,9 +8,9 @@
   config = lib.mkIf config.profiles.workstation.personal.enable (
     {
       programs = {
-        mcpproxy = {
+        mcp = {
           enable = true;
-          port = 34205;
+          servers.mcpproxy.url = "http://127.0.0.1:3333/mcp";
         };
         codex = {
           enable = true;
