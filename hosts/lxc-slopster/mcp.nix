@@ -40,6 +40,8 @@
       bash
       nodejs-slim
       nodejs-slim.npm
+      uv
+      python3
     ];
 
     settings = {

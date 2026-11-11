@@ -6,6 +6,7 @@
   imports = [
     inputs.self.nixosModules.default
     ./mcp.nix
+    ./t3.nix
   ];
 
   profiles.server.enable = true;
@@ -17,6 +18,7 @@
     description = "Slop service user";
     home = "/storage-fast/slopster";
     createHome = true;
+    useDefaultShell = true;
   };
 
   lxc = {
