@@ -69,7 +69,6 @@
   };
 
   services.desktopManager.plasma6.enable = true;
-  services.orca.enable = false; # failing to build otherwise
 
   security.rtkit.enable = true;
   services.pipewire-denon = {

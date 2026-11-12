@@ -6,7 +6,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixos-hardware.url = "github:anna-oake/nixos-hardware";
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
 
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
 
@@ -91,7 +91,6 @@
       blueprint = inputs.nix-things.lib.mkFlake {
         inherit inputs;
         nixpkgs.overlays = [
-          (import ./overlays.nix)
           inputs.macos-speech-server.overlays.default
         ];
       };
