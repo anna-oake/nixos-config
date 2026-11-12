@@ -7,6 +7,7 @@
   imports = [
     inputs.self.nixosModules.default
     ./mcp.nix
+    ./netbird.nix
     ./t3.nix
   ];
 
