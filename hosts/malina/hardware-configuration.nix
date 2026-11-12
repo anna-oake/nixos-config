@@ -1,4 +1,5 @@
 {
+  config,
   inputs,
   lib,
   ...
@@ -32,6 +33,9 @@
   };
 
   boot.initrd.systemd.tpm2.enable = false;
+
+  # The RPi vendor installer writes a versioned image instead of nixpkgs’ expected Image.
+  system.boot.loader.kernelFile = "vmlinux-${config.boot.kernelPackages.kernel.modDirVersion}";
 
   zramSwap.enable = true;
 
