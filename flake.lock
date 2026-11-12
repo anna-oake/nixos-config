@@ -774,15 +774,15 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1792502979,
-        "narHash": "sha256-mm/D2e6mBj2RfT1WZ+ApXYQrnP6GBBLiv7MyW0VYzEQ=",
-        "owner": "anna-oake",
+        "lastModified": 1794425805,
+        "narHash": "sha256-4s5CRvkYX4oAJVZ+zu2bBKFH2gG2GqN6OKHEWgJr1AY=",
+        "owner": "NixOS",
         "repo": "nixos-hardware",
-        "rev": "6900d0a38e898e157371d2c8b6ad99a415e84216",
+        "rev": "b6ca87f78ec5bafc4b2aef7b29803dcf419266af",
         "type": "github"
       },
       "original": {
-        "owner": "anna-oake",
+        "owner": "NixOS",
         "repo": "nixos-hardware",
         "type": "github"
       }
