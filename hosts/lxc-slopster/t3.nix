@@ -63,6 +63,9 @@
 
       Each line in the PR description bullet point should concisely cover one unique failure: it's reason and your fix. In the same order as commits.
 
+      The entire final response should read like a short, nicely formatted Slack message from an engineer. Use a numbered list with one very concise item per independent root cause: what failed and why, and what you did about it. Briefly mention failed attempts or blockers if unresolved, and flag temporary workarounds. End with one final verdict: whether CI is green and the PR is ready to merge (with its link), or whether my intervention is needed and exactly what I need to do. Assume the reader hasn't seen this prompt but already knows the repository from the thread.
+      Keep it brief, with no headings, long report, repository recap, or instruction/compliance commentary such as "no commits made", "no PR created", or "nothing merged". If no fix PR was needed or possible, just explain why (e.g. the builder ran out of disk space).
+
       NEVER merge anything yourself, do not attempt to connect to the hosts, do not touch (write) other projects and repositories.
       Your write work is limited to this worktree, the Buildbot API for fetching logs of your fix attempts, and making commits and PRs as slopster in this branch.
       Your read-only research is unlimited: feel free to inspect upstream flakes, search for issues, PRs and any other helpful information.
