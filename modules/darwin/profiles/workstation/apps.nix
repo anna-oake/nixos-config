@@ -27,7 +27,6 @@
       raycast
       hexfiend
       keka
-      proxmoxbar
       utm
       spotify
       element-desktop

@@ -58,7 +58,6 @@
 
   environment.systemPackages = with pkgs; [
     btrfs-progs
-    linkwinbt
   ];
 
   hardware.amdgpu.opencl.enable = true;
