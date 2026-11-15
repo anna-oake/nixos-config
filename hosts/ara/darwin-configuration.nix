@@ -1,5 +1,6 @@
 {
   inputs,
+  pkgs,
   ...
 }:
 {
@@ -9,6 +10,9 @@
   ];
 
   profiles.workstation.enable = true;
+
+  homebrew.casks = [ "kicad" ];
+  environment.systemPackages = [ pkgs.konnect ];
 
   nixpkgs.hostPlatform = "aarch64-darwin";
 

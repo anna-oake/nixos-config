@@ -11,6 +11,17 @@
 
   profiles.workstation.enable = true;
 
+  home.file."Library/Application Support/konnect/config.toml".text = ''
+    kicad_cli = "/Applications/KiCad/KiCad.app/Contents/MacOS/kicad-cli"
+    kicad_binary = "/Applications/KiCad/KiCad.app/Contents/MacOS/kicad"
+    eager_toolsets = true
+  '';
+
+  home.file."Library/Preferences/kicad/10.0/scripting/plugins/konnect" = {
+    source = "${pkgs.konnect}/share/kicad/plugins/konnect";
+    recursive = true;
+  };
+
   home.packages = with pkgs; [
     docker
     docker-compose
