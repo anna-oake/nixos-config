@@ -15,7 +15,7 @@
   services.t3-flake-fixer = {
     enable = true;
     user = "slopster";
-    buildbotUrl = "http://builder-buyan.me.ow";
+    nixbotUrl = "http://builder-buyan.me.ow";
     repositories = {
       "anna-oake/nixos-config" = "/storage-fast/slopster/Projects/nixos-config";
       "maeve-oake/nixos-config" = "/storage-fast/slopster/Projects/maeve-nixos-config";
@@ -50,7 +50,7 @@
       Once your fixes are ready, commit, push and create a PR into flake-update as slopster.
       Watch the PR until checks pass or fail.
 
-      If the build fails again, check the fresh Buildbot logs with http://builder-buyan.me.ow/api/v2/ and fix your shit.
+      If the build fails again, check the fresh Nixbot logs with http://builder-buyan.me.ow/api/ and fix your shit.
       The resulting green PR should have one commit per original independent root cause, so squash your stuff if you need several iterations.
 
       If you don't know how to fix cleanly or what caused the issue, or if you spent 3 iterations on one failure, give up and report to me with your best findings.
@@ -67,7 +67,7 @@
       Keep it brief, with no headings, long report, repository recap, or instruction/compliance commentary such as "no commits made", "no PR created", or "nothing merged". If no fix PR was needed or possible, just explain why (e.g. the builder ran out of disk space).
 
       NEVER merge anything yourself, do not attempt to connect to the hosts, do not touch (write) other projects and repositories.
-      Your write work is limited to this worktree, the Buildbot API for fetching logs of your fix attempts, and making commits and PRs as slopster in this branch.
+      Your write work is limited to this worktree, the Nixbot API for fetching logs of your fix attempts, and making commits and PRs as slopster in this branch.
       Your read-only research is unlimited: feel free to inspect upstream flakes, search for issues, PRs and any other helpful information.
 
       Good luck ^_^
