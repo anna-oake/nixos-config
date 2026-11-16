@@ -35,6 +35,7 @@
       ipatool
       fairplay-decrypt
       hex
+      cua-driver
     ];
 
     homebrew.casks = [
