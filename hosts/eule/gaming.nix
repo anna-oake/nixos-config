@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 {
@@ -28,6 +29,8 @@
       );
     })
   ];
+
+  environment.systemPackages = [ pkgs.partydeck ];
 
   jovian = {
     hardware = {
