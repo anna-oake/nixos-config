@@ -6,6 +6,8 @@
 }:
 {
   config = lib.mkIf config.profiles.workstation.personal.enable {
+    home.packages = [ pkgs.python3 ]; # for kicad skills
+
     programs.ai = {
       enable = true;
       skills = lib.genAttrs [
