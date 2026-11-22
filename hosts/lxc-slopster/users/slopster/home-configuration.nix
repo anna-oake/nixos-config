@@ -8,16 +8,7 @@
   ];
 
   programs = {
-    ai = {
-      enable = true;
-      enableMcpProxyIntegration = true;
-      agents = {
-        codex = true;
-        claude-code = true;
-        grok-build = true;
-        opencode = true;
-      };
-    };
+    ai.enable = true;
     uv = {
       enable = true;
       settings = {
