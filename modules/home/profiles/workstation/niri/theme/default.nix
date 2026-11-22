@@ -21,6 +21,9 @@ in
 
         rofi.enable = false;
 
+        # TODO: remove once resolved https://github.com/nix-community/stylix/issues/2556
+        wayprompt.enable = false;
+
         # Stylix derives GTK's accent from base0D (blue); put the red back, and
         # square everything off like the shell.
         gtk.extraCss = ''
