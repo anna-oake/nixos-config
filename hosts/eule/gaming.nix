@@ -30,7 +30,10 @@
     })
   ];
 
-  environment.systemPackages = [ pkgs.partydeck ];
+  environment.systemPackages = with pkgs; [
+    couchplay
+    partydeck
+  ];
 
   jovian = {
     hardware = {
