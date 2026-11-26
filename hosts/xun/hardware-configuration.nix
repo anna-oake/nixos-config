@@ -3,7 +3,33 @@
   imports = [ inputs.nixun.nixosModules.redmi-pad-se ];
 
   nixpkgs.hostPlatform = "aarch64-linux";
-  hardware.redmi-pad-se.enable = true;
+  hardware.redmi-pad-se = {
+    enable = true;
+    panelVariant = "m84-36-02-0a";
+  };
+
+  boot.kernelParams = [
+    "regulator_ignore_unused"
+    "g_ether.host_addr=ee:6c:b4:46:c0:fe"
+    "g_ether.dev_addr=da:d9:74:25:fa:b1"
+  ];
+  hardware.deviceTree.overlays = [
+    {
+      name = "xun-native-display";
+      dtsText = ''
+        /dts-v1/;
+        /plugin/;
+
+        / {
+          compatible = "xiaomi,xun";
+        };
+
+        &framebuffer0 {
+          status = "disabled";
+        };
+      '';
+    }
+  ];
 
   fileSystems."/" = {
     device = "/dev/disk/by-label/NIXOS_XUN";
