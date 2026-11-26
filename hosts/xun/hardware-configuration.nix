@@ -11,8 +11,6 @@
   nixpkgs.hostPlatform = "aarch64-linux";
   hardware.redmi-pad-se.enable = true;
 
-  boot.initrd.systemd.tpm2.enable = false;
-
   fileSystems."/" = {
     device = "/dev/disk/by-label/NIXOS_XUN";
     fsType = "ext4";
@@ -26,6 +24,16 @@
     baseName = "userdata";
     copyChannel = false;
   };
+
+  system.build.xunSparseRootImage =
+    pkgs.runCommand "xun-userdata-sparse"
+      {
+        nativeBuildInputs = [ pkgs.android-tools ];
+      }
+      ''
+        mkdir -p "$out"
+        img2simg ${config.system.build.xunRootImage}/userdata.img "$out/userdata.img"
+      '';
 
   networking.interfaces.usb0.ipv4.addresses = [
     {

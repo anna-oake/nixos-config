@@ -838,11 +838,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1795720500,
-        "narHash": "sha256-jYNTqaUfu5PKx/PvPp5ewL20mCYBRBk1Xdu8pbMRw9I=",
+        "lastModified": 1795728791,
+        "narHash": "sha256-wdrClLHL1lNDbRAmbeYhOX31siNHJDYGI8Cz6+rzjww=",
         "owner": "anna-oake",
         "repo": "nixun",
-        "rev": "bec7b420f39548371e1f7fa652f6b243c3c7f254",
+        "rev": "f0ce799c029b2f72d363d722e34f577c55d47d37",
         "type": "github"
       },
       "original": {
