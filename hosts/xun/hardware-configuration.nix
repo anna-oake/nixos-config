@@ -11,6 +11,8 @@
   nixpkgs.hostPlatform = "aarch64-linux";
   hardware.redmi-pad-se.enable = true;
 
+  boot.initrd.systemd.tpm2.enable = false;
+
   fileSystems."/" = {
     device = "/dev/disk/by-label/NIXOS_XUN";
     fsType = "ext4";
