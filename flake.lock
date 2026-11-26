@@ -831,6 +831,26 @@
         "type": "github"
       }
     },
+    "nixun": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1795720500,
+        "narHash": "sha256-jYNTqaUfu5PKx/PvPp5ewL20mCYBRBk1Xdu8pbMRw9I=",
+        "owner": "anna-oake",
+        "repo": "nixun",
+        "rev": "bec7b420f39548371e1f7fa652f6b243c3c7f254",
+        "type": "github"
+      },
+      "original": {
+        "owner": "anna-oake",
+        "repo": "nixun",
+        "type": "github"
+      }
+    },
     "nur": {
       "inputs": {
         "flake-parts": [
@@ -943,6 +963,7 @@
         "nix-things": "nix-things",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_3",
+        "nixun": "nixun",
         "plasma-manager": "plasma-manager",
         "steam-rom-manager": "steam-rom-manager",
         "stylix": "stylix"

@@ -8,6 +8,11 @@
 
     nixos-hardware.url = "github:NixOS/nixos-hardware";
 
+    nixun = {
+      url = "github:anna-oake/nixun";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
 
     homebrew-core = {
