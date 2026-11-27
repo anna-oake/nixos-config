@@ -22,6 +22,9 @@ in
     enable = true;
     alsa.enable = true;
     pulse.enable = true;
+    wireplumber.extraConfig."60-xun-volume"."wireplumber.settings" = {
+      "device.routes.default-sink-volume" = 1.0;
+    };
   };
   systemd.user.services.wireplumber.environment.ALSA_CONFIG_UCM2 =
     config.environment.sessionVariables.ALSA_CONFIG_UCM2;

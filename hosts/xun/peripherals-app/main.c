@@ -14,6 +14,7 @@ typedef struct {
     gboolean keys_started;
 
     GtkWidget *audio_buttons[4];
+    GtkRange *volume;
     GtkLabel *audio_status;
     GSubprocess *audio;
     guint record_timer;
@@ -31,10 +32,57 @@ typedef struct {
     GDBusProxy *bluetooth;
 } App;
 
+#define RECORD_SAMPLES 192000
+
+typedef graphene_point_t Contact;
+
 typedef struct {
-    double x, y;
-    guint id;
-} Contact;
+    GtkWidget parent;
+    GHashTable *touches;
+} TouchCanvas;
+
+typedef GtkWidgetClass TouchCanvasClass;
+
+G_DEFINE_TYPE(TouchCanvas, touch_canvas, GTK_TYPE_WIDGET)
+
+static void touch_canvas_snapshot(GtkWidget *widget, GtkSnapshot *snapshot)
+{
+    TouchCanvas *canvas = (TouchCanvas *)widget;
+    float width = gtk_widget_get_width(widget);
+    float height = gtk_widget_get_height(widget);
+    const GdkRGBA background = { .07, .11, .13, 1 };
+    const GdkRGBA grid = { .24, .31, .33, 1 };
+    const GdkRGBA dot = { .54, .94, .81, 1 };
+
+    gtk_snapshot_append_color(snapshot, &background, &GRAPHENE_RECT_INIT(0, 0, width, height));
+    for (int i = 1; i < 8; i++) {
+        gtk_snapshot_append_color(snapshot, &grid, &GRAPHENE_RECT_INIT(width * i / 8, 0, 1, height));
+        gtk_snapshot_append_color(snapshot, &grid, &GRAPHENE_RECT_INIT(0, height * i / 8, width, 1));
+    }
+
+    GHashTableIter iter;
+    gpointer item;
+    g_hash_table_iter_init(&iter, canvas->touches);
+    while (g_hash_table_iter_next(&iter, NULL, &item)) {
+        Contact *contact = item;
+        graphene_rect_t bounds = GRAPHENE_RECT_INIT(contact->x - 26, contact->y - 26, 52, 52);
+        GskRoundedRect circle;
+        gsk_rounded_rect_init_from_rect(&circle, &bounds, 26);
+        gtk_snapshot_push_rounded_clip(snapshot, &circle);
+        gtk_snapshot_append_color(snapshot, &dot, &bounds);
+        gtk_snapshot_pop(snapshot);
+    }
+}
+
+static void touch_canvas_class_init(TouchCanvasClass *class)
+{
+    class->snapshot = touch_canvas_snapshot;
+}
+
+static void touch_canvas_init(TouchCanvas *canvas)
+{
+    gtk_widget_set_overflow(GTK_WIDGET(canvas), GTK_OVERFLOW_HIDDEN);
+}
 
 static const struct {
     const char *name;
@@ -90,43 +138,6 @@ static void start_touch(GtkButton *sender, gpointer data)
     update_touches(app);
 }
 
-static void draw_touch(GtkDrawingArea *area, cairo_t *cr, int w, int h, gpointer data)
-{
-    (void)area;
-    App *app = data;
-    cairo_set_source_rgb(cr, .07, .11, .13);
-    cairo_paint(cr);
-    cairo_set_source_rgb(cr, .24, .31, .33);
-    cairo_set_line_width(cr, 1);
-
-    for (int i = 1; i < 8; i++) {
-        cairo_move_to(cr, w * i / 8.0, 0);
-        cairo_line_to(cr, w * i / 8.0, h);
-        cairo_move_to(cr, 0, h * i / 8.0);
-        cairo_line_to(cr, w, h * i / 8.0);
-    }
-    cairo_stroke(cr);
-
-    GHashTableIter iter;
-    gpointer item;
-    g_hash_table_iter_init(&iter, app->touches);
-    while (g_hash_table_iter_next(&iter, NULL, &item)) {
-        Contact *contact = item;
-        cairo_set_source_rgb(cr, .54, .94, .81);
-        cairo_arc(cr, contact->x, contact->y, 26, 0, 2 * G_PI);
-        cairo_fill(cr);
-        cairo_set_source_rgb(cr, .07, .11, .13);
-        cairo_set_font_size(cr, 18);
-        char id[16];
-        g_snprintf(id, sizeof id, "%u", contact->id);
-        cairo_text_extents_t extents;
-        cairo_text_extents(cr, id, &extents);
-        cairo_move_to(cr, contact->x - extents.width / 2 - extents.x_bearing,
-                      contact->y - extents.height / 2 - extents.y_bearing);
-        cairo_show_text(cr, id);
-    }
-}
-
 static gboolean touch_event(GtkEventControllerLegacy *controller, GdkEvent *event, gpointer data)
 {
     (void)controller;
@@ -135,8 +146,9 @@ static gboolean touch_event(GtkEventControllerLegacy *controller, GdkEvent *even
         return FALSE;
     GdkEventType type = gdk_event_get_event_type(event);
     GdkEventSequence *sequence = gdk_event_get_event_sequence(event);
+    gboolean count_changed;
     if (type == GDK_TOUCH_END || type == GDK_TOUCH_CANCEL) {
-        g_hash_table_remove(app->touches, sequence);
+        count_changed = g_hash_table_remove(app->touches, sequence);
     } else if (type == GDK_TOUCH_BEGIN || type == GDK_TOUCH_UPDATE) {
         double x, y, tx, ty;
         GtkNative *native = gtk_widget_get_native(app->canvas);
@@ -148,25 +160,20 @@ static gboolean touch_event(GtkEventControllerLegacy *controller, GdkEvent *even
         if (!gtk_widget_compute_point(GTK_WIDGET(native), app->canvas, &surface, &local))
             return FALSE;
         Contact *contact = g_hash_table_lookup(app->touches, sequence);
+        count_changed = !contact || !app->touchscreen_present;
         if (!contact) {
-            contact = g_new0(Contact, 1);
-            contact->id = 1;
-            GHashTableIter iter;
-            gpointer item;
-            g_hash_table_iter_init(&iter, app->touches);
-            while (g_hash_table_iter_next(&iter, NULL, &item)) {
-                Contact *other = item;
-                contact->id = MAX(contact->id, other->id + 1);
-            }
+            contact = g_new(Contact, 1);
             g_hash_table_insert(app->touches, sequence, contact);
         }
-        contact->x = local.x;
-        contact->y = local.y;
+        *contact = local;
         app->touchscreen_present = TRUE;
     } else {
         return FALSE;
     }
-    update_touches(app);
+    if (count_changed)
+        update_touches(app);
+    else
+        gtk_widget_queue_draw(app->canvas);
     return TRUE;
 }
 
@@ -206,6 +213,7 @@ static void audio_controls(App *app)
 {
     for (guint i = 0; i < G_N_ELEMENTS(app->audio_buttons); i++)
         gtk_widget_set_sensitive(app->audio_buttons[i], !app->audio && (i != 3 || app->recorded));
+    gtk_widget_set_sensitive(GTK_WIDGET(app->volume), !app->audio);
 }
 
 static gboolean stop_recording(gpointer data)
@@ -223,24 +231,23 @@ static void audio_done(GObject *object, GAsyncResult *result, gpointer data)
     g_autoptr(GError) error = NULL;
     g_autofree char *stderr_text = NULL;
     gboolean recording = GPOINTER_TO_INT(g_object_get_data(object, "recording"));
-    gboolean stopped = recording && app->record_timer == 0;
     if (app->record_timer)
         g_clear_handle_id(&app->record_timer, g_source_remove);
 
     gboolean communicated = g_subprocess_communicate_utf8_finish(
         process, result, NULL, &stderr_text, &error);
-    gboolean success = communicated &&
-        (g_subprocess_get_successful(process) ||
-         (stopped && g_subprocess_get_if_signaled(process) && g_subprocess_get_term_sig(process) == SIGINT));
-    if (recording && success) {
-        GStatBuf info;
-        app->recorded = g_stat(app->recording, &info) == 0 && info.st_size > 44;
-        gtk_label_set_text(app->audio_status, app->recorded ?
-                           "Recording ready. Tap Play recording." : "The microphone produced no recording.");
-    } else if (success) {
+    GStatBuf info;
+    /* pw-record exits nonzero even after saving all requested samples. */
+    if (recording && communicated && g_stat(app->recording, &info) == 0 &&
+        info.st_size >= 44 + RECORD_SAMPLES * 2) {
+        app->recorded = TRUE;
+        gtk_label_set_text(app->audio_status, "Recording ready. Tap Play recording.");
+    } else if (!recording && communicated && g_subprocess_get_successful(process)) {
         gtk_label_set_text(app->audio_status, "Playback finished.");
     } else {
         const char *detail = error ? error->message : stderr_text;
+        if (recording && (!detail || !*detail))
+            detail = "The microphone did not deliver four seconds of audio.";
         g_autofree char *message = g_strdup_printf("%s failed%s%s", recording ? "Recording" : "Playback",
                                                   detail && *detail ? " · " : "", detail ? detail : "");
         gtk_label_set_text(app->audio_status, message);
@@ -263,22 +270,35 @@ static void audio_action(GtkButton *sender, gpointer data)
 
     g_autoptr(GError) error = NULL;
     const char *record[] = {
-        PIPEWIRE_BIN "/pw-record", "--rate=48000", "--channels=1", "--format=s16", file, NULL
+        PIPEWIRE_BIN "/pw-record", "--rate=48000", "--channels=1", "--channel-map=FL",
+        "--format=s16", "--sample-count=" G_STRINGIFY(RECORD_SAMPLES), file, NULL
     };
-    const char *play[] = { PIPEWIRE_BIN "/pw-play", file, NULL };
+    char level[G_ASCII_DTOSTR_BUF_SIZE];
+    g_ascii_formatd(level, sizeof(level), "%.2f", gtk_range_get_value(app->volume) / 100.0);
+    const char *play[] = { PIPEWIRE_BIN "/pw-play", "--volume", level, file, NULL };
+    if (recording) {
+        app->recorded = FALSE;
+        g_unlink(app->recording);
+    }
     app->audio = g_subprocess_newv(recording ? record : play, G_SUBPROCESS_FLAGS_STDERR_PIPE, &error);
     if (!app->audio) {
         gtk_label_set_text(app->audio_status, error->message);
+        audio_controls(app);
         return;
     }
     g_object_set_data(G_OBJECT(app->audio), "recording", GINT_TO_POINTER(recording));
-    if (recording) {
-        app->recorded = FALSE;
-        app->record_timer = g_timeout_add_seconds(4, stop_recording, app);
-    }
+    if (recording)
+        app->record_timer = g_timeout_add_seconds(8, stop_recording, app);
     audio_controls(app);
     gtk_label_set_text(app->audio_status, recording ? "Recording for four seconds…" : "Playing…");
     g_subprocess_communicate_utf8_async(app->audio, NULL, NULL, audio_done, app);
+}
+
+static char *format_volume(GtkScale *scale, double value, gpointer data)
+{
+    (void)scale;
+    (void)data;
+    return g_strdup_printf("%.0f%%", value);
 }
 
 static void draw_color(GtkDrawingArea *area, cairo_t *cr, int w, int h, gpointer data)
@@ -413,9 +433,10 @@ static void activate(GtkApplication *application, gpointer data)
     GtkBox *touch = page(stack, "touch", "Touch");
     label(touch, "Place several fingers on the grid and drag them to the edges.");
     app->touch_count = label(touch, "");
-    app->canvas = gtk_drawing_area_new();
+    TouchCanvas *canvas = g_object_new(touch_canvas_get_type(), NULL);
+    canvas->touches = app->touches;
+    app->canvas = GTK_WIDGET(canvas);
     gtk_widget_set_vexpand(app->canvas, TRUE);
-    gtk_drawing_area_set_draw_func(GTK_DRAWING_AREA(app->canvas), draw_touch, app, NULL);
     gtk_box_append(touch, app->canvas);
     GtkEventController *legacy = gtk_event_controller_legacy_new();
     g_signal_connect(legacy, "event", G_CALLBACK(touch_event), app);
@@ -427,7 +448,18 @@ static void activate(GtkApplication *application, gpointer data)
     button(touch, "Start touch test", G_CALLBACK(start_touch), app);
 
     GtkBox *audio = page(stack, "audio", "Audio");
-    label(audio, "Check each speaker. Record and play back your voice to check the microphone. Plug in headphones to check the routed output.");
+    label(audio, "Check each audio channel. Record and play back your voice to check the microphone.");
+    GtkLabel *volume_label = label(audio, "Playback volume");
+    GtkWidget *volume = gtk_scale_new_with_range(GTK_ORIENTATION_HORIZONTAL, 0, 100, 1);
+    app->volume = GTK_RANGE(volume);
+    gtk_range_set_value(app->volume, 100);
+    gtk_scale_set_draw_value(GTK_SCALE(volume), TRUE);
+    gtk_scale_set_value_pos(GTK_SCALE(volume), GTK_POS_RIGHT);
+    gtk_scale_set_format_value_func(GTK_SCALE(volume), format_volume, NULL, NULL);
+    gtk_widget_set_size_request(volume, -1, 48);
+    gtk_accessible_update_relation(GTK_ACCESSIBLE(volume), GTK_ACCESSIBLE_RELATION_LABELLED_BY,
+                                   volume_label, NULL, -1);
+    gtk_box_append(audio, volume);
     app->audio_status = label(audio, "Ready.");
     app->audio_buttons[0] = GTK_WIDGET(button(audio, "Play left tone", G_CALLBACK(audio_action), app));
     app->audio_buttons[1] = GTK_WIDGET(button(audio, "Play right tone", G_CALLBACK(audio_action), app));
@@ -447,8 +479,8 @@ static void activate(GtkApplication *application, gpointer data)
     gtk_box_set_homogeneous(display_controls, TRUE);
     gtk_box_append(display, GTK_WIDGET(display_controls));
     button(display_controls, "Next color", G_CALLBACK(next_color), app);
-    const char *brightness_labels[] = { "Low", "Medium", "High" };
-    const guint brightness_levels[] = { 410, 1024, 2047 };
+    const char *brightness_labels[] = { "10%", "50%", "100%" };
+    const guint brightness_levels[] = { 205, 1024, 2047 };
     for (guint i = 0; i < G_N_ELEMENTS(brightness_labels); i++) {
         GtkButton *control = button(display_controls, brightness_labels[i], G_CALLBACK(set_brightness), app);
         g_object_set_data(G_OBJECT(control), "level", GUINT_TO_POINTER(brightness_levels[i]));
