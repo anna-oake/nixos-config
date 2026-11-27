@@ -4,7 +4,6 @@
 
   networking.networkmanager = {
     enable = true;
-    unmanaged = [ "interface-name:usb0" ];
 
     ensureProfiles = {
       environmentFiles = [ config.age.secrets."wifi/home".path ];
