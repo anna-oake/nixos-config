@@ -3,6 +3,7 @@
   imports = [
     inputs.self.nixosModules.default
     ./hardware-configuration.nix
+    ./peripherals.nix
     ./wifi.nix
   ];
 
